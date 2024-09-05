@@ -1,0 +1,106 @@
+/* General Styling */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Orbitron', sans-serif; /* Gaming-inspired font */
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: url('/pics/background.webp') no-repeat center center fixed; /* מחליף את הרקע השחור בתמונה */
+    background-size: cover;
+    color: #fff;
+}
+
+/* Container for form */
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+}
+
+.form-container {
+    background: rgba(30, 30, 30, 0.9); /* Dark background with some transparency */
+    border-radius: 12px;
+    padding: 40px;
+    width: 350px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.8); /* Deeper shadow for a "floating" effect */
+    backdrop-filter: blur(10px); /* Adds a frosted glass effect */
+}
+
+.form h2 {
+    margin-bottom: 20px;
+    color: #ffcc00; /* Neon gold color for headings */
+    text-align: center;
+    font-size: 28px;
+    letter-spacing: 2px;
+    text-shadow: 0 0 8px rgba(255, 204, 0, 0.7); /* Neon glow */
+}
+
+.input-group {
+    margin-bottom: 20px;
+    position: relative;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 15px;
+    background: #222; /* Darker input fields */
+    border-radius: 6px;
+    border: 1px solid #444;
+    color: #fff;
+    font-size: 16px;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.input-group input:focus {
+    border-color: #ffcc00; /* Neon border on focus */
+    box-shadow: 0 0 12px rgba(255, 204, 0, 0.8); /* Neon glow effect */
+    outline: none;
+}
+
+/* Button Styling */
+.btn {
+    width: 100%;
+    padding: 15px;
+    background-color: #ffcc00; /* Vibrant gaming color */
+    border: none;
+    border-radius: 6px;
+    color: black;
+    font-size: 18px;
+    cursor: pointer;
+    transition: background-color 0.3s, box-shadow 0.3s;
+}
+
+.btn:hover {
+    background-color: #d59710; /* Lighter hover effect */
+    box-shadow: 0 0 15px rgba(255, 87, 51, 0.8); /* Neon glow effect */
+}
+
+/* Link for switching between login and register */
+.toggle-form {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.toggle-form a {
+    color: #ffcc00;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.toggle-form a:hover {
+    color: #ff5733;
+}
+
+/* Additional effects to enhance design */
+input::placeholder {
+    color: rgba(255, 255, 255, 0.7); /* Soft placeholder color */
+}
+
