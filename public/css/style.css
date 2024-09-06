@@ -1,9 +1,9 @@
-/* General Styling */
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Orbitron', sans-serif; /* Gaming-inspired font */
+    font-family: 'Orbitron', sans-serif;
 }
 
 body {
@@ -11,36 +11,57 @@ body {
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background: url('/pics/background.webp') no-repeat center center fixed; /* מחליף את הרקע השחור בתמונה */
+    background: url('/pics/background.webp') no-repeat center center fixed;
     background-size: cover;
     color: #fff;
 }
 
-/* Container for form */
-.container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    height: 100%;
+.flip-container {
+    perspective: 1000px;
 }
 
-.form-container {
-    background: rgba(30, 30, 30, 0.9); /* Dark background with some transparency */
+.flipper {
+    position: relative;
+    width: 350px;
+    height: 450px;
+    transition: transform 0.6s;
+    transform-style: preserve-3d;
+}
+
+.front, .back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    background: linear-gradient(145deg, #1c1c28, #302b63); 
     border-radius: 12px;
     padding: 40px;
-    width: 350px;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.8); /* Deeper shadow for a "floating" effect */
-    backdrop-filter: blur(10px); /* Adds a frosted glass effect */
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.8);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.front {
+    transform: rotateY(0deg);
+}
+
+.back {
+    transform: rotateY(180deg);
+}
+
+.flipped .flipper {
+    transform: rotateY(180deg);
 }
 
 .form h2 {
     margin-bottom: 20px;
-    color: #ffcc00; /* Neon gold color for headings */
+    color: #00ff99;
     text-align: center;
     font-size: 28px;
     letter-spacing: 2px;
-    text-shadow: 0 0 8px rgba(255, 204, 0, 0.7); /* Neon glow */
+    text-shadow: 0 0 8px rgba(0, 255, 153, 0.7); 
 }
 
 .input-group {
@@ -51,56 +72,103 @@ body {
 .input-group input {
     width: 100%;
     padding: 15px;
-    background: #222; /* Darker input fields */
+    background: #222; 
     border-radius: 6px;
-    border: 1px solid #444;
+    border: 1px solid #555; 
     color: #fff;
     font-size: 16px;
     transition: border-color 0.3s, box-shadow 0.3s;
 }
 
 .input-group input:focus {
-    border-color: #ffcc00; /* Neon border on focus */
-    box-shadow: 0 0 12px rgba(255, 204, 0, 0.8); /* Neon glow effect */
+    border-color: #00ff99; 
+    box-shadow: 0 0 12px rgba(0, 255, 153, 0.8); 
     outline: none;
 }
 
-/* Button Styling */
 .btn {
     width: 100%;
     padding: 15px;
-    background-color: #ffcc00; /* Vibrant gaming color */
+    background-color: #2d2f41; 
     border: none;
     border-radius: 6px;
-    color: black;
+    color: #fff;
     font-size: 18px;
     cursor: pointer;
     transition: background-color 0.3s, box-shadow 0.3s;
 }
 
 .btn:hover {
-    background-color: #d59710; /* Lighter hover effect */
-    box-shadow: 0 0 15px rgba(255, 87, 51, 0.8); /* Neon glow effect */
+    background-color: #00ff99; 
+    box-shadow: 0 0 15px rgba(0, 255, 153, 0.8); 
 }
 
-/* Link for switching between login and register */
-.toggle-form {
-    text-align: center;
+
+.flip-btn {
     margin-top: 20px;
+    width: 100%;
+    padding: 12px 20px;
+    background: linear-gradient(45deg, #1d76a7, #6a82fb); 
+    border: none;
+    border-radius: 50px;
+    color: #fff;
+    font-size: 18px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.4s ease;
+    box-shadow: 0 0 20px rgba(0, 8, 255, 0.8), 0 0 30px rgba(106, 130, 251, 0.8), 0 0 40px rgba(215, 218, 238, 0.6); 
+    position: relative;
+    overflow: hidden;
 }
 
-.toggle-form a {
-    color: #ffcc00;
-    text-decoration: none;
-    transition: color 0.3s;
+.flip-btn::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 300%;
+    height: 300%;
+    background: rgba(255, 255, 255, 0.2); 
+    transition: all 0.75s ease;
+    transform: translate(-50%, -50%) rotate(45deg);
 }
 
-.toggle-form a:hover {
-    color: #ff5733;
+.flip-btn:hover::before {
+    width: 0;
+    height: 0;
 }
 
-/* Additional effects to enhance design */
-input::placeholder {
-    color: rgba(255, 255, 255, 0.7); /* Soft placeholder color */
+.flip-btn:hover {
+    background: linear-gradient(45deg, #0288d1, #00bfa5); 
+    box-shadow: 0 0 30px rgba(3, 169, 244, 0.8), 0 0 40px rgba(0, 191, 165, 0.8);
 }
 
+.flip-btn:active {
+    transform: scale(0.95);
+}
+
+.hidden {
+    display: none;
+}
+
+.message {
+    margin-bottom: 15px;
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 14px;
+    text-align: center;
+}
+
+.message.success {
+    background-color: rgba(0, 255, 153, 0.2); 
+    color: #00ff99; 
+    border: 1px solid #00ff99;
+}
+
+.message.error {
+    background-color: rgba(255, 0, 71, 0.2); 
+    color: #ff0047;
+    border: 1px solid #ff0047;
+}

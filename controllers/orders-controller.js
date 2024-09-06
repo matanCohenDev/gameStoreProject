@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const Order = require('../models/ordersDB');
 
+//creating a new order
 const createOrder = async (req, res) => {
     try {
         const order = new Order({
@@ -16,7 +17,7 @@ const createOrder = async (req, res) => {
         res.status(400).send(error);
     }
 }
-
+//getting all orders
 const getOrders = async (req, res) => {
     try {
         const orders = await Order.find();
@@ -25,7 +26,7 @@ const getOrders = async (req, res) => {
         res.status(500).send(error);
     }
 }
-
+//updating an order
 const updateOrder = async (req, res) => {
     try {
         const order = await Order.findByIdAndUpdate(req.body.id);
@@ -39,7 +40,7 @@ const updateOrder = async (req, res) => {
         res.status(400).send(error);
     }
 }
-
+//deleting an order
 const deleteOrder = async (req, res) => {
     try {
         const order = await Order.findByIdAndDelete(req.body.id);
@@ -49,6 +50,6 @@ const deleteOrder = async (req, res) => {
         res.status(500).send(error);
     }
 }
-
+//exporting the functions
 module.exports = { createOrder, getOrders, updateOrder, deleteOrder };
 

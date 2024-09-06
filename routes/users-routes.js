@@ -6,10 +6,10 @@ router.post('/register', createUser);
 
 router.post('/login', loginUser);
 
-router.get('/users', getUsers);
+router.get('/getUsers', getUsers);
 
-router.patch('/users', updateUser);
+router.patch('/updateUser', updateUser);
 
-router.delete('/users', deleteUser);
+router.delete('/deleteUser', deleteUser);
 
 module.exports = router;

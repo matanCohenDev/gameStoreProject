@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-
+//creating a new product schema
 const productSchema = new mongoose.Schema({
     name: {
         type: String,
@@ -23,5 +23,5 @@ const productSchema = new mongoose.Schema({
         default: Date.now,
     }
 });
-
+//exporting the model
 module.exports = mongoose.model('Product', productSchema);

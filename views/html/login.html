@@ -3,25 +3,47 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
+    <title>Login/Register</title>
     <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
     <div class="container">
-        <div class="form-container">
-            <form id="loginForm" class="form active">
-                <h2>Login</h2>
-                <div class="input-group">
-                    <input type="text" id="usernameLogin" placeholder="Username" required>
+        <div class="flip-container">
+            <div class="flipper">
+                <div class="front">
+                    <form id="loginForm" class="form">
+                        <h2>Login</h2>
+                        <div class="input-group">
+                            <input type="text" id="usernameLogin" placeholder="Username" required>
+                        </div>
+                        <div class="input-group">
+                            <input type="password" id="passwordLogin" placeholder="Password" required>
+                        </div>
+                        <div class="message" id="loginMessage"></div> 
+                        <button type="submit" class="btn">Login</button>
+                    </form>
                 </div>
-                <div class="input-group">
-                    <input type="password" id="passwordLogin" placeholder="Password" required>
+
+                <div class="back">
+                    <form id="registerForm" class="form">
+                        <h2>Register</h2>
+                        <div class="input-group">
+                            <input type="text" id="usernameRegister" placeholder="Username" required>
+                        </div>
+                        <div class="input-group">
+                            <input type="email" id="emailRegister" placeholder="Email" required>
+                        </div>
+                        <div class="input-group">
+                            <input type="password" id="passwordRegister" placeholder="Password" required>
+                        </div>
+                        <div class="message" id="registerMessage"></div> 
+                        <button type="submit" class="btn">Register</button>
+                    </form>
                 </div>
-                <button type="submit" class="btn">Login</button>
-                <p class="toggle-form">Don't have an account? <a href="/register">Register</a></p>
-            </form>
+            </div>
         </div>
+        <button id="toggleFormBtn" class="flip-btn">Switch to Register</button>
     </div>
+    <script src="/js/loginJs.js"></script>
 </body>
-<script src="/js/loginJs.js"></script>
 </html>
