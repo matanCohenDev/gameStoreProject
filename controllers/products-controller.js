@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Product = require('../models/productsDB');
-
+//creating a new product
 const createProduct = async (req, res) => {
     try {
         const product = new Product({
@@ -16,7 +16,7 @@ const createProduct = async (req, res) => {
         res.status(400).send(error);
     }
 }
-
+//getting all products
 const getProducts = async (req, res) => {
     try {
         const products = await Product.find();
@@ -25,7 +25,7 @@ const getProducts = async (req, res) => {
         res.status(500).send(error);
     }
 }
-
+//updating a product
 const updateProduct = async (req, res) => {
     try {
         const product = await Product.findByIdAndUpdate(req.body.id);
@@ -40,7 +40,7 @@ const updateProduct = async (req, res) => {
         res.status
     }
 }
-
+//deleting a product
 const deleteProduct = async (req, res) => {
     try {
         const product = await Product.findByIdAndDelete(req.body.id);
@@ -49,5 +49,5 @@ const deleteProduct = async (req, res) => {
         res.status(500).send(error);
     }
 }
-
+//exporting the functions
 module.exports = { createProduct, getProducts, updateProduct, deleteProduct };

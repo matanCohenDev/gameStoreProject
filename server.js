@@ -36,12 +36,19 @@ app.use('/api/users', require('./routes/users-routes'));
 app.use('/api/products', require('./routes/products-routes'));
 app.use('/api/orders', require('./routes/orders-routes'));
 
-app.use('/register', (req, res) => {
-    res.sendFile(path.join(__dirname, 'views' , 'html', 'register.html'));
+app.use('/admin', (req, res) => {
+    res.sendFile(path.join(__dirname, 'views' , 'html', 'admin.html'));
 });
 
+//מניעת משתמש רגיל להיכנס לדף האדמין
+//צריך להוסיף עוד עו תנאי על מנת שמשתמש לא יוכל לחזור חזרה לדף הלוגין אם מחובר
 app.use('/', (req, res) => {
+    if(req.session.user && req.session.user.username === 'admin'){
+        res.sendFile(path.join(__dirname, 'views' , 'html', 'admin.html'));
+    }
+    else {
     res.sendFile(path.join(__dirname, 'views' , 'html', 'login.html'));
+    }
 });
 
 const port = 3000;

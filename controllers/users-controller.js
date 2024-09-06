@@ -1,6 +1,6 @@
 const bcrypt = require('bcryptjs');
 const User = require('../models/usersDB');
-
+//creating a new user
 const createUser = async (req, res) => {
     try {
         console.log(req.body); 
@@ -17,7 +17,7 @@ const createUser = async (req, res) => {
         res.status(400).send({ msg: 'Error creating user' });
     }
 };
-
+//login
 const loginUser = async (req, res) => {
     try {
         const user = await User.findOne({ username: req.body.username });
@@ -34,7 +34,7 @@ const loginUser = async (req, res) => {
         res.status(500).send(error);
     }
 };
-
+//getting all users
 const getUsers = async (req, res) => {
     try {
         const users = await User.find();
@@ -43,7 +43,7 @@ const getUsers = async (req, res) => {
         res.status(500).send(error);
     }
 };
-
+//updating a user
 const updateUser = async (req, res) => {
     try {
         let updateData = {
@@ -68,7 +68,7 @@ const updateUser = async (req, res) => {
         res.status(500).send(error);
     }
 };
-
+//deleting a user
 const deleteUser = async (req, res) => {
     try {
         const user = await User.findByIdAndDelete(req.body.id);
@@ -80,5 +80,5 @@ const deleteUser = async (req, res) => {
         res.status(500).send(error);
     }
 };
-
+//exporting the functions
 module.exports = { createUser, getUsers, updateUser, deleteUser, loginUser };

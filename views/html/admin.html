@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Page</title>
+    <link rel="stylesheet" href="/css/styleAdmin.css">
+</head>
+<body>
+    <div class="container">
+        <div class="toolbar">
+            <button class="tab-btn" id="usersBtn">Users</button>
+            <button class="tab-btn" id="productsBtn">Products</button>
+            <button class="tab-btn" id="ordersBtn">Orders</button>
+        </div>
+
+        <div class="content">
+            <div id="usersSection" class="section hidden">
+                <center><h2>Users</h2></center>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Username</th>
+                            <th>Email</th>
+                            <th>Role Level</th>
+                            <th>Created At</th>
+                        </tr>
+                    </thead>
+                    <tbody id="usersTableBody"></tbody>
+                </table>
+            </div>
+
+            <div id="productsSection" class="section hidden">
+                <center>
+                    <h2>Products</h2>
+                    <br>
+                    <div class="product-controls">
+                        <button class="control-btn" id="createProductBtn">Create Product</button>
+                        <button class="control-btn" id="updateProductBtn">Update Product</button>
+                        <button class="control-btn" id="deleteProductBtn">Delete Product</button>
+                    </div>
+                </center>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Price</th>
+                            <th>Description</th>
+                            <th>Category</th>
+                            <th>Created At</th>
+                        </tr>
+                    </thead>
+                    <tbody id="productsTableBody"></tbody>
+                </table>
+            </div>
+
+            <div id="ordersSection" class="section hidden">
+                <center><h2>Orders</h2></center>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Username</th>
+                            <th>Products Ordered</th>
+                            <th>Quantity</th>
+                            <th>Created At</th>
+                        </tr>
+                    </thead>
+                    <tbody id="ordersTableBody"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for creating product -->
+    <div id="productModal" class="modal hidden">
+        <div class="modal-content">
+            <span class="close-btn" id="closeModal">&times;</span>
+            <h2>Create Product</h2>
+            <form id="productForm">
+                <label for="productName">Name:</label>
+                <input type="text" id="productName" name="name" required><br>
+                <label for="productPrice">Price:</label>
+                <input type="number" id="productPrice" name="price" required><br>
+                <label for="productDescription">Description:</label>
+                <input type="text" id="productDescription" name="description" required><br>
+                <label for="productCategory">Category:</label>
+                <input type="text" id="productCategory" name="category" required><br>
+                <label for="productCreatedAt">Created At:</label>
+                <input type="datetime-local" id="productCreatedAt" name="createdAt" required><br>
+                <button type="submit" class="modal-btn" id="AddProduct">Submit</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="/js/adminJs.js"></script>
+</body>
+</html>
