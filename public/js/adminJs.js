@@ -33,6 +33,9 @@ const closeDeleteModalBtn = document.getElementById('closeDeleteModal');
 //select row
 let selectedProduct = null;
 
+//loguot button
+const logoutBtn = document.getElementById('logoutBtn');
+
 //format date
 function formatDate(isoString) {
     const date = new Date(isoString);
@@ -171,7 +174,24 @@ AddproductBtn.addEventListener('click', async () => {
 closeModalBtn.addEventListener('click', () => {
     productModal.classList.remove('active');
 });
-
+//logout
+async function Logout() {
+    try {
+        const res = await fetch('/api/users/logout', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' }
+        });
+        if (res.ok) {
+            window.location.href = '/';
+        } else {
+            alert('Logout failed. Please try again.');
+        }
+    } catch (err) {
+        console.error('An error occurred during logout:', err);
+        alert('An error occurred. Please try again later.');
+    }
+}
+logoutBtn.addEventListener('click', Logout);
 //select row
 function highlightSelectedRow(row) {
     // Remove highlight from any previously selected row
@@ -276,5 +296,3 @@ closeDeleteModalBtn.addEventListener('click', () => {
 deleteCancelBtn.addEventListener('click', () => {
     deleteModal.classList.remove('active');
 });
-     
- 
