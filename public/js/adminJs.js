@@ -10,6 +10,7 @@ const ordersSection = document.getElementById('ordersSection');
 const createProductBtn = document.getElementById('createProductBtn');
 const updateProductBtn = document.getElementById('updateProductBtn');
 const deleteProductBtn = document.getElementById('deleteProductBtn');
+const logoutBtn = document.getElementById('logoutBtn');
 const productModal = document.getElementById('productModal');
 const closeModalBtn = document.getElementById('closeModal');
 const AddproductBtn = document.getElementById('AddProduct');
@@ -142,4 +143,22 @@ AddproductBtn.addEventListener('click', async () => {
 closeModalBtn.addEventListener('click', () => {
     productModal.classList.remove('active');
 });
+//logout
+async function Logout() {
+    try {
+        const res = await fetch('/api/users/logout', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' }
+        });
+        if (res.ok) {
+            window.location.href = '/';
+        } else {
+            alert('Logout failed. Please try again.');
+        }
+    } catch (err) {
+        console.error('An error occurred during logout:', err);
+        alert('An error occurred. Please try again later.');
+    }
+}
 
+logoutBtn.addEventListener('click', Logout);

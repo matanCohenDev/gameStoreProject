@@ -80,5 +80,17 @@ const deleteUser = async (req, res) => {
         res.status(500).send(error);
     }
 };
+
+const logout = (req, res) => {
+    req.session.destroy((err) => {
+        if (err) {
+            return res.status(500).send(err);
+        }
+        res.clearCookie('connect.sid');
+        res.status(200).send('Logged out');
+    }
+    );
+}
+
 //exporting the functions
-module.exports = { createUser, getUsers, updateUser, deleteUser, loginUser };
+module.exports = { createUser, getUsers, updateUser, deleteUser, loginUser , logout};

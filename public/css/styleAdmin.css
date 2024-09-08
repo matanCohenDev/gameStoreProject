@@ -176,3 +176,22 @@ input, textarea {
 .hidden {
     display: none;
 }
+
+#logoutBtn{
+    background-color: #2d2f41;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    font-size: 18px;
+    cursor: pointer;
+    border-radius: 6px;
+    transition: background-color 0.3s, box-shadow 0.3s;
+    position: absolute;
+    right: 20px;
+    top: 20px;
+}
+
+#logoutBtn:hover {
+    background-color: #00ff99; 
+    box-shadow: 0 0 15px rgba(0, 255, 153, 0.8); 
+}
