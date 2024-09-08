@@ -1,19 +1,40 @@
+//shows the users, products and orders tables
 const usersBtn = document.getElementById('usersBtn');
 const productsBtn = document.getElementById('productsBtn');
 const ordersBtn = document.getElementById('ordersBtn');
+
+//read the tables
 const usersTable = document.getElementById('usersTableBody');
 const productsTable = document.getElementById('productsTableBody');
 const ordersTable = document.getElementById('ordersTableBody');
 const usersSection = document.getElementById('usersSection');
 const productsSection = document.getElementById('productsSection');
 const ordersSection = document.getElementById('ordersSection');
+
+//create product modal
 const createProductBtn = document.getElementById('createProductBtn');
-const updateProductBtn = document.getElementById('updateProductBtn');
-const deleteProductBtn = document.getElementById('deleteProductBtn');
-const logoutBtn = document.getElementById('logoutBtn');
 const productModal = document.getElementById('productModal');
 const closeModalBtn = document.getElementById('closeModal');
 const AddproductBtn = document.getElementById('AddProduct');
+
+//update product modal
+const updateProductBtn = document.getElementById('updateProductBtn');
+const updateProductForm = document.getElementById('UpdateProductBtnComplete');
+const closeUpdateModalBtn = document.getElementById('closeUpdateModal');
+
+//delete modal
+const deleteProductBtn = document.getElementById('deleteProductBtn');
+const deleteOkBtn = document.getElementById('deleteOk');
+const deleteCancelBtn = document.getElementById('deleteCancel');
+const deleteMessage = document.getElementById('deleteMessage');
+const deleteModal = document.getElementById('DeleteProdactModal');
+const closeDeleteModalBtn = document.getElementById('closeDeleteModal');
+
+//select row
+let selectedProduct = null;
+
+//loguot button
+const logoutBtn = document.getElementById('logoutBtn');
 
 //format date
 function formatDate(isoString) {
@@ -49,6 +70,14 @@ function fetchAllProductsAndInsertToTable() {
             data.forEach((product) => {
                 const tr = document.createElement('tr');
                 tr.innerHTML = `<td>${product.name}</td><td>${product.price}</td><td>${product.category}</td><td>${product.description}</td><td>${formatDate(product.createdAt)}</td>`;
+
+                // Add click event listener to each row
+                tr.addEventListener('click', () => {
+                    selectedProduct = product;
+                    console.log(selectedProduct);
+                    highlightSelectedRow(tr);
+                });
+
                 productsTable.appendChild(tr);
             });
         });
@@ -107,6 +136,7 @@ function showSection(section) {
 createProductBtn.addEventListener('click', () => {
     productModal.classList.add('active');
 });
+
 //add product
 AddproductBtn.addEventListener('click', async () => {
     const productName = document.getElementById('productName').value;
@@ -139,6 +169,7 @@ AddproductBtn.addEventListener('click', async () => {
         console.error('Error:', error);
     }
 });
+
 //close the product modal
 closeModalBtn.addEventListener('click', () => {
     productModal.classList.remove('active');
@@ -160,5 +191,108 @@ async function Logout() {
         alert('An error occurred. Please try again later.');
     }
 }
-
 logoutBtn.addEventListener('click', Logout);
+//select row
+function highlightSelectedRow(row) {
+    // Remove highlight from any previously selected row
+    document.querySelectorAll('tbody tr').forEach(tr => {
+        tr.classList.remove('selected');
+        tr.style.backgroundColor = ''; // Reset background color
+    });
+
+    // Add highlight to the clicked row
+    row.classList.add('selected');
+}
+//show the update product modal
+updateProductBtn.addEventListener('click', () => {
+    if (!selectedProduct) {
+        alert('Please select a product from the table first.');
+        return;
+    }
+
+    const productNameInput = document.getElementById('productNameUpdate');
+    productNameInput.setAttribute('value', selectedProduct.name);
+    updateProdactModal.classList.add('active');
+});
+
+//update product
+updateProductForm.addEventListener('click', () => {
+
+    const updatedPrice = document.getElementById('productPriceUpdate').value; 
+    const productId = selectedProduct._id; 
+    
+
+    try {
+        const response = fetch(`/api/products/updateProduct`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                id: productId,          
+                price: updatedPrice      
+            }),
+        });
+
+        const data = response.json();
+
+        if (response.ok) {
+            console.log('Product updated:', data);
+            updateProdactModal.classList.remove('active');
+            productsBtn.click();
+        } else {
+            console.log('Error updating product:', data);
+        }
+    } catch (error) {
+        console.error('Error:', error);
+    }
+});
+
+//close the update product modal
+closeUpdateModalBtn.addEventListener('click', () => {
+    updateProdactModal.classList.remove('active');
+});  
+//open the delete product modal
+deleteProductBtn.addEventListener('click', () => {
+    if (!selectedProduct) {
+        alert('Please select a product from the table first.');
+        return;
+    }
+
+    deleteMessage.innerText = `Are you sure you want to delete ${selectedProduct.name}?`;
+    deleteModal.classList.add('active');
+});
+//delete product
+deleteOkBtn.addEventListener('click', async () => {
+    try {
+        const response = await fetch(`/api/products/deleteProduct`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                id: selectedProduct._id,
+            }),
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+            console.log('Product deleted:', data);
+            deleteModal.classList.remove('active');
+            productsBtn.click();
+        } else {
+            console.log('Error deleting product:', data);
+        }
+    } catch (error) {
+        console.error('Error:', error);
+    }
+});
+//close the delete product modal
+closeDeleteModalBtn.addEventListener('click', () => {
+    deleteModal.classList.remove('active');
+});
+//delete cancel button
+deleteCancelBtn.addEventListener('click', () => {
+    deleteModal.classList.remove('active');
+});

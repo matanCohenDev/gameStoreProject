@@ -71,15 +71,24 @@ th, td {
     border: 1px solid #555;
     text-align: left;
 }
-
+table tbody tr:hover {
+    background-color: #00ff99 !important;
+    cursor: pointer !important; /* Change cursor to pointer to indicate clickable */
+}
+/* Highlight selected row */
+table tbody tr.selected td {
+    background-color: #00cc80 !important; /* Lighter green for selected rows */
+}
 th {
     background-color: #302b63;
     color: #00ff99;
 }
 
 td {
-    background-color: #222;
     color: #fff;
+}
+table tbody tr:not(:hover) td {
+    background-color: #222; /* Default background color for non-hovered rows */
 }
 
 .product-controls {

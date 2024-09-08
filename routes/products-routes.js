@@ -6,7 +6,7 @@ router.post('/createProduct', createProduct);
 
 router.get('/getProducts', getProducts);
 
-router.patch('/updateProduct', updateProduct);
+router.put('/updateProduct', updateProduct);
 
 router.delete('/deleteProduct', deleteProduct);
 
