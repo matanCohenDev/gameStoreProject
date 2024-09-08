@@ -27,19 +27,23 @@ const getProducts = async (req, res) => {
 }
 //updating a product
 const updateProduct = async (req, res) => {
+    const { id, price } = req.body; // Get id and price from the request body
     try {
-        const product = await Product.findByIdAndUpdate(req.body.id);
-        product.name = req.body.name;
-        product.price = req.body.price;
-        product.description = req.body.description;
-        product.category = req.body.category;
-        await product.save();
+        const product = await Product.findById(id);
+        
+        if (!product) {
+            return res.status(404).send({ error: "Product not found" });
+        }
+
+        product.price = price; // Update the price with the new value
+        await product.save();  // Save the updated product
         res.status(200).send(product);
+        
+    } catch (error) {
+        res.status(500).send({ error: error.message });
     }
-    catch (error) {
-        res.status
-    }
-}
+};
+
 //deleting a product
 const deleteProduct = async (req, res) => {
     try {
