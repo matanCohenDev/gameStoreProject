@@ -1,3 +1,9 @@
+//dont forget npm i
+//if you want to run the tests, do:
+//open two terminals - one cd gameStoreProject , and one cd tests
+//in the gameStoreProject terminal - nodemon server.js - the server must be running for the tests
+//in the tests terminal - dotnet build - download packages like npm i, dotnet test - to run the tests
+
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
