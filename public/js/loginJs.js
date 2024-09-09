@@ -44,7 +44,7 @@ document.getElementById('loginForm').addEventListener('submit', async (event) =>
                 window.location.href = '/admin';
                 } 
                 else {
-                window.location.href = '/';    
+                window.location.href = '/user';    
                 }
             }, 2000);
         } else {
