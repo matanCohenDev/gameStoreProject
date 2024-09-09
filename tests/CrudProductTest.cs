@@ -9,22 +9,22 @@ namespace Tests
 {
     [TestFixture]
     public class CrudProduct : LoginAndRegisterTest
-    {
+    {    //inheritance from the LoginAndRegisterTests
         private IMongoCollection<BsonDocument> productsCollection = null!;
-
+        //start browser with product collection
         [SetUp]
         public new void StartBrowser()
         {
             base.StartBrowser();
             productsCollection = db.GetCollection<BsonDocument>("products");
         }
-
+        //the ignore in the LoginAndRegisterTests make no duplicate tests cause the inheritance
         [Test]
         public new void TestRegisterAndCheckDB()
         {
             base.TestRegisterAndCheckDB();
         }
-
+        //create product test
         [Test , Order(1)]
         public void CreateProductAdmin()
         {
@@ -45,7 +45,7 @@ namespace Tests
             var createdProduct = productsCollection.Find(filter).FirstOrDefault();
             Assert.That(createdProduct["name"].AsString, Is.EqualTo("test"));
         }
-
+        //update product price test
         [Test , Order(2)]
         public void UpdateProductAdmin()
         {
@@ -70,7 +70,7 @@ namespace Tests
                 price = updatedProduct["price"].AsDouble;
             Assert.That(price, Is.EqualTo(20));
         }
-
+        //delete the same product 
         [Test , Order(3)]
         public void DeleteProductAdmin()
         {
@@ -86,7 +86,7 @@ namespace Tests
             var deletedProduct = productsCollection.Find(filter).FirstOrDefault();
             Assert.That(deletedProduct, Is.Null);
         }
-
+        //quit chrome
         [TearDown]
         public new void CloseBrowser()
         {
