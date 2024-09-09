@@ -34,11 +34,8 @@ namespace Tests
 
         public void TestLoginAdmin(string username, string password)
         {
-            System.Threading.Thread.Sleep(1000);
             driver.FindElement(By.Id("usernameLogin")).SendKeys(username);
-            System.Threading.Thread.Sleep(1000);
             driver.FindElement(By.Id("passwordLogin")).SendKeys(password);
-            System.Threading.Thread.Sleep(1000);
             driver.FindElement(By.Id("loginForm")).Submit();
             WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
             wait.Until(ExpectedConditions.UrlContains("admin"));
@@ -47,11 +44,8 @@ namespace Tests
 
         public void TestLoginUser(string username, string password)
         {
-            System.Threading.Thread.Sleep(1000);
             driver.FindElement(By.Id("usernameLogin")).SendKeys(username);
-            System.Threading.Thread.Sleep(1000);
             driver.FindElement(By.Id("passwordLogin")).SendKeys(password);
-            System.Threading.Thread.Sleep(1000);
             driver.FindElement(By.Id("loginForm")).Submit();
             WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
             wait.Until(ExpectedConditions.UrlContains("user"));
@@ -65,18 +59,12 @@ namespace Tests
             string username = "testUser";
             string email = "testUser@example.com";
             string password = "password123";
-            System.Threading.Thread.Sleep(1000);
             driver.FindElement(By.Id("toggleFormBtn")).Click();
-            System.Threading.Thread.Sleep(1000);
             driver.FindElement(By.Id("usernameRegister")).SendKeys(username);
             WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
-            System.Threading.Thread.Sleep(1000);
             wait.Until(ExpectedConditions.ElementIsVisible(By.Id("emailRegister"))).SendKeys(email);
-            System.Threading.Thread.Sleep(1000);
             wait.Until(ExpectedConditions.ElementIsVisible(By.Id("passwordRegister"))).SendKeys(password);
-            System.Threading.Thread.Sleep(1000);
             driver.FindElement(By.Id("registerForm")).Submit();
-            System.Threading.Thread.Sleep(1000); 
             var filter = Builders<BsonDocument>.Filter.Eq("username", username);
             var registeredUser = usersCollection.Find(filter).FirstOrDefault();
             if (registeredUser == null)
