@@ -18,7 +18,7 @@ namespace Tests
         protected IMongoClient mongoClient = null!;
         protected IMongoDatabase db = null!;
         protected IMongoCollection<BsonDocument> usersCollection = null!;
-
+        //open chrome
         [OneTimeSetUp]
         public void StartBrowser()
         {
@@ -31,7 +31,7 @@ namespace Tests
             db = mongoClient.GetDatabase("test");
             usersCollection = db.GetCollection<BsonDocument>("users");
         }
-
+        //admin enter
         public void TestLoginAdmin(string username, string password)
         {
             driver.FindElement(By.Id("usernameLogin")).SendKeys(username);
@@ -41,7 +41,7 @@ namespace Tests
             wait.Until(ExpectedConditions.UrlContains("admin"));
             Assert.That(driver.Url, Is.EqualTo("http://localhost:3000/admin"));
         }
-
+        //user enter
         public void TestLoginUser(string username, string password)
         {
             driver.FindElement(By.Id("usernameLogin")).SendKeys(username);
@@ -51,7 +51,7 @@ namespace Tests
             wait.Until(ExpectedConditions.UrlContains("user"));
             Assert.That(driver.Url, Is.EqualTo("http://localhost:3000/user"));
         }
-
+        //register and make a user enter
         [Ignore("TestRegisterAndCheckDB is ignored in the base class to avoid duplication in derived classes.")]
         [Test , Order(0)]
         public void TestRegisterAndCheckDB()
@@ -73,7 +73,7 @@ namespace Tests
             System.Threading.Thread.Sleep(1000);
             TestLoginUser(username, password);
         }
-
+        //quit chrome
         [OneTimeTearDown]
         public void CloseBrowser()
         {
