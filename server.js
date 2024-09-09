@@ -3,7 +3,7 @@
 //open two terminals - one cd gameStoreProject , and one cd tests
 //in the gameStoreProject terminal - nodemon server.js - the server must be running for the tests
 //in the tests terminal - dotnet build - download packages like npm i, dotnet test - to run the tests
-// if you want to see how it the test works, add System.Threading.Thread.Sleep(2000); before : .SendKey("something") or .click() 
+// if you want to see how the test works, add System.Threading.Thread.Sleep(2000); before : .SendKey("something") or .click() 
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
