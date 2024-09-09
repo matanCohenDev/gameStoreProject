@@ -48,6 +48,7 @@ function formatDate(isoString) {
 
     return `${day}/${month}/${year} - ${hours}:${minutes}`;
 }
+
 //fetch all users and insert to table
 function fetchAllUsersAndInsertToTable() {
     fetch('/api/users/getUsers')
@@ -62,6 +63,7 @@ function fetchAllUsersAndInsertToTable() {
             
         });
 }
+
 //fetch all products and insert to table
 function fetchAllProductsAndInsertToTable() {
     fetch('/api/products/getProducts')
@@ -82,6 +84,7 @@ function fetchAllProductsAndInsertToTable() {
             });
         });
 }
+
 //fetch all orders and insert to table
 function fetchAllOrdersAndInsertToTable() {
     fetch('/api/orders/getOrders')
@@ -94,30 +97,35 @@ function fetchAllOrdersAndInsertToTable() {
             });
         });
 }
+
 //clear tables
 function clearTables() {
     usersTable.innerHTML = '';
     productsTable.innerHTML = '';
     ordersTable.innerHTML = '';
 }
+
 //show the users table
 usersBtn.addEventListener('click', () => {
     clearTables();
     showSection('users');
     fetchAllUsersAndInsertToTable();
 });
+
 //show the products table
 productsBtn.addEventListener('click', () => {
     clearTables();
     showSection('products');
     fetchAllProductsAndInsertToTable();
 });
+
 //show the orders table
 ordersBtn.addEventListener('click', () => {
     clearTables();
     showSection('orders');
     fetchAllOrdersAndInsertToTable();
 });
+
 //disabling duplicate table
 function showSection(section) {
     usersSection.classList.remove('active');
@@ -132,6 +140,7 @@ function showSection(section) {
         ordersSection.classList.add('active');
     }
 }
+
 //show the product modal
 createProductBtn.addEventListener('click', () => {
     productModal.classList.add('active');
@@ -174,6 +183,7 @@ AddproductBtn.addEventListener('click', async () => {
 closeModalBtn.addEventListener('click', () => {
     productModal.classList.remove('active');
 });
+
 //logout
 async function Logout() {
     try {
@@ -192,24 +202,22 @@ async function Logout() {
     }
 }
 logoutBtn.addEventListener('click', Logout);
+
 //select row
 function highlightSelectedRow(row) {
-    // Remove highlight from any previously selected row
     document.querySelectorAll('tbody tr').forEach(tr => {
         tr.classList.remove('selected');
-        tr.style.backgroundColor = ''; // Reset background color
+        tr.style.backgroundColor = ''; 
     });
-
-    // Add highlight to the clicked row
     row.classList.add('selected');
 }
+
 //show the update product modal
 updateProductBtn.addEventListener('click', () => {
     if (!selectedProduct) {
         alert('Please select a product from the table first.');
         return;
     }
-
     const productNameInput = document.getElementById('productNameUpdate');
     productNameInput.setAttribute('value', selectedProduct.name);
     updateProdactModal.classList.add('active');
@@ -217,11 +225,8 @@ updateProductBtn.addEventListener('click', () => {
 
 //update product
 updateProductForm.addEventListener('click', () => {
-
     const updatedPrice = document.getElementById('productPriceUpdate').value; 
     const productId = selectedProduct._id; 
-    
-
     try {
         const response = fetch(`/api/products/updateProduct`, {
             method: 'PUT',
@@ -233,9 +238,7 @@ updateProductForm.addEventListener('click', () => {
                 price: updatedPrice      
             }),
         });
-
         const data = response.json();
-
         if (response.ok) {
             console.log('Product updated:', data);
             updateProdactModal.classList.remove('active');
@@ -252,16 +255,17 @@ updateProductForm.addEventListener('click', () => {
 closeUpdateModalBtn.addEventListener('click', () => {
     updateProdactModal.classList.remove('active');
 });  
+
 //open the delete product modal
 deleteProductBtn.addEventListener('click', () => {
     if (!selectedProduct) {
         alert('Please select a product from the table first.');
         return;
     }
-
     deleteMessage.innerText = `Are you sure you want to delete ${selectedProduct.name}?`;
     deleteModal.classList.add('active');
 });
+
 //delete product
 deleteOkBtn.addEventListener('click', async () => {
     try {
@@ -274,9 +278,7 @@ deleteOkBtn.addEventListener('click', async () => {
                 id: selectedProduct._id,
             }),
         });
-
         const data = await response.json();
-
         if (response.ok) {
             console.log('Product deleted:', data);
             deleteModal.classList.remove('active');
@@ -292,6 +294,7 @@ deleteOkBtn.addEventListener('click', async () => {
 closeDeleteModalBtn.addEventListener('click', () => {
     deleteModal.classList.remove('active');
 });
+
 //delete cancel button
 deleteCancelBtn.addEventListener('click', () => {
     deleteModal.classList.remove('active');
