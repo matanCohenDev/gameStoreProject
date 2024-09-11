@@ -53,7 +53,7 @@ namespace Tests
         }
         //register and make a user enter
         [Ignore("TestRegisterAndCheckDB is ignored in the base class to avoid duplication in derived classes.")]
-        [Test , Order(0)]
+        [Test , Order(1)]
         public void TestRegisterAndCheckDB()
         {
             string username = "testUser";
