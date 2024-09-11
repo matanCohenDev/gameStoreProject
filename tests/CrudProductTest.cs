@@ -82,6 +82,7 @@ namespace Tests
             driver.FindElement(By.Id("deleteProductBtn")).Click();
             wait.Until(ExpectedConditions.ElementIsVisible(By.Id("DeleteProdactModal")));
             driver.FindElement(By.Id("deleteOk")).Click();
+            System.Threading.Thread.Sleep(1000);
             var filter = Builders<BsonDocument>.Filter.Eq("name", "test");
             var deletedProduct = productsCollection.Find(filter).FirstOrDefault();
             Assert.That(deletedProduct, Is.Null);
