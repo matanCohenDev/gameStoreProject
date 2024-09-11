@@ -59,6 +59,7 @@ namespace Tests
             string username = "testUser";
             string email = "testUser@example.com";
             string password = "password123";
+    
             driver.FindElement(By.Id("toggleFormBtn")).Click();
             driver.FindElement(By.Id("usernameRegister")).SendKeys(username);
             WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
@@ -66,11 +67,19 @@ namespace Tests
             wait.Until(ExpectedConditions.ElementIsVisible(By.Id("passwordRegister"))).SendKeys(password);
             driver.FindElement(By.Id("registerForm")).Submit();
             var filter = Builders<BsonDocument>.Filter.Eq("username", username);
-            var registeredUser = usersCollection.Find(filter).FirstOrDefault();
+            BsonDocument registeredUser = null;
+            int retries = 3;
+            for (int i = 0; i < retries; i++)
+            {
+                registeredUser = usersCollection.Find(filter).FirstOrDefault();
+                if (registeredUser != null)
+                    break;
+                System.Threading.Thread.Sleep(1000);  
+            }
             if (registeredUser == null)
                 throw new Exception("User not found in the database.");
             Assert.That(registeredUser["email"].AsString, Is.EqualTo(email));
-            System.Threading.Thread.Sleep(1000);
+            System.Threading.Thread.Sleep(2000);
             TestLoginUser(username, password);
         }
         //quit chrome
