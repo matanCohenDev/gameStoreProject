@@ -46,11 +46,16 @@ app.use('/admin', (req, res) => {
     res.sendFile(path.join(__dirname, 'views' , 'html', 'admin.html'));
 });
 
-//מניעת משתמש רגיל להיכנס לדף האדמין
-//צריך להוסיף עוד עו תנאי על מנת שמשתמש לא יוכל לחזור חזרה לדף הלוגין אם מחובר
+app.use('/user' , (req, res) => {
+    res.sendFile(path.join(__dirname, 'views' , 'html', 'market.html'));
+});
+
 app.use('/', (req, res) => {
     if(req.session.user && req.session.user.username === 'admin'){
         res.sendFile(path.join(__dirname, 'views' , 'html', 'admin.html'));
+    }
+    else if(req.session.user){
+        res.sendFile(path.join(__dirname, 'views' , 'html', 'market.html'));
     }
     else {
     res.sendFile(path.join(__dirname, 'views' , 'html', 'login.html'));
