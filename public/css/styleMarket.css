@@ -243,3 +243,44 @@ h1 {
 .delete-btn:hover {
     background-color: darkred;
 }
+.tab-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 40px;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    position: relative;
+    font-size: 16px;
+    transition: all 0.3s ease;
+}
+
+.tab-btn .icon {
+    display: none;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.tab-btn span {
+    display: inline-block;
+    transition: opacity 0.3s ease;
+}
+
+.tab-btn:hover .icon {
+    display: inline-block;
+    opacity: 1;
+}
+
+.tab-btn:hover span {
+    display: none;
+}
+
+.tab-btn .icon, .tab-btn span {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
