@@ -3,23 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Page</title>
+    <title>Admin Page - GameStore</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="/css/styleAdmin.css">
 </head>
 <body>
-    
-    <div class="container">
-        <div class="toolbar">
-            <h1>Admin Page</h1>
-            <button class="tab-btn" id="usersBtn">Users</button>
-            <button class="tab-btn" id="productsBtn">Products</button>
-            <button class="tab-btn" id="ordersBtn">Orders</button>
-            <button class="logout-btn" id="logoutBtn">Logout</button>
-        </div>
+    <!-- Toolbar -->
+    <div class="toolbar">
+        <h1>Admin Dashboard</h1>
+        <button class="tab-btn" id="usersBtn"><i class="fas fa-users"></i> Users</button>
+        <button class="tab-btn" id="productsBtn"><i class="fas fa-gamepad"></i> Products</button>
+        <button class="tab-btn" id="ordersBtn"><i class="fas fa-shopping-cart"></i> Orders</button>
+        <button class="logout-btn" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Logout</button>
+    </div>
 
+    <div class="container">
         <div class="content">
+            <!-- Users Section -->
             <div id="usersSection" class="section hidden">
-                <center><h2>Users</h2></center>
+                <h2>Users</h2>
                 <table>
                     <thead>
                         <tr>
@@ -29,20 +31,20 @@
                             <th>Created At</th>
                         </tr>
                     </thead>
-                    <tbody id="usersTableBody"></tbody>
+                    <tbody id="usersTableBody">
+                        <!-- User data will be populated here -->
+                    </tbody>
                 </table>
             </div>
 
+            <!-- Products Section -->
             <div id="productsSection" class="section hidden">
-                <center>
-                    <h2>Products</h2>
-                    <br>
-                    <div class="product-controls">
-                        <button class="control-btn" id="createProductBtn">Create Product</button>
-                        <button class="control-btn" id="updateProductBtn">Update Product</button>
-                        <button class="control-btn" id="deleteProductBtn">Delete Product</button>
-                    </div>
-                </center>
+                <h2>Products</h2>
+                <div class="product-controls">
+                    <button class="control-btn" id="createProductBtn"><i class="fas fa-plus-circle"></i> Create Product</button>
+                    <button class="control-btn" id="updateProductBtn"><i class="fas fa-edit"></i> Update Product</button>
+                    <button class="control-btn" id="deleteProductBtn"><i class="fas fa-trash-alt"></i> Delete Product</button>
+                </div>
                 <table>
                     <thead>
                         <tr>
@@ -53,12 +55,15 @@
                             <th>Created At</th>
                         </tr>
                     </thead>
-                    <tbody id="productsTableBody"></tbody>
+                    <tbody id="productsTableBody">
+                        <!-- Product data will be populated here -->
+                    </tbody>
                 </table>
             </div>
 
+            <!-- Orders Section -->
             <div id="ordersSection" class="section hidden">
-                <center><h2>Orders</h2></center>
+                <h2>Orders</h2>
                 <table>
                     <thead>
                         <tr>
@@ -68,56 +73,68 @@
                             <th>Created At</th>
                         </tr>
                     </thead>
-                    <tbody id="ordersTableBody"></tbody>
+                    <tbody id="ordersTableBody">
+                        <!-- Order data will be populated here -->
+                    </tbody>
                 </table>
             </div>
         </div>
     </div>
 
-    <!-- Modal for creating product -->
+    <!-- Modals -->
+    <!-- Create Product Modal -->
     <div id="productModal" class="modal hidden">
         <div class="modal-content">
             <span class="close-btn" id="closeModal">&times;</span>
             <h2>Create Product</h2>
             <form id="productForm">
                 <label for="productName">Name:</label>
-                <input type="text" id="productName" name="name" required><br>
+                <input type="text" id="productName" name="name" required>
+
                 <label for="productPrice">Price:</label>
-                <input type="number" id="productPrice" name="price" required><br>
+                <input type="number" id="productPrice" name="price" required>
+
                 <label for="productDescription">Description:</label>
-                <input type="text" id="productDescription" name="description" required><br>
+                <textarea id="productDescription" name="description" required></textarea>
+
                 <label for="productCategory">Category:</label>
-                <input type="text" id="productCategory" name="category" required><br>
-                <label for="productCreatedAt">Created At:</label>
-                <input type="datetime-local" id="productCreatedAt" name="createdAt" required><br>
+                <input type="text" id="productCategory" name="category" required>
+
                 <button type="submit" class="modal-btn" id="AddProduct">Submit</button>
             </form>
         </div>
     </div>
-    <div id="updateProdactModal" class="modal hidden">
+
+    <!-- Update Product Modal -->
+    <div id="updateProductModal" class="modal hidden">
         <div class="modal-content">
             <span class="close-btn" id="closeUpdateModal">&times;</span>
             <h2>Update Product</h2>
             <form id="updateProductForm">
-                <label for="productName">Name:</label>
-                <input type="text" id="productNameUpdate" name="name" required readonly><br>
-                <label for="productPrice">Price:</label>
-                <input type="number" id="productPriceUpdate" name="price" required><br>
+                <label for="productNameUpdate">Name:</label>
+                <input type="text" id="productNameUpdate" name="name" required readonly>
+
+                <label for="productPriceUpdate">Price:</label>
+                <input type="number" id="productPriceUpdate" name="price" required>
+
                 <button type="submit" class="modal-btn" id="UpdateProductBtnComplete">Submit</button>
             </form>
         </div>
     </div>
-    <div id="DeleteProdactModal" class="modal hidden">
+
+    <!-- Delete Product Modal -->
+    <div id="deleteProductModal" class="modal hidden">
         <div class="modal-content">
             <span class="close-btn" id="closeDeleteModal">&times;</span>
-            <h2>Update Product</h2>
-            <form id="updateProductForm">
-                <label for="productName"id="deleteMessage"></label> 
-                <button type="submit" class="modal-btn" id="deleteOk">Ok</button>
-                <button type="submit" class="modal-btn" id="deleteCancel">Cancel</button>
-            </form>
+            <h2>Delete Product</h2>
+            <p id="deleteMessage">Are you sure you want to delete this product?</p>
+            <div class="modal-actions">
+                <button class="modal-btn" id="deleteOk">Yes, Delete</button>
+                <button class="modal-btn" id="deleteCancel">Cancel</button>
+            </div>
         </div>
     </div>
+
 
     <script src="/js/adminJs.js"></script>
 </body>

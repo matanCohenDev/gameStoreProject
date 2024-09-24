@@ -1,301 +1,333 @@
-//shows the users, products and orders tables
+// Tab Navigation Buttons
 const usersBtn = document.getElementById('usersBtn');
 const productsBtn = document.getElementById('productsBtn');
 const ordersBtn = document.getElementById('ordersBtn');
 
-//read the tables
-const usersTable = document.getElementById('usersTableBody');
-const productsTable = document.getElementById('productsTableBody');
-const ordersTable = document.getElementById('ordersTableBody');
+// Sections
 const usersSection = document.getElementById('usersSection');
 const productsSection = document.getElementById('productsSection');
 const ordersSection = document.getElementById('ordersSection');
 
-//create product modal
-const createProductBtn = document.getElementById('createProductBtn');
+// Tables
+const usersTableBody = document.getElementById('usersTableBody');
+const productsTableBody = document.getElementById('productsTableBody');
+const ordersTableBody = document.getElementById('ordersTableBody');
+
+// Modals
 const productModal = document.getElementById('productModal');
-const closeModalBtn = document.getElementById('closeModal');
-const AddproductBtn = document.getElementById('AddProduct');
+const updateProductModal = document.getElementById('updateProductModal');
+const deleteProductModal = document.getElementById('deleteProductModal');
 
-//update product modal
-const updateProductBtn = document.getElementById('updateProductBtn');
-const updateProductForm = document.getElementById('UpdateProductBtnComplete');
+// Modal Close Buttons
+const closeProductModalBtn = document.getElementById('closeModal');
 const closeUpdateModalBtn = document.getElementById('closeUpdateModal');
-
-//delete modal
-const deleteProductBtn = document.getElementById('deleteProductBtn');
-const deleteOkBtn = document.getElementById('deleteOk');
-const deleteCancelBtn = document.getElementById('deleteCancel');
-const deleteMessage = document.getElementById('deleteMessage');
-const deleteModal = document.getElementById('DeleteProdactModal');
 const closeDeleteModalBtn = document.getElementById('closeDeleteModal');
 
-//select row
+// Product Form Buttons
+const createProductBtn = document.getElementById('createProductBtn');
+const updateProductBtn = document.getElementById('updateProductBtn');
+const deleteProductBtn = document.getElementById('deleteProductBtn');
+
+// Modal Action Buttons
+const addProductBtn = document.getElementById('AddProduct');
+const updateProductFormBtn = document.getElementById('UpdateProductBtnComplete');
+const deleteOkBtn = document.getElementById('deleteOk');
+const deleteCancelBtn = document.getElementById('deleteCancel');
+
+// Other Elements
+const logoutBtn = document.getElementById('logoutBtn');
+const deleteMessage = document.getElementById('deleteMessage');
+
+// Selected Product Variable
 let selectedProduct = null;
 
-//loguot button
-const logoutBtn = document.getElementById('logoutBtn');
-
-//format date
+// Format Date Function
 function formatDate(isoString) {
     const date = new Date(isoString);
-    const day = String(date.getDate()).padStart(2, '0');
-    const month = String(date.getMonth() + 1).padStart(2, '0');
-    const year = date.getFullYear();
-
-    const hours = String(date.getHours()).padStart(2, '0');
-    const minutes = String(date.getMinutes()).padStart(2, '0');
-
-    return `${day}/${month}/${year} - ${hours}:${minutes}`;
+    const options = { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' };
+    return date.toLocaleString('en-GB', options).replace(',', ' -');
 }
 
-//fetch all users and insert to table
+// Clear Tables Function
+function clearTables() {
+    usersTableBody.innerHTML = '';
+    productsTableBody.innerHTML = '';
+    ordersTableBody.innerHTML = '';
+}
+
+// Show Section Function
+function showSection(section) {
+    usersSection.classList.add('hidden');
+    productsSection.classList.add('hidden');
+    ordersSection.classList.add('hidden');
+
+    if (section === 'users') {
+        usersSection.classList.remove('hidden');
+    } else if (section === 'products') {
+        productsSection.classList.remove('hidden');
+    } else if (section === 'orders') {
+        ordersSection.classList.remove('hidden');
+    }
+}
+
+// Fetch and Display Users
 function fetchAllUsersAndInsertToTable() {
     fetch('/api/users/getUsers')
-        .then((response) => response.json())
-        .then((data) => {
-            data.forEach((user) => {
+        .then(response => response.json())
+        .then(data => {
+            data.forEach(user => {
                 const tr = document.createElement('tr');
-                console.log(user);
-                tr.innerHTML = `<td>${user.username}</td><td>${user.email}</td><td>${user.roleLevel}</td><td>${formatDate(user.createdAt)}</td>`;
-                usersTable.appendChild(tr);
+                tr.innerHTML = `
+                    <td>${user.username}</td>
+                    <td>${user.email}</td>
+                    <td>${user.roleLevel}</td>
+                    <td>${formatDate(user.createdAt)}</td>
+                `;
+                usersTableBody.appendChild(tr);
             });
-            
-        });
+        })
+        .catch(error => console.error('Error fetching users:', error));
 }
 
-//fetch all products and insert to table
+// Fetch and Display Products
 function fetchAllProductsAndInsertToTable() {
     fetch('/api/products/getProducts')
-        .then((response) => response.json())
-        .then((data) => {
-            data.forEach((product) => {
+        .then(response => response.json())
+        .then(data => {
+            data.forEach(product => {
                 const tr = document.createElement('tr');
-                tr.innerHTML = `<td>${product.name}</td><td>${product.price}</td><td>${product.category}</td><td>${product.description}</td><td>${formatDate(product.createdAt)}</td>`;
+                tr.innerHTML = `
+                    <td>${product.name}</td>
+                    <td>${product.price}</td>
+                    <td>${product.description}</td>
+                    <td>${product.category}</td>
+                    <td>${formatDate(product.createdAt)}</td>
+                `;
 
-                // Add click event listener to each row
+                // Add click event to select product
                 tr.addEventListener('click', () => {
                     selectedProduct = product;
-                    console.log(selectedProduct);
                     highlightSelectedRow(tr);
                 });
 
-                productsTable.appendChild(tr);
+                productsTableBody.appendChild(tr);
             });
-        });
+        })
+        .catch(error => console.error('Error fetching products:', error));
 }
 
-//fetch all orders and insert to table
+// Fetch and Display Orders
 function fetchAllOrdersAndInsertToTable() {
     fetch('/api/orders/getOrders')
-        .then((response) => response.json())
-        .then((data) => {
-            data.forEach((order) => {
+        .then(response => response.json())
+        .then(data => {
+            data.forEach(order => {
                 const tr = document.createElement('tr');
-                tr.innerHTML = `<td>${order.userId}</td><td>${order.products}</td><td>${order.totalPrice}</td><td>${formatDate(order.createdAt)}</td>`;
-                ordersTable.appendChild(tr);
+                tr.innerHTML = `
+                    <td>${order.username}</td>
+                    <td>${order.products}</td>
+                    <td>${order.quantity}</td>
+                    <td>${formatDate(order.createdAt)}</td>
+                `;
+                ordersTableBody.appendChild(tr);
             });
-        });
+        })
+        .catch(error => console.error('Error fetching orders:', error));
 }
 
-//clear tables
-function clearTables() {
-    usersTable.innerHTML = '';
-    productsTable.innerHTML = '';
-    ordersTable.innerHTML = '';
+// Highlight Selected Row
+function highlightSelectedRow(row) {
+    document.querySelectorAll('tbody tr').forEach(tr => {
+        tr.classList.remove('selected');
+    });
+    row.classList.add('selected');
 }
 
-//show the users table
+// Event Listeners for Tab Buttons
 usersBtn.addEventListener('click', () => {
     clearTables();
     showSection('users');
     fetchAllUsersAndInsertToTable();
 });
 
-//show the products table
 productsBtn.addEventListener('click', () => {
     clearTables();
     showSection('products');
     fetchAllProductsAndInsertToTable();
 });
 
-//show the orders table
 ordersBtn.addEventListener('click', () => {
     clearTables();
     showSection('orders');
     fetchAllOrdersAndInsertToTable();
 });
 
-//disabling duplicate table
-function showSection(section) {
-    usersSection.classList.remove('active');
-    productsSection.classList.remove('active');
-    ordersSection.classList.remove('active');
-
-    if (section === 'users') {
-        usersSection.classList.add('active');
-    } else if (section === 'products') {
-        productsSection.classList.add('active');
-    } else if (section === 'orders') {
-        ordersSection.classList.add('active');
-    }
-}
-
-//show the product modal
+// Show Create Product Modal
 createProductBtn.addEventListener('click', () => {
     productModal.classList.add('active');
 });
 
-//add product
-AddproductBtn.addEventListener('click', async () => {
-    const productName = document.getElementById('productName').value;
-    const productPrice = document.getElementById('productPrice').value;
-    const productCategory = document.getElementById('productCategory').value;
-    const productDescription = document.getElementById('productDescription').value;
+// Close Create Product Modal
+closeProductModalBtn.addEventListener('click', () => {
+    productModal.classList.remove('active');
+});
+
+// Add New Product
+addProductBtn.addEventListener('click', async (event) => {
+    event.preventDefault();
+
+    const productName = document.getElementById('productName').value.trim();
+    const productPrice = parseFloat(document.getElementById('productPrice').value);
+    const productDescription = document.getElementById('productDescription').value.trim();
+    const productCategory = document.getElementById('productCategory').value.trim();
+
+    if (!productName || isNaN(productPrice) || !productDescription || !productCategory) {
+        alert('Please fill in all fields correctly.');
+        return;
+    }
 
     try {
         const response = await fetch('/api/products/createProduct', {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
+            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
                 name: productName,
                 price: productPrice,
-                category: productCategory,
                 description: productDescription,
+                category: productCategory
             }),
         });
 
-        const data = await response.json();
-
         if (response.ok) {
+            const data = await response.json();
             console.log('Product created:', data);
+            productModal.classList.remove('active');
+            productsBtn.click(); // Refresh products table
         } else {
-            console.log('Error creating product:', data);
+            const errorData = await response.json();
+            console.error('Error creating product:', errorData);
+            alert('Error creating product. Please try again.');
         }
     } catch (error) {
         console.error('Error:', error);
+        alert('An error occurred. Please try again.');
     }
 });
 
-//close the product modal
-closeModalBtn.addEventListener('click', () => {
-    productModal.classList.remove('active');
-});
-
-//logout
-async function Logout() {
-    try {
-        const res = await fetch('/api/users/logout', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' }
-        });
-        if (res.ok) {
-            window.location.href = '/';
-        } else {
-            alert('Logout failed. Please try again.');
-        }
-    } catch (err) {
-        console.error('An error occurred during logout:', err);
-        alert('An error occurred. Please try again later.');
-    }
-}
-logoutBtn.addEventListener('click', Logout);
-
-//select row
-function highlightSelectedRow(row) {
-    document.querySelectorAll('tbody tr').forEach(tr => {
-        tr.classList.remove('selected');
-        tr.style.backgroundColor = ''; 
-    });
-    row.classList.add('selected');
-}
-
-//show the update product modal
+// Show Update Product Modal
 updateProductBtn.addEventListener('click', () => {
     if (!selectedProduct) {
         alert('Please select a product from the table first.');
         return;
     }
-    const productNameInput = document.getElementById('productNameUpdate');
-    productNameInput.setAttribute('value', selectedProduct.name);
-    updateProdactModal.classList.add('active');
+    document.getElementById('productNameUpdate').value = selectedProduct.name;
+    document.getElementById('productPriceUpdate').value = selectedProduct.price;
+    updateProductModal.classList.add('active');
 });
 
-//update product
-updateProductForm.addEventListener('click', () => {
-    const updatedPrice = document.getElementById('productPriceUpdate').value; 
-    const productId = selectedProduct._id; 
+// Close Update Product Modal
+closeUpdateModalBtn.addEventListener('click', () => {
+    updateProductModal.classList.remove('active');
+});
+
+// Update Product
+updateProductFormBtn.addEventListener('click', async (event) => {
+    event.preventDefault();
+
+    const updatedPrice = parseFloat(document.getElementById('productPriceUpdate').value);
+
+    if (isNaN(updatedPrice)) {
+        alert('Please enter a valid price.');
+        return;
+    }
+
     try {
-        const response = fetch(`/api/products/updateProduct`, {
+        const response = await fetch('/api/products/updateProduct', {
             method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json',
-            },
+            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
-                id: productId,          
-                price: updatedPrice      
+                id: selectedProduct._id,
+                price: updatedPrice
             }),
         });
-        const data = response.json();
+
         if (response.ok) {
+            const data = await response.json();
             console.log('Product updated:', data);
-            updateProdactModal.classList.remove('active');
-            productsBtn.click();
+            updateProductModal.classList.remove('active');
+            productsBtn.click(); // Refresh products table
         } else {
-            console.log('Error updating product:', data);
+            const errorData = await response.json();
+            console.error('Error updating product:', errorData);
+            alert('Error updating product. Please try again.');
         }
     } catch (error) {
         console.error('Error:', error);
+        alert('An error occurred. Please try again.');
     }
 });
 
-//close the update product modal
-closeUpdateModalBtn.addEventListener('click', () => {
-    updateProdactModal.classList.remove('active');
-});  
-
-//open the delete product modal
+// Show Delete Product Modal
 deleteProductBtn.addEventListener('click', () => {
     if (!selectedProduct) {
         alert('Please select a product from the table first.');
         return;
     }
-    deleteMessage.innerText = `Are you sure you want to delete ${selectedProduct.name}?`;
-    deleteModal.classList.add('active');
+    deleteMessage.textContent = `Are you sure you want to delete "${selectedProduct.name}"?`;
+    deleteProductModal.classList.add('active');
 });
 
-//delete product
+// Close Delete Product Modal
+closeDeleteModalBtn.addEventListener('click', () => {
+    deleteProductModal.classList.remove('active');
+});
+
+// Cancel Delete Product
+deleteCancelBtn.addEventListener('click', () => {
+    deleteProductModal.classList.remove('active');
+});
+
+// Confirm Delete Product
 deleteOkBtn.addEventListener('click', async () => {
     try {
-        const response = await fetch(`/api/products/deleteProduct`, {
+        const response = await fetch('/api/products/deleteProduct', {
             method: 'DELETE',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                id: selectedProduct._id,
-            }),
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ id: selectedProduct._id }),
         });
-        const data = await response.json();
+
         if (response.ok) {
+            const data = await response.json();
             console.log('Product deleted:', data);
-            deleteModal.classList.remove('active');
-            productsBtn.click();
+            deleteProductModal.classList.remove('active');
+            productsBtn.click(); // Refresh products table
         } else {
-            console.log('Error deleting product:', data);
+            const errorData = await response.json();
+            console.error('Error deleting product:', errorData);
+            alert('Error deleting product. Please try again.');
         }
     } catch (error) {
         console.error('Error:', error);
+        alert('An error occurred. Please try again.');
     }
 });
-//close the delete product modal
-closeDeleteModalBtn.addEventListener('click', () => {
-    deleteModal.classList.remove('active');
+
+// Logout Functionality
+logoutBtn.addEventListener('click', async () => {
+    try {
+        const response = await fetch('/api/users/logout', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' }
+        });
+        if (response.ok) {
+            window.location.href = '/';
+        } else {
+            alert('Logout failed. Please try again.');
+        }
+    } catch (error) {
+        console.error('An error occurred during logout:', error);
+        alert('An error occurred. Please try again later.');
+    }
 });
 
-//delete cancel button
-deleteCancelBtn.addEventListener('click', () => {
-    deleteModal.classList.remove('active');
-});
+usersBtn.click(); // Default tab

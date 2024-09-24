@@ -1,229 +1,272 @@
+:root {
+    --primary-color: #ff4500;
+    --secondary-color: #e6d4d4;
+    --accent-color: #f0f0f0;
+    --text-color: #fff;
+    --font-family: 'Orbitron', sans-serif;
+}
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Orbitron', sans-serif;
+    font-family: var(--font-family);
 }
 
 body {
     display: flex;
-    justify-content: flex-start; /* Align content to the left */
-    align-items: flex-start;
-    height: 100vh;
-    background: url('/pics/background.webp') no-repeat center center fixed;
+    min-height: 100vh;
+    background-color: var(--secondary-color);
     background-size: cover;
-    color: #fff;
-}
-
-.container {
-    width: 80%;
-    margin: 50px auto;
-    background: rgba(34, 34, 34, 0.9); 
-    max-height: 80%;
-    padding: 20px;
-    border-radius: 12px;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.8);
-    margin-left: 20%; /* Adjust to leave space for the left toolbar */
+    color: var(--text-color);
+    overflow: hidden;
 }
 
 .toolbar {
     position: fixed;
     top: 0;
     left: 0;
-    height: 100vh; /* Full height for the toolbar */
-    width: 20%; /* Set width of the toolbar */
-    background-color: rgba(25, 25, 35, 0.95); /* Darker, semi-transparent */
-    padding: 20px;
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.7);
+    height: 100vh;
+    width: 250px;
+    background-color: rgba(0, 0, 0, 0.9);
+    padding: 30px 20px;
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
     align-items: center;
+    box-shadow: 2px 0 15px rgba(0, 0, 0, 0.7);
 }
 
-.tab-btn {
-    width: 100%;
-    background-color: rgba(45, 47, 65, 0.85); /* Subtle dark background for buttons */
-    color: #fff;
-    border: none;
-    padding: 12px 20px;
-    font-size: 18px;
-    cursor: pointer;
-    border-radius: 6px;
-    margin-bottom: 12px; /* Spacing between buttons */
-    transition: background-color 0.3s, box-shadow 0.3s;
+.toolbar h1 {
+    font-size: 28px;
+    color: var(--primary-color);
+    margin-bottom: 40px;
+    text-align: center;
 }
 
-.tab-btn:hover {
-    background-color: #6cb4ff; /* Light blue hover effect */
-    box-shadow: 0 0 12px rgba(108, 180, 255, 0.8); 
-}
-
-#logoutBtn {
+.tab-btn, .logout-btn {
     width: 100%;
     background-color: rgba(45, 47, 65, 0.85);
-    color: #fff;
+    color: var(--text-color);
     border: none;
-    padding: 12px 20px;
+    padding: 15px 20px;
     font-size: 18px;
     cursor: pointer;
     border-radius: 6px;
-    margin-top: auto; /* Push logout button to the bottom */
+    margin-bottom: 20px;
+    text-align: left;
+    display: flex;
+    align-items: center;
     transition: background-color 0.3s, box-shadow 0.3s;
 }
 
-#logoutBtn:hover {
-    background-color: #6cb4ff; 
-    box-shadow: 0 0 12px rgba(108, 180, 255, 0.8); 
+.tab-btn i, .logout-btn i {
+    margin-right: 10px;
+    font-size: 20px;
 }
 
-.content {
-    display: flex;
-    flex-direction: column;
+.tab-btn:hover, .logout-btn:hover {
+    background-color: var(--primary-color);
+    box-shadow: 0 0 12px rgba(255, 69, 0, 0.8);
 }
 
-.section {
-    display: none; 
+.logout-btn {
+    margin-top: auto;
 }
 
-.section.active {
-    display: block; 
+.container {
+    margin-left: 250px;
+    flex: 1;
+    overflow-y: auto;
+    padding: 40px 60px;
+    background: rgba(0, 0, 0, 0.8);
 }
 
-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
-}
-
-th, td {
-    padding: 15px;
-    border: 1px solid rgba(80, 80, 100, 0.8);
-    text-align: left;
-}
-
-table tbody tr:hover {
-    background-color: rgba(50, 50, 70, 0.85); /* Subtle blue for hover effect */
-    cursor: pointer; 
-}
-
-table tbody tr.selected td {
-    background-color: rgba(45, 47, 65, 0.9); /* Darker row for selected */
-}
-
-th {
-    background-color: rgba(30, 30, 40, 0.9); 
-    color: #6cb4ff; /* Light blue headers */
-}
-
-td {
-    color: #fff;
-}
-
-table tbody tr:not(:hover) td {
-    background-color: rgba(34, 34, 44, 0.9); 
+h2 {
+    font-size: 32px;
+    margin-bottom: 30px;
+    color: var(--primary-color);
+    text-align: center;
+    text-shadow: 0 0 10px rgba(255, 69, 0, 0.7);
 }
 
 .product-controls {
-    margin-bottom: 20px;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 30px;
 }
 
 .control-btn {
-    background-color: rgba(45, 47, 65, 0.85); /* Darker background for buttons */
-    color: #fff;
+    background-color: var(--primary-color);
+    color: var(--text-color);
     border: none;
     padding: 12px 20px;
     font-size: 16px;
     cursor: pointer;
     border-radius: 6px;
-    margin-right: 10px;
+    margin: 0 10px;
+    display: flex;
+    align-items: center;
     transition: background-color 0.3s, box-shadow 0.3s;
 }
 
+.control-btn i {
+    margin-right: 8px;
+}
+
 .control-btn:hover {
-    background-color: #6cb4ff;
-    box-shadow: 0 0 12px rgba(108, 180, 255, 0.8); 
+    background-color: #e03e00;
+    box-shadow: 0 0 12px rgba(255, 69, 0, 0.8);
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 50px;
+}
+
+th, td {
+    padding: 15px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    text-align: left;
+}
+
+th {
+    background-color: rgba(255, 69, 0, 0.1);
+    color: var(--primary-color);
+    font-size: 18px;
+}
+
+td {
+    color: var(--text-color);
+    font-size: 16px;
+}
+
+tbody tr:hover {
+    background-color: rgba(255, 69, 0, 0.1);
+    cursor: pointer;
+}
+
+tbody tr.selected {
+    background-color: rgba(255, 69, 0, 0.2);
 }
 
 .modal {
-    display: none; 
+    display: none;
     position: fixed;
     top: 0;
-    left: 0;
-    width: 100%;
+    left: 250px;
+    width: calc(100% - 250px);
     height: 100%;
-    background: rgba(0, 0, 0, 0.85); 
+    background: rgba(0, 0, 0, 0.9);
     justify-content: center;
     align-items: center;
+    z-index: 1000;
 }
 
 .modal.active {
-    display: flex; 
+    display: flex;
 }
 
 .modal-content {
-    background: rgba(34, 34, 44, 0.95); 
-    padding: 20px;
+    background: rgba(34, 34, 44, 0.95);
+    padding: 30px;
     border-radius: 10px;
-    width: 450px;
-    color: #fff;
+    width: 500px;
+    color: var(--text-color);
     position: relative;
-    box-shadow: 0 0 15px rgba(108, 180, 255, 0.5); 
+    box-shadow: 0 0 15px rgba(255, 69, 0, 0.5);
+    animation: fadeIn 0.5s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
 .close-btn {
     position: absolute;
-    top: 10px;
-    right: 10px;
-    font-size: 24px;
-    color: #fff;
+    top: 15px;
+    right: 15px;
+    font-size: 28px;
+    color: var(--text-color);
     cursor: pointer;
 }
 
 .close-btn:hover {
-    color: #6cb4ff; /* Light blue hover for close button */
+    color: var(--primary-color);
 }
 
-label {
+.modal h2 {
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.modal label {
     display: block;
-    margin-top: 10px;
+    margin-top: 15px;
+    font-size: 16px;
 }
 
-input, textarea {
+.modal input, .modal textarea {
     width: 100%;
-    padding: 10px;
-    margin-top: 5px;
-    border-radius: 4px;
+    padding: 12px;
+    margin-top: 8px;
+    border-radius: 6px;
     border: none;
-    background: rgba(50, 50, 70, 0.85); /* Dark input background */
-    color: #fff;
+    background: rgba(50, 50, 70, 0.9);
+    color: var(--text-color);
+    font-size: 16px;
+}
+
+.modal textarea {
+    resize: vertical;
+    height: 100px;
 }
 
 .modal-btn {
-    background-color: #6cb4ff;
-    color: #fff;
-    padding: 10px;
+    background-color: var(--primary-color);
+    color: var(--text-color);
     border: none;
+    padding: 12px;
+    font-size: 18px;
     cursor: pointer;
+    border-radius: 6px;
+    margin-top: 25px;
     width: 100%;
-    margin-top: 15px;
-    border-radius: 4px;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.3s, box-shadow 0.3s;
 }
 
-.selected {
-    background-color: #8fd3ff; 
-}
 .modal-btn:hover {
-    background-color: #8fd3ff; /* Lighter blue hover effect */
+    background-color: #e03e00;
+    box-shadow: 0 0 12px rgba(255, 69, 0, 0.8);
+}
+
+.modal-actions {
+    display: flex;
+    justify-content: space-between;
+}
+
+.modal-actions .modal-btn {
+    width: 48%;
 }
 
 .hidden {
     display: none;
 }
 
-h1 {
-    font-size: 36px;
-    margin-bottom: 40px;
-    color: #6cb4ff; /* Match the title color with the design */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(255, 69, 0, 0.8);
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 69, 0, 1);
+}
+
+::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.2);
 }

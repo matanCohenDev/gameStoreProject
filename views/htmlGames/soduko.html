@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sudoku</title>
+    <link rel="stylesheet" href="/public/gamesCssJs/soduko/sodukoStyle.css">
+</head>
+<body>
+    <div class="sudokuContainer">
+        <div class="timeAndTitle">
+        <h1>Sudoku</h1>
+        <p id="time"></p>
+</div>
+<h2 id="score">Score:</h3>
+        <div class="custom-dropdown">
+            <div class="selected-option">Choose level</div>
+            <div class="dropdown-options">
+                <div class="option" data-value="Easy">Easy</div>
+                <div class="option" data-value="Medium">Medium</div>
+                <div class="option" data-value="Hard">Hard</div>
+            </div>
+            <button class="btn">Start</button>
+        </div>
+        
+        <div class="sudokuGrid" id="sudokuGrid"></div> 
+        <div class="sudokuButtons">
+            <button class="btn" id="checkBtn">Check</button>
+            <button class="btn" id="resetBtn">Reset</button>
+    </div>
+    <script src="/public/gamesCssJs/soduko/sodukoJs.js"></script>
+</body>
+</html>
