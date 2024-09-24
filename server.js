@@ -50,7 +50,8 @@ app.use('/user' , (req, res) => {
     res.sendFile(path.join(__dirname, 'views' , 'html', 'market.html'));
 });
 
-app.use('/', (req, res) => {
+
+app.use('/login', (req, res) => {
     if(req.session.user && req.session.user.username === 'admin'){
         res.sendFile(path.join(__dirname, 'views' , 'html', 'admin.html'));
     }
@@ -60,6 +61,10 @@ app.use('/', (req, res) => {
     else {
     res.sendFile(path.join(__dirname, 'views' , 'html', 'login.html'));
     }
+});
+
+app.use('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'views' , 'html', 'home.html'));
 });
 
 const port = 3000;

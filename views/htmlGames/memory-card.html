@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Memory Game</title>
+    <link rel="stylesheet" href="/public/gamesCssJs/memory-card/memoryCardStyle.css">
+</head>
+<body>
+    <div class="gameContainer">
+        <h1>Memory Game</h1>
+        <p id="welcomeMessage"></p>
+        <p id="time"></p>
+        <p id="score">Score: 0</p>
+        <div class="card-grid" id="cardGrid"></div>
+    </div>
+
+    <div id="gameOverModal">
+        <div id="completionMessage"></div>
+        <div id="completionTime"></div>
+        <button class="modal-button" id="newGameButton">Start New Game</button>
+        <button class="modal-button cancel" id="cancelButton">Cancel</button>
+    </div>
+
+    <div id="pairSelectionModal" class="modal">
+        <div class="modal-content">
+            <h2>Select Number of Pairs</h2>
+            <label for="numPairsSelect">Number of pairs:</label>
+            <select id="numPairsSelect">
+                <option value="6">6 Pairs</option>
+                <option value="10" selected>10 Pairs</option>
+                <option value="15">15 Pairs</option>
+                <option value="20">20 Pairs</option>
+            </select>
+            <button class="modal-button" id="startGameButton">Start Game</button>
+        </div>
+    </div>
+
+    <script src="/public/gamesCssJs/memory-card/memoryCardJs.js"></script>
+</body>
+</html>

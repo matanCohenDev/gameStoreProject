@@ -18,6 +18,7 @@ document.getElementById('toggleFormBtn').addEventListener('click', function () {
         toggleBtn.textContent = "Switch to Login";
     }
 });
+
 //login form
 document.getElementById('loginForm').addEventListener('submit', async (event) => {
     event.preventDefault();

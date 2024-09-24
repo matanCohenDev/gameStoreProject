@@ -2,84 +2,58 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Game Product Market</title>
+    <title>GameStore - Market</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="/css/styleMarket.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
+    <!-- Toolbar -->
     <div class="toolbar">
         <h2>Game Store</h2>
         <button class="tab-btn" id="home">
-            <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" width="24" height="24" fill="currentColor">
-                <path d="M280.37 148.26L96 300.11V464a48 48 0 0 0 48 48h112V368a16 16 0 0 1 16-16h64a16 16 0 0 1 16 16v144h112a48 48 0 0 0 48-48V300L295.67 148.26a12 12 0 0 0-15.3 0zM571.6 251.47L488 182.6V44a12 12 0 0 0-12-12h-56a12 12 0 0 0-12 12v72.61L318.47 43.15c-15.64-12.81-38.29-12.81-53.93 0L4.34 251.47a12 12 0 0 0-1.6 16.9l25.46 31.17a12 12 0 0 0 16.9 1.6L288 81.84a12 12 0 0 1 15.3 0l243.9 219.3a12 12 0 0 0 16.9-1.6l25.46-31.17a12 12 0 0 0-1.96-16.9z"/>
-            </svg>
+            <i class="fas fa-home icon"></i>
             <span>Home</span>
         </button>
         
         <button class="tab-btn" id="cart">
-            <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" width="24" height="24" fill="currentColor">
-                <path d="M528.12 301.319l47.273-208A16 16 0 0 0 560 80H128L117.44 40.8A32 32 0 0 0 86.218 16H16A16 16 0 0 0 0 32v16a16 16 0 0 0 16 16h54.218l90.545 317.3c-22.08 20.438-35.022 49.317-35.022 81.7C125.741 497.067 150.674 512 179.703 512h308.594c29.029 0 53.962-14.933 53.962-44.288 0-32.383-12.942-61.262-35.022-81.7h59.898c14.72 0 24.427-13.673 20.697-27.694zM179.741 464c-13.437 0-23.973-8.554-23.973-28.288 0-19.732 10.536-28.288 23.973-28.288s23.973 8.556 23.973 28.288c0 19.734-10.535 28.288-23.973 28.288zm308.576 0c-13.437 0-23.973-8.554-23.973-28.288 0-19.732 10.536-28.288 23.973-28.288s23.973 8.556 23.973 28.288c0 19.734-10.535 28.288-23.973 28.288zm23.135-152.32H164.88L136.13 160h357.473l17.849 80h-24.982a16 16 0 1 0 0 32h34.132l7.36 32z"/>
-            </svg>
+            <i class="fas fa-shopping-cart icon"></i>
             <span>Cart</span>
         </button>
         
         <button class="tab-btn" id="my-games">
-            <svg class="icon" viewBox="0 0 256 256" xmlns="http://www.w3.org/2000/svg" width="24" height="24">
-                <rect fill="none" height="256" width="256"/>
-                <line fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="16" x1="152" x2="184" y1="108" y2="108"/>
-                <line fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="16" x1="72" x2="104" y1="108" y2="108"/>
-                <line fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="16" x1="88" x2="88" y1="92" y2="124"/>
-                <path d="M172,55.7,84,56A52.1,52.1,0,0,0,32.8,99h0L16.4,183.1a28,28,0,0,0,47.4,24.7h0L107,160l65-.3a52,52,0,1,0,0-104Z" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/>
-                <path d="M223.2,98.7l16.4,84.4a28,28,0,0,1-47.4,24.7h0l-43.2-48" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/>
-            </svg>
+            <i class="fas fa-gamepad icon"></i>
             <span>My Games</span>
         </button>
+
+        <button class="tab-btn" id="ContactUs">
+            <i class="fas fa-envelope icon"></i> 
+            <span>Contact Us</span>
+        </button>
+        
         
         <button class="tab-btn" id="logoutBtn">
-            <svg class="icon" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" width="24" height="24">
-                <defs>
-                    <style>.cls-1{fill:none;stroke:#fff;stroke-linecap:round;stroke-linejoin:round;stroke-width:2px;}</style>
-                </defs>
-                <g id="logout">
-                    <line class="cls-1" x1="15.92" x2="28.92" y1="16" y2="16"/>
-                    <path d="M23.93,25v3h-16V4h16V7h2V3a1,1,0,0,0-1-1h-18a1,1,0,0,0-1,1V29a1,1,0,0,0,1,1h18a1,1,0,0,0,1-1V25Z" fill="none" stroke="#fff" stroke-width="2"/>
-                    <line class="cls-1" x1="28.92" x2="24.92" y1="16" y2="20"/>
-                    <line class="cls-1" x1="28.92" x2="24.92" y1="16" y2="12"/>
-                    <line class="cls-1" x1="24.92" x2="24.92" y1="8.09" y2="6.09"/>
-                    <line class="cls-1" x1="24.92" x2="24.92" y1="26" y2="24"/>
-                </g>
-            </svg>
+            <i class="fas fa-sign-out-alt icon"></i>
             <span>Logout</span>
         </button>
     </div>
     <div class="container">
         <h1>Explore Our Products</h1>
         <div class="product-list">
-            <!-- <div class="product-card">
-                <img src="https://via.placeholder.com/150" alt="Product Image" class="product-image">
-                <div class="product-info">
-                    <h3 class="product-title">Product Name</h3>
-                    <p class="product-category">Category: Shooter</p>
-                    <p class="product-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque ut ex ut odio varius faucibus.</p>
-                    <p class="product-price">$59.99</p>
-                    <div class="product-buttons">
-                        <button class="btn">Add to Cart</button>
-                    </div>
-                </div>
-            </div> -->
+            <!-- Product Cards will be dynamically inserted here -->
         </div>
     </div>
 
     <!-- Cart Popup -->
     <div id="cart-popup" class="cart-popup">
         <div class="cart-content">
+            <span class="close-btn" id="closeCartPopup">&times;</span>
             <h2>Your Cart</h2>
-            <br>
             <ul id="cart-items"></ul> 
             <button class="btn" id="checkout-btn">Checkout</button>
         </div>
     </div>
-
     <script src="/js/marketJs.js"></script>
 </body>
 </html>

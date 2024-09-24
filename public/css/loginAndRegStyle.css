@@ -1,0 +1,217 @@
+:root {
+    --primary-color: #ff4500;
+    --secondary-color: #1a1a1a;
+    --accent-color: #f0f0f0;
+    --text-color: #fff;
+    --font-family: 'Roboto', sans-serif;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: var(--font-family);
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: var(--secondary-color);
+    background-size: cover;
+    color: var(--text-color);
+    position: relative;
+    overflow: hidden;
+}
+
+body::after {
+    content: '';
+    position: absolute;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle at center, rgba(0,0,0,0.3), rgba(0,0,0,0.8));
+    animation: rotateBg 20s infinite linear;
+    top: -50%;
+    left: -50%;
+    z-index: -1;
+}
+
+@keyframes rotateBg {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+.container {
+    text-align: center;
+}
+
+.flip-container {
+    perspective: 1000px;
+}
+
+.flipper {
+    position: relative;
+    width: 350px;
+    height: 500px;
+    transition: transform 0.6s;
+    transform-style: preserve-3d;
+}
+
+.front, .back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    background: rgba(0, 0, 0, 0.85);
+    border-radius: 10px;
+    padding: 40px 30px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.front {
+    transform: rotateY(0deg);
+}
+
+.back {
+    transform: rotateY(180deg);
+}
+
+.flipped .flipper {
+    transform: rotateY(180deg);
+}
+
+.form h2 {
+    margin-bottom: 30px;
+    color: var(--primary-color);
+    font-size: 28px;
+    letter-spacing: 2px;
+    text-shadow: 0 0 10px rgba(255, 69, 0, 0.7);
+}
+
+.input-group {
+    margin-bottom: 25px;
+    position: relative;
+    width: 100%;
+}
+
+.input-group i {
+    position: absolute;
+    top: 12px;
+    left: 15px;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.input-group input {
+    width: 100%;
+    padding: 12px 15px 12px 45px;
+    background: rgba(25, 25, 35, 0.9);
+    border-radius: 6px;
+    border: 1px solid rgba(50, 50, 70, 0.8);
+    color: var(--text-color);
+    font-size: 16px;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.input-group input:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 12px rgba(255, 69, 0, 0.8);
+    outline: none;
+}
+
+.btn {
+    width: 100%;
+    padding: 12px;
+    background-color: var(--primary-color);
+    border: none;
+    border-radius: 6px;
+    color: var(--text-color);
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s, box-shadow 0.3s;
+}
+
+.btn:hover {
+    background-color: #e03e00;
+    box-shadow: 0 0 15px rgba(255, 69, 0, 0.8);
+}
+
+.flip-btn {
+    margin-top: 20px;
+    width: 200px;
+    padding: 12px;
+    background: var(--secondary-color);
+    border: 2px solid var(--primary-color);
+    border-radius: 50px;
+    color: var(--text-color);
+    font-size: 16px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.4s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.flip-btn::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -50%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(120deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+    transform: skewX(45deg);
+    transition: left 0.7s;
+}
+
+.flip-btn:hover::before {
+    left: 150%;
+}
+
+.flip-btn:hover {
+    background-color: var(--primary-color);
+    box-shadow: 0 0 30px rgba(255, 69, 0, 0.8);
+}
+
+.flip-btn:active {
+    transform: scale(0.95);
+}
+
+.message {
+    margin-bottom: 15px;
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 14px;
+    text-align: center;
+    width: 100%;
+}
+
+.message.success {
+    background-color: rgba(0, 255, 153, 0.2);
+    color: #00ff99;
+    border: 1px solid #00ff99;
+}
+
+.message.error {
+    background-color: rgba(255, 0, 71, 0.2);
+    color: #ff0033;
+    border: 1px solid #ff0033;
+}
+
+@media (max-width: 768px) {
+    .flipper {
+        width: 300px;
+        height: 450px;
+    }
+
+    .form h2 {
+        font-size: 24px;
+    }
+}
