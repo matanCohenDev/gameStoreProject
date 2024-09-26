@@ -80,7 +80,7 @@ const deleteUser = async (req, res) => {
         res.status(500).send(error);
     }
 };
-
+//logout
 const logout = (req, res) => {
     req.session.destroy((err) => {
         if (err) {
