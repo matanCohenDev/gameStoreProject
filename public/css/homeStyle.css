@@ -306,9 +306,10 @@ h1, h2, h3, p, .btn {
     background-color: rgba(0, 0, 0, 0.7);
     justify-content: center;
     align-items: center;
-    z-index: 999;
+    z-index: 1000; 
     animation: fadeIn 0.3s ease-in-out;
 }
+
 
 .popup-content {
     background-color: var(--secondary-color);
