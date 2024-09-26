@@ -104,7 +104,6 @@ function fetchAllProductsAndInsertToTable() {
                     <td>${formatDate(product.createdAt)}</td>
                 `;
 
-                // Add click event to select product
                 tr.addEventListener('click', () => {
                     selectedProduct = product;
                     highlightSelectedRow(tr);
@@ -202,7 +201,7 @@ addProductBtn.addEventListener('click', async (event) => {
             const data = await response.json();
             console.log('Product created:', data);
             productModal.classList.remove('active');
-            productsBtn.click(); // Refresh products table
+            productsBtn.click(); 
         } else {
             const errorData = await response.json();
             console.error('Error creating product:', errorData);
@@ -255,7 +254,7 @@ updateProductFormBtn.addEventListener('click', async (event) => {
             const data = await response.json();
             console.log('Product updated:', data);
             updateProductModal.classList.remove('active');
-            productsBtn.click(); // Refresh products table
+            productsBtn.click(); 
         } else {
             const errorData = await response.json();
             console.error('Error updating product:', errorData);
@@ -300,7 +299,7 @@ deleteOkBtn.addEventListener('click', async () => {
             const data = await response.json();
             console.log('Product deleted:', data);
             deleteProductModal.classList.remove('active');
-            productsBtn.click(); // Refresh products table
+            productsBtn.click();
         } else {
             const errorData = await response.json();
             console.error('Error deleting product:', errorData);
