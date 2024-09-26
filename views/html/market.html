@@ -27,7 +27,7 @@
             <span>My Games</span>
         </button>
 
-        <button class="tab-btn" id="ContactUs">
+        <button class="tab-btn" id="ContactUs" onclick="openContactPopup()">
             <i class="fas fa-envelope icon"></i> 
             <span>Contact Us</span>
         </button>
@@ -44,7 +44,6 @@
             <!-- Product Cards will be dynamically inserted here -->
         </div>
     </div>
-
     <!-- Cart Popup -->
     <div id="cart-popup" class="cart-popup">
         <div class="cart-content">
@@ -54,6 +53,20 @@
             <button class="btn" id="checkout-btn">Checkout</button>
         </div>
     </div>
+    <!--Contact us Popup-->
+    <div id="contactPopup" class="popup">
+        <div class="popup-content">
+            <span class="close-popup" onclick="closeContactPopup()">&times;</span>
+            <h2>Contact Us</h2>
+            <form id="contactForm">
+                <input type="text" placeholder="Your Name" required>
+                <input type="email" placeholder="Your Email" required>
+                <textarea placeholder="Your Message" rows="5" required></textarea>
+                <button type="submit" class="btn">Send Message</button>
+            </form>
+        </div>
+    </div>
+
     <script src="/js/marketJs.js"></script>
 </body>
 </html>

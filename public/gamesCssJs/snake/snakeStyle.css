@@ -1,22 +1,78 @@
+:root {
+  --primary-color: #ff4500;
+  --secondary-color: #1a1a1a;
+  --accent-color: #f0f0f0;
+  --text-color: #fff;
+  --font-family: 'Roboto', sans-serif;
+}
+
 article, aside, details, figcaption, figure, footer, header,
-hgroup, menu, nav, section { 
-  display: block; 
+hgroup, menu, nav, section {
+  display: block;
 }
+
 body {
-  background: url('/public/pics/background.webp') no-repeat center center fixed;
+  background-color: var(--secondary-color);
+  background-size: cover;
+  margin: 0;
+  font-family: var(--font-family);
+  color: var(--text-color);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  scroll-behavior: smooth;
 }
+
 h1 {
   text-align: center;
+  font-size: 2.5rem;
+  color: var(--primary-color);
+  margin-top: 5%;
+  animation: fadeInUp 1s ease-in-out;
 }
+
 p {
   text-align: center;
+  font-size: 1.2rem;
+  color: var(--text-color);
+  margin: 20px 0;
+  animation: fadeInUp 1s ease-in-out;
 }
+
 canvas {
-  
   display: block;
   margin: 0 auto;
   background-color: #666;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+  border: 2px solid var(--accent-color);
+  border-radius: 10px;
+  animation: fadeInUp 1s ease-in-out;
 }
-.board{
-    margin-top: 15%;
+
+.board {
+  margin-top: 15%;
+}
+
+@keyframes fadeInUp {
+  from {
+      opacity: 0;
+      transform: translateY(30px);
+  }
+  to {
+      opacity: 1;
+      transform: translateY(0);
+  }
+}
+
+@media (max-width: 768px) {
+  h1 {
+      font-size: 2rem;
+  }
+  p {
+      font-size: 1rem;
+  }
+  canvas {
+      width: 90%;
+  }
 }

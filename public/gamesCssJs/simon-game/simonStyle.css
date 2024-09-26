@@ -1,54 +1,108 @@
-body {
+:root {
+  --primary-color: #ff4500;
+  --secondary-color: #1a1a1a;
+  --accent-color: #f0f0f0;
+  --text-color: #fff;
+  --font-family: 'Roboto', sans-serif;
+  --red-color: #e74c3c;
+  --green-color: #2ecc71;
+  --blue-color: #3498db;
+  --yellow-color: #f1c40f;
+}
 
+body {
+  background-color: var(--secondary-color);
+  background-size: cover;
   text-align: center;
-  background: url('/public/pics/background.webp') no-repeat center center fixed;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+  font-family: var(--font-family);
+  color: var(--text-color);
+  scroll-behavior: smooth;
 }
 
 #level-title {
-  font-family: 'Press Start 2P', cursive;
+  font-family: var(--font-family);
   font-size: 3rem;
-  margin:  5%;
-  color: #FEF2BF;
+  margin: 5%;
+  color: var(--primary-color);
+  animation: fadeInUp 1s ease-in-out;
 }
 
 .container {
-  display: block;
-  width: 50%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  width: 80%;
   margin: auto;
-
+  animation: fadeInUp 1s ease-in-out;
 }
 
 .btn {
   margin: 25px;
   display: inline-block;
-  height: 200px;
-  width: 200px;
-  border: 10px solid black;
+  height: 150px;
+  width: 150px;
+  border: 10px solid var(--accent-color);
   border-radius: 20%;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
 }
 
-.game-over {
-  background-color: red;
-  opacity: 0.8;
+.btn:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
 }
 
 .red {
-  background-color: red;
+  background-color: var(--red-color);
 }
 
 .green {
-  background-color: green;
+  background-color: var(--green-color);
 }
 
 .blue {
-  background-color: blue;
+  background-color: var(--blue-color);
 }
 
 .yellow {
-  background-color: yellow;
+  background-color: var(--yellow-color);
 }
 
 .pressed {
-  box-shadow: 0 0 20px white;
   background-color: grey;
+  box-shadow: 0 0 20px var(--accent-color);
+  transform: scale(0.95);
+}
+
+.game-over {
+  background-color: rgba(255, 69, 0, 0.8);
+}
+
+@keyframes fadeInUp {
+  from {
+      opacity: 0;
+      transform: translateY(30px);
+  }
+  to {
+      opacity: 1;
+      transform: translateY(0);
+  }
+}
+
+@media (max-width: 768px) {
+  .btn {
+      width: 100px;
+      height: 100px;
+      margin: 15px;
+  }
+  #level-title {
+      font-size: 2rem;
+  }
 }

@@ -131,6 +131,14 @@ document.addEventListener('keydown', (event) => {
 document.getElementById('home').addEventListener('click', () => {
     window.location.href = '/';
 });
+// Open the Contact Us popup
+function openContactPopup() {
+    document.getElementById('contactPopup').style.display = 'flex';
+}
+// Close the Contact Us popup
+function closeContactPopup() {
+    document.getElementById('contactPopup').style.display = 'none';
+}
 //logout
 async function Logout() {
     try {

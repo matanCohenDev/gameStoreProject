@@ -91,7 +91,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         for (let i = 0; i < rows * columns; i++) {
             const cell = document.createElement('div');
-            cell.style.border = '0.5px solid #8e2de2'; 
+            cell.style.border = '0.5px solid #ff4500'; 
             cell.style.backgroundColor = '#2a2a2a'; 
             cell.style.color = 'white';
             cell.style.display = 'flex';

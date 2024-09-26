@@ -1,62 +1,102 @@
+:root {
+    --primary-color: #ff4500;
+    --secondary-color: #1a1a1a;
+    --accent-color: #f0f0f0;
+    --text-color: #fff;
+    --font-family: 'Roboto', sans-serif;
+}
+
 body {
-    background: url('/public/pics/background.webp') no-repeat center center fixed;
+    background-color: var(--secondary-color);
     background-size: cover;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    justify-content: flex-start;
     align-items: center;
     height: 100vh;
     margin: 0;
-    font-family: 'Arial', sans-serif;
+    font-family: var(--font-family);
+    color: var(--text-color);
     text-align: center;
+    scroll-behavior: smooth;
 }
+
+header {
+    width: 100%;
+    padding: 15px 50px;
+    background: rgba(0, 0, 0, 0.8);
+    position: fixed;
+    top: 0;
+    z-index: 1000;
+    backdrop-filter: blur(10px);
+}
+
+header h1 {
+    font-size: 36px;
+    margin: 0;
+    color: var(--primary-color);
+    animation: fadeInUp 1s ease-in-out;
+}
+
 .card-grid {
     display: grid;
-    gap: 10px;
-    padding: 20px;
-    justify-content: center;
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    gap: 15px;
+    width: 90%;
+    box-sizing: border-box;
+    animation: fadeInUp 1s ease-in-out;
+    padding-top: 40px;
 }
+
 .card {
     width: 100px;
     height: 130px;
     background: url('/public/gamesCssJs/memory-card/Cards/backCard.png') no-repeat center center / cover;
     border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
     position: relative;
     overflow: hidden;
     cursor: pointer;
-    transition: transform 0.3s ease;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
+
+.card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
+}
+
 .card img {
     width: 100%;
     height: 100%;
     object-fit: cover;
     display: none;
 }
-.card.flipped img {
-    display: block;
-}
+
 .card.flipped {
     background: none;
-    transition: transform 0.3s ease;
+}
 
+.card.flipped img {
+    display: block;
+    animation: flipIn 0.5s forwards;
 }
-.card:hover {
-    transform: scale(1.05);
+
+@keyframes flipIn {
+    from {
+        transform: rotateY(90deg);
+    }
+    to {
+        transform: rotateY(0);
+    }
 }
-.card .flip{
-    transform: rotateY(180deg);
-}
-#time {
+
+#time, #score {
     font-size: 24px;
     margin: 20px 0;
+    color: var(--text-color);
+    animation: fadeInUp 1s ease-in-out;
 }
-#score {
-    font-size: 24px;
-    margin: 20px 0;
-}
+
 #gameOverModal {
     display: none;
     position: fixed;
@@ -64,27 +104,55 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(48, 48, 48, 0.8);
-    color: #fff;
-    text-align: center;
-    padding: 20px;
-    box-sizing: border-box;
+    background: rgba(0, 0, 0, 0.85);
+    justify-content: center;
+    align-items: center;
     z-index: 1000;
+    animation: fadeIn 0.3s ease-in-out;
 }
+
+#gameOverModal.active {
+    display: flex;
+}
+
 #gameOverModal div {
-    margin: 20px 0;
+    background-color: var(--secondary-color);
+    color: var(--text-color);
+    padding: 30px;
+    border-radius: 10px;
+    text-align: center;
+    animation: slideIn 0.5s ease-in-out;
 }
+
+#gameOverModal h2 {
+    font-size: 28px;
+    margin-bottom: 20px;
+    color: var(--primary-color);
+}
+
 .modal-button {
-    background: #4CAF50;
-    color: #fff;
+    background: var(--primary-color);
+    color: var(--text-color);
     border: none;
-    padding: 10px 20px;
+    padding: 12px 30px;
     font-size: 16px;
+    font-weight: bold;
+    border-radius: 5px;
     cursor: pointer;
-    margin: 5px;
+    margin: 10px;
+    transition: background 0.3s ease;
 }
+
+.modal-button:hover {
+    background: #e03e00;
+}
+
 .modal-button.cancel {
     background: #f44336;
+}
+
+.modal-button.cancel:hover {
+    background: #d32f2f;
 }
 
 .modal {
@@ -98,6 +166,7 @@ body {
     justify-content: center;
     align-items: center;
     z-index: 1000;
+    animation: fadeIn 0.3s ease-in-out;
 }
 
 .modal.active {
@@ -105,67 +174,140 @@ body {
 }
 
 .modal-content {
-    background: rgba(34, 34, 44, 0.95);
-    padding: 20px;
-    border-radius: 10px;
+    background-color: var(--secondary-color);
+    padding: 30px;
     width: 450px;
-    color: #fff;
+    border-radius: 10px;
     position: relative;
-    box-shadow: 0 0 15px rgba(108, 180, 255, 0.5);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+    animation: slideIn 0.5s ease-in-out;
 }
 
 .close-btn {
     position: absolute;
     top: 10px;
-    right: 10px;
+    right: 15px;
     font-size: 24px;
-    color: #fff;
+    color: var(--text-color);
     cursor: pointer;
 }
 
 .close-btn:hover {
-    color: #6cb4ff;
+    color: var(--primary-color);
 }
 
 label {
     display: block;
-    margin-top: 10px;
+    margin-top: 15px;
+    font-size: 16px;
+    color: var(--text-color);
 }
 
 input, textarea {
     width: 100%;
-    padding: 10px;
-    margin-top: 5px;
-    border-radius: 4px;
+    padding: 12px;
+    margin-top: 8px;
+    border-radius: 5px;
     border: none;
-    background: rgba(50, 50, 70, 0.85);
-    color: #fff;
+    background: #2a2a2a;
+    color: var(--text-color);
+    font-size: 16px;
+    transition: border 0.3s ease;
+}
+
+input:focus, textarea:focus {
+    border: 1px solid var(--primary-color);
+    outline: none;
 }
 
 .modal-btn {
-    background-color: #6cb4ff;
-    color: #fff;
-    padding: 10px;
+    background-color: var(--primary-color);
+    color: var(--text-color);
+    padding: 12px;
     border: none;
     cursor: pointer;
     width: 100%;
-    margin-top: 15px;
-    border-radius: 4px;
+    margin-top: 20px;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: bold;
     transition: background-color 0.3s ease;
 }
 
 .modal-btn:hover {
-    background-color: #8fd3ff;
+    background-color: #e03e00;
 }
 
 .hidden {
     display: none;
 }
 
-h1 {
-    font-size: 36px;
-    margin-bottom: 40px;
-    color: #6cb4ff;
+h1, h2, #time, #score, .modal-content {
+    animation: fadeInUp 1s ease-in-out;
 }
 
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
 
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateY(-50px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@media (max-width: 768px) {
+    .card-grid {
+        grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+        padding: 80px 10px 10px 10px;
+    }
+
+    .card {
+        width: 80px;
+        height: 100px;
+    }
+
+    header h1 {
+        font-size: 28px;
+    }
+}
+
+.contact-btn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: var(--primary-color);
+    color: var(--text-color);
+    padding: 12px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    transition: background-color 0.3s ease;
+}
+
+.contact-btn:hover {
+    background-color: #e03e00;
+}
