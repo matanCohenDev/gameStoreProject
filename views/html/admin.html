@@ -11,15 +11,15 @@
     <!-- Toolbar -->
     <div class="toolbar">
         <h1>Admin Dashboard</h1>
+        <button class="tab-btn" id="homeBtn"><i class="fas fa-home"></i> Home</button>
         <button class="tab-btn" id="usersBtn"><i class="fas fa-users"></i> Users</button>
         <button class="tab-btn" id="productsBtn"><i class="fas fa-gamepad"></i> Products</button>
         <button class="tab-btn" id="ordersBtn"><i class="fas fa-shopping-cart"></i> Orders</button>
-        <button class="tab-btn" id="homeBtn"><i class="fas fa-home"></i> Home</button>
-        <button class="tab-btn" if="messagesBtn"><i class="fas fa-envelope"></i> Messages</button>
+        <button class="tab-btn" id="messagesBtn"><i class="fas fa-envelope"></i> Messages</button>
         <button class="logout-btn" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Logout</button>
     </div>
 
-    <div class="container">
+    <div class="container" id="conatiner">
         <div class="content">
             <!-- Users Section -->
             <div id="usersSection" class="section hidden">
@@ -80,6 +80,30 @@
                     </tbody>
                 </table>
             </div>
+            <!-- messages -->
+            <div id="chatSection" class="section hidden"> <!-- Added Chat Section -->
+                <h2>Chat Interface</h2>
+                <div class="chat-center">
+                    <div class="side-menu">
+                        <input type="text" class="search" placeholder="Search">
+                        <div class="user-list">
+                            <!-- Add dynamically loaded user elements here -->
+                        </div>
+                    </div>
+                    <div class="message-area">
+                        <div class="message-header">
+                            <div class="current-user"><h3 class="currentUser"></h3></div>
+                        </div>
+                        <div class="messages">
+                            <!-- Messages will be loaded dynamically here -->
+                        </div>
+                        <div class="message-input">
+                            <input type="text" class="message" id="message" placeholder="Type a message">
+                            <button class="send" id="send">Send</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -136,6 +160,8 @@
             </div>
         </div>
     </div>
+
+    
 
 
     <script src="/js/adminJs.js"></script>

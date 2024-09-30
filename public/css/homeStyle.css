@@ -379,3 +379,16 @@ h1, h2, h3, p, .btn {
     from { transform: translateY(-50px); opacity: 0; }
     to { transform: translateY(0); opacity: 1; }
 }
+
+.message {
+    display: none;
+    margin-bottom: 15px;
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 14px;
+    text-align: center;
+    width: 100%;
+    background-color: rgba(0, 255, 153, 0.2);
+    color: #00ff99;
+    border: 1px solid #00ff99;
+}

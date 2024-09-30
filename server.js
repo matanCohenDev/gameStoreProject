@@ -38,6 +38,7 @@ app.use(session({
 }));
 
 // Routes
+app.use('/api/messages', require('./routes/messages-routes'));
 app.use('/api/users', require('./routes/users-routes'));
 app.use('/api/products', require('./routes/products-routes'));
 app.use('/api/orders', require('./routes/orders-routes'));
