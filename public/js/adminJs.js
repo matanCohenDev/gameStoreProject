@@ -2,11 +2,13 @@
 const usersBtn = document.getElementById('usersBtn');
 const productsBtn = document.getElementById('productsBtn');
 const ordersBtn = document.getElementById('ordersBtn');
-
+const chatBtn = document.getElementById('messagesBtn');
+const homeBtn = document.getElementById('homeBtn');
 // Sections
 const usersSection = document.getElementById('usersSection');
 const productsSection = document.getElementById('productsSection');
 const ordersSection = document.getElementById('ordersSection');
+const chatSection = document.getElementById('chatSection');
 
 // Tables
 const usersTableBody = document.getElementById('usersTableBody');
@@ -34,6 +36,13 @@ const updateProductFormBtn = document.getElementById('UpdateProductBtnComplete')
 const deleteOkBtn = document.getElementById('deleteOk');
 const deleteCancelBtn = document.getElementById('deleteCancel');
 
+//chat Actions
+const chatContainer = document.getElementById('chatSection');
+const usersContainer = document.getElementsByClassName('user-list');
+const currentChat = document.getElementsByClassName('current-user');
+const messageContainer = document.querySelector('.messages'); 
+let chatWith = null;
+
 // Other Elements
 const logoutBtn = document.getElementById('logoutBtn');
 const deleteMessage = document.getElementById('deleteMessage');
@@ -53,6 +62,7 @@ function clearTables() {
     usersTableBody.innerHTML = '';
     productsTableBody.innerHTML = '';
     ordersTableBody.innerHTML = '';
+
 }
 
 // Show Section Function
@@ -67,6 +77,8 @@ function showSection(section) {
         productsSection.classList.remove('hidden');
     } else if (section === 'orders') {
         ordersSection.classList.remove('hidden');
+    } else if(section === 'chat'){
+        chatSection.classList.remove('hidden');
     }
 }
 
@@ -144,18 +156,21 @@ function highlightSelectedRow(row) {
 
 // Event Listeners for Tab Buttons
 usersBtn.addEventListener('click', () => {
+    chatSection.classList.add('hidden');
     clearTables();
     showSection('users');
     fetchAllUsersAndInsertToTable();
 });
 
 productsBtn.addEventListener('click', () => {
+    chatSection.classList.add('hidden');
     clearTables();
     showSection('products');
     fetchAllProductsAndInsertToTable();
 });
 
 ordersBtn.addEventListener('click', () => {
+    chatSection.classList.add('hidden');
     clearTables();
     showSection('orders');
     fetchAllOrdersAndInsertToTable();
@@ -329,4 +344,105 @@ logoutBtn.addEventListener('click', async () => {
     }
 });
 
+// Chat Functionality
+chatBtn.addEventListener('click', () => {
+    usersSection.classList.add('hidden');
+    productsSection.classList.add('hidden');
+    ordersSection.classList.add('hidden');
+    if (chatContainer.classList.contains('hidden')) {
+        chatContainer.classList.remove('hidden');
+    } else {
+        chatContainer.classList.add('hidden');
+    }
+});
+
+function fetchAllUsers() {
+    fetch('/api/users/getUsers')
+        .then(response => response.json())
+        .then(data => {
+            usersContainer[0].innerHTML = ''; 
+
+            data.forEach(user => {
+                if(user.username !== 'admin') {
+                let userDiv = document.createElement('div');
+                userDiv.classList.add('user');
+                userDiv.innerHTML = `<p>${user.username}</p>`; 
+
+                userDiv.addEventListener('click', () => {
+                    if (chatWith !== null) {
+                        chatWith.classList.remove('currentUser'); 
+                    }
+                    chatWith = userDiv; 
+                    console.log(chatWith.textContent);
+                    chatWith.classList.add('currentUser'); 
+                    currentChat[0].textContent = "chat with " + chatWith.textContent; 
+                    fetchMessages(chatWith.textContent);
+                });
+
+                usersContainer[0].appendChild(userDiv); 
+            }
+            });
+        })
+        .catch(error => console.error('Error fetching users:', error));
+}
+fetchAllUsers(); 
+
+function fetchMessages(user) {
+    fetch('/api/messages/getMessages')
+        .then(response => response.json())
+        .then(data => {
+            messageContainer.innerHTML = ''; 
+            data.forEach(msg => {
+                if(msg.sender === user && msg.receiver === "admin") {
+                    let messageDiv = document.createElement('div');
+                    messageDiv.classList.add('message', 'received');
+                    messageDiv.innerHTML = `<p>${msg.message}</p>`;
+                    messageContainer.appendChild(messageDiv); 
+
+                }
+                if(msg.sender === "admin" && msg.receiver === user) {
+                    let messageDiv = document.createElement('div');
+                    messageDiv.classList.add('message', 'sent');
+                    messageDiv.innerHTML = `<p>${msg.message}</p>`;
+                    messageContainer.appendChild(messageDiv); 
+                }
+            });
+        })
+        .catch(error => console.error('Error fetching messages:', error));
+}
+
+function sendMessage() {
+    let message = document.getElementById('message').value; 
+    if (message === "") {
+        return; 
+    }
+    fetch('/api/messages/createMessage', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            sender: "admin",
+            receiver: chatWith.textContent,
+            message: message
+        }),
+    })
+    .then(response => response.json())
+    .then(data => {
+        fetchMessages(chatWith.textContent);
+        document.getElementById('message').value = "";
+    })
+    .catch(error => console.error('Error sending message:', error));
+}
+
+document.getElementById('send').addEventListener('click', sendMessage);
+document.getElementById('message').addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') 
+        sendMessage();
+    
+});
+
+homeBtn.addEventListener('click', () => {
+    window.location.href = '/';
+});
+
 usersBtn.click(); // Default tab
+

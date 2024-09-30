@@ -57,10 +57,10 @@
             <span class="close-popup" onclick="closeContactPopup()">&times;</span>
             <h2>Contact Us</h2>
             <form id="contactForm">
-                <input type="text" placeholder="Your Name" required>
-                <input type="email" placeholder="Your Email" required>
-                <textarea placeholder="Your Message" rows="5" required></textarea>
-                <button type="submit" class="btn">Send Message</button>
+                <input type="text" placeholder="Your Name" id="sender" required>
+                <textarea placeholder="Your Message" rows="5" id="message" required></textarea>
+                <button type="submit" class="btn" id="sendMessageBtn">Send Message</button>
+                <div class="message" id="sendSuccecfulMessage">message sent succefully</div> 
             </form>
         </div>
     </div>

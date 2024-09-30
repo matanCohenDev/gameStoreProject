@@ -25,6 +25,7 @@ const loginUser = async (req, res) => {
             return res.status(400).json({msg: 'User not found'});
         }
         if (await bcrypt.compare(req.body.password, user.password)) {
+            req.session.userId = user._id;
             req.session.user = user;
             res.status(200).json({ msg: 'Login successful', user: user.username });
         } else {

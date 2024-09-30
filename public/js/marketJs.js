@@ -9,6 +9,7 @@ let productsNames = [];
 let productsPrices = [];
 let productDescription = [];
 let productCategory = [];
+let currentUser = '';
 
 // Update the cart display
 function updateCartDisplay() {
@@ -139,6 +140,8 @@ function openContactPopup() {
 function closeContactPopup() {
     document.getElementById('contactPopup').style.display = 'none';
 }
+
+
 //logout
 async function Logout() {
     try {
