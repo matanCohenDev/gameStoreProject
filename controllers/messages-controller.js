@@ -30,11 +30,10 @@ const getMessages = async (req, res) => {
 
 //updating a message
 const updateMessage = async (req, res) => {
+    const {id} = req.body;
     try {
-        const message = await Message.findByIdAndUpdate(req.body.id);
-        message.message = req.body.message;
-        message.sender = req.body.sender;
-        message.receiver = req.body.receiver;
+        const message = await Message.findById(id);
+        message.read = true;
         await message.save();
         res.status(200).send(message);
     }

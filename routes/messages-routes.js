@@ -6,7 +6,7 @@ router.post('/createMessage', createMessage);
 
 router.get('/getMessages', getMessages);
 
-router.patch('/updateMessage', updateMessage);
+router.put('/updateMessage', updateMessage);
 
 router.delete('/deleteMessage', deleteMessage);
 

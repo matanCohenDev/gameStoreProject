@@ -356,35 +356,46 @@ chatBtn.addEventListener('click', () => {
     }
 });
 
-function fetchAllUsers() {
-    fetch('/api/users/getUsers')
-        .then(response => response.json())
-        .then(data => {
-            usersContainer[0].innerHTML = ''; 
+async function fetchAllUsers() {
+    try {
+        const response = await fetch('/api/users/getUsers');
+        const data = await response.json();
+        usersContainer[0].innerHTML = ''; 
 
-            data.forEach(user => {
-                if(user.username !== 'admin') {
+        for (const user of data) {
+            if (user.username !== 'admin') {
+                let count = await countUnreadMessages(user.username);  
                 let userDiv = document.createElement('div');
                 userDiv.classList.add('user');
-                userDiv.innerHTML = `<p>${user.username}</p>`; 
+                userDiv.innerHTML = `<p>${user.username}</p>`;
+
+                if (count > 0) {
+                    let unreadDiv = document.createElement('div');
+                    unreadDiv.classList.add('unread');
+                    unreadDiv.innerHTML = `<p>${count}</p>`;
+                    userDiv.appendChild(unreadDiv);
+                }
 
                 userDiv.addEventListener('click', () => {
-                    if (chatWith !== null) {
+                    if (chatWith !== null) 
                         chatWith.classList.remove('currentUser'); 
-                    }
-                    chatWith = userDiv; 
-                    console.log(chatWith.textContent);
-                    chatWith.classList.add('currentUser'); 
-                    currentChat[0].textContent = "chat with " + chatWith.textContent; 
-                    fetchMessages(chatWith.textContent);
+                
+                    const cleanUsername = userDiv.textContent.replace(/\d+/g, '');
+                    userDiv.textContent = cleanUsername;
+                    chatWith = userDiv;  
+                    chatWith.classList.add('currentUser');   
+                    currentChat[0].textContent = "Chat with " + cleanUsername; 
+                    changeInDbToReadWhenClicker(cleanUsername);
+                    fetchMessages(cleanUsername); 
                 });
-
                 usersContainer[0].appendChild(userDiv); 
             }
-            });
-        })
-        .catch(error => console.error('Error fetching users:', error));
+        }
+    } catch (error) {
+        console.error('Error fetching users:', error);
+    }
 }
+
 fetchAllUsers(); 
 
 function fetchMessages(user) {
@@ -409,6 +420,9 @@ function fetchMessages(user) {
             });
         })
         .catch(error => console.error('Error fetching messages:', error));
+        setTimeout(() => {
+            messageContainer.scrollTop = messageContainer.scrollHeight;
+        }, 100);
 }
 
 function sendMessage() {
@@ -439,6 +453,54 @@ document.getElementById('message').addEventListener('keypress', (e) => {
         sendMessage();
     
 });
+
+function filterUsers() {
+    let input = document.getElementById('searchUsers').value.toUpperCase();
+    let users = document.getElementsByClassName('user');
+    for (let i = 0; i < users.length; i++) {
+        let user = users[i].getElementsByTagName('p')[0];
+        if (user.innerHTML.toUpperCase().indexOf(input) > -1) {
+            users[i].style.display = "";
+        } else {
+            users[i].style.display = "none";
+        }
+    }
+}
+document.getElementById('searchUsers').addEventListener('keyup', filterUsers);
+
+async function countUnreadMessages(username) {
+    try {
+        const response = await fetch('/api/messages/getMessages');
+        const data = await response.json();
+        let count = 0;
+        data.forEach(msg => {
+            if (msg.sender === username && msg.receiver === "admin" && !msg.read) 
+                count++;
+        });
+        return count;
+    } catch (error) {
+        console.error('Error counting unread messages:', error);
+        return 0; 
+    }
+}
+
+function changeInDbToReadWhenClicker(username){
+    fetch('/api/messages/getMessages')
+        .then(response => response.json())
+        .then(data => {
+            data.forEach(msg => {
+                if(msg.sender === chatWith.textContent && msg.receiver === "admin"){
+                    fetch('/api/messages/updateMessage', {
+                        method: 'PUT',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ id: msg._id })
+                    })
+                    .catch(error => console.error('Error updating post:', error));
+                }
+            });
+        })
+        .catch(error => console.error('Error fetching messages:', error));
+}
 
 homeBtn.addEventListener('click', () => {
     window.location.href = '/';
