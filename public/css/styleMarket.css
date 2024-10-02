@@ -515,4 +515,21 @@ h1 {
 .cancel-btn:hover {
     background-color: #777;
 }
+.cart{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px ;
+
+}
+.cart-items{
+    border-radius: 50%;
+    background-color: white;
+    color: black;
+    margin-left: auto;
+    padding: 10px;
+
+
+}
 
