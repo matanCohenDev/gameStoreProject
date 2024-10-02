@@ -4,12 +4,15 @@ const cartBtn = document.getElementById('cart');
 const cartItems = document.getElementById('cart-items');
 const logoutBtn = document.getElementById('logoutBtn');
 const cartModal = document.getElementById('cart-popup');
+const checkoutModal = document.getElementById('checkoutPopup');
+
 const productsHaveAddedList = [];
 let productsNames = [];
 let productsPrices = [];
 let productDescription = [];
 let productCategory = [];
 let currentUser = '';
+let productsIds = []; 
 
 // Update the cart display
 function updateCartDisplay() {
@@ -52,7 +55,10 @@ function updateCartDisplay() {
 // Add product to cart
 function addProductToCart(productName) {
     const productIndex = productsNames.indexOf(productName);
-    productsHaveAddedList.push({ name: productsNames[productIndex], price: productsPrices[productIndex] });
+    productsHaveAddedList.push({
+        id: productsIds[productIndex],
+        name: productsNames[productIndex], 
+        price: productsPrices[productIndex] });
     alert(productName + ' added to cart.');
 }
 
@@ -102,6 +108,7 @@ async function getProducts() {
             productsPrices.push(product.price);
             productDescription.push(product.description);
             productCategory.push(product.category);
+            productsIds.push(product._id);
         });
 
         displayProducts();
@@ -140,7 +147,132 @@ function openContactPopup() {
 function closeContactPopup() {
     document.getElementById('contactPopup').style.display = 'none';
 }
+document.getElementById('checkout-btn').addEventListener('click', () => {
+    cartModal.style.display = 'none';
+    checkoutModal.style.display = 'flex';
+});
+function closeCheckoutPopup() {
+    checkoutModal.style.display = 'none';
+}
+document.getElementById('closeCheckoutPopup').addEventListener('click', () => {
+    closeCheckoutPopup();
+});
+document.getElementById('cancelCheckoutBtn').addEventListener('click', () => {
+    closeCheckoutPopup();
+});
 
+function validateExpiryDate(expiry) {
+    // Expected format MM/YY
+    const [monthStr, yearStr] = expiry.split('/');
+    if (!monthStr || !yearStr || monthStr.length !== 2 || yearStr.length !== 2) {
+        return false;
+    }
+
+    const month = parseInt(monthStr, 10);
+    let year = parseInt(yearStr, 10);
+
+    if (isNaN(month) || isNaN(year) || month < 1 || month > 12) {
+        return false;
+    }
+
+    // Assuming cards are valid for up to 99 years from 2000
+    year += 2000;
+
+    // Get current month and year
+    const now = new Date();
+    const currentMonth = now.getMonth() + 1; // Months are zero-based
+    const currentYear = now.getFullYear();
+
+    // Check if the expiry date has passed
+    if (year < currentYear || (year === currentYear && month < currentMonth)) {
+        return false; // Expired
+    }
+
+    return true;
+}
+
+function validCheckout() {
+    const CardholderName = document.getElementById('CardholderName').value;
+    const cardNumber = document.getElementById('cardNumber').value;
+    const expiryDate = document.getElementById('expiryDate').value;
+    const cvv = document.getElementById('cvv').value;
+    const billingAddress = document.getElementById('billingAddress').value;
+    const city = document.getElementById('city').value;
+    const postalCode = document.getElementById('postalCode').value;
+
+    if(!CardholderName || !billingAddress || !city){
+        alert('Please fill in all fields.');
+        return false;
+    }
+    if (cardNumber.length !== 16) {
+        alert('Card number must be 16 digits.');
+        return false;
+    }
+    if (cvv.length !== 3) {
+        alert('CVV must be 3 digits.');
+        return false;
+    }
+    if (postalCode.length !== 6) {
+        alert('Postal code must be 6 digits.');
+        return false;
+    }
+    if (!validateExpiryDate(expiryDate)) {
+        alert('Expiry date is invalid or has already passed.');
+        return false;
+    }
+
+    return true;
+} 
+
+function getCurrentUser() {
+    fetch('/api/users/getCurrentUser', {
+        method: 'GET',
+        credentials: 'include' 
+    })
+    .then(response => response.json())
+    .then(data => {
+        currentUser = data;
+    })
+    .catch(error => {
+        console.error('Error fetching current user:', error);
+    });
+} 
+
+getCurrentUser(); 
+// Handle the checkout form submission
+document.getElementById('checkoutForm').addEventListener('submit',async function(event) {
+    event.preventDefault(); 
+    //if (validCheckout()) {
+        try{
+            const response = await fetch('/api/orders/createOrder', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    userId: currentUser.userId, 
+                    productIds: productsHaveAddedList.map(product => product.id)
+                })
+            });
+            if (!response.ok) {
+                throw new Error('Failed to add order');
+            }
+        }
+        catch (error) {
+            console.error('An error occurred during checkout:', error);
+            alert('An error occurred. Please try again later.');
+            return;
+        }
+
+        alert('Payment processed successfully!');
+        closeCheckoutPopup();
+        productsHaveAddedList.length = 0; 
+        updateCartDisplay(); 
+        document.getElementById('checkoutForm').reset();
+    //} //else {
+       
+    //}
+});
 
 //logout
 async function Logout() {
