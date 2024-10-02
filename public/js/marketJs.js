@@ -13,6 +13,7 @@ let productDescription = [];
 let productCategory = [];
 let currentUser = '';
 let productsIds = []; 
+let countProductsInCart = 0;
 
 // Update the cart display
 function updateCartDisplay() {
@@ -59,7 +60,7 @@ function addProductToCart(productName) {
         id: productsIds[productIndex],
         name: productsNames[productIndex], 
         price: productsPrices[productIndex] });
-    alert(productName + ' added to cart.');
+    updateCartQuantity();
 }
 
 // Display products
@@ -160,9 +161,8 @@ document.getElementById('closeCheckoutPopup').addEventListener('click', () => {
 document.getElementById('cancelCheckoutBtn').addEventListener('click', () => {
     closeCheckoutPopup();
 });
-
+//check for card expiry date
 function validateExpiryDate(expiry) {
-    // Expected format MM/YY
     const [monthStr, yearStr] = expiry.split('/');
     if (!monthStr || !yearStr || monthStr.length !== 2 || yearStr.length !== 2) {
         return false;
@@ -175,22 +175,19 @@ function validateExpiryDate(expiry) {
         return false;
     }
 
-    // Assuming cards are valid for up to 99 years from 2000
     year += 2000;
 
-    // Get current month and year
     const now = new Date();
-    const currentMonth = now.getMonth() + 1; // Months are zero-based
+    const currentMonth = now.getMonth() + 1; 
     const currentYear = now.getFullYear();
 
-    // Check if the expiry date has passed
     if (year < currentYear || (year === currentYear && month < currentMonth)) {
-        return false; // Expired
+        return false; 
     }
 
     return true;
 }
-
+//check for valid checkout
 function validCheckout() {
     const CardholderName = document.getElementById('CardholderName').value;
     const cardNumber = document.getElementById('cardNumber').value;
@@ -223,7 +220,7 @@ function validCheckout() {
 
     return true;
 } 
-
+//give current user
 function getCurrentUser() {
     fetch('/api/users/getCurrentUser', {
         method: 'GET',
@@ -273,7 +270,20 @@ document.getElementById('checkoutForm').addEventListener('submit',async function
        
     //}
 });
-
+//update cart quantity
+function updateCartQuantity() {
+    if(productsHaveAddedList.length > 0){
+       const cartDisplayBtn = document.getElementById('cart');
+       if(cartDisplayBtn.children[2]){
+           cartDisplayBtn.children[2].remove();
+       }
+       let cartItems = document.createElement('div');
+       cartItems.className = 'cart-items';
+       cartItems.innerHTML = productsHaveAddedList.length;
+       cartDisplayBtn.appendChild(cartItems);
+   
+    }
+   }
 //logout
 async function Logout() {
     try {
