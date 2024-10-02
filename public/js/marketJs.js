@@ -29,6 +29,7 @@ function updateCartDisplay() {
         `;
         cartItems.appendChild(productItem);
     });
+
     cartItems.innerHTML += `<li>Total: ${total}$</li>`;
 
     document.querySelectorAll('.delete-btn').forEach(btn => {
@@ -49,10 +50,16 @@ function updateCartDisplay() {
                 addToCartBtn.addEventListener('click', addToCartBtn.handler);
             }
             updateCartDisplay();
+            if(productsHaveAddedList.length === 0){
+                const cartDisplayBtn = document.getElementById('cart');
+                if(cartDisplayBtn.children[2]){
+                    cartDisplayBtn.children[2].remove();
+                }
+            }
+            updateCartQuantity();
         });
     });
 }
-
 // Add product to cart
 function addProductToCart(productName) {
     const productIndex = productsNames.indexOf(productName);
