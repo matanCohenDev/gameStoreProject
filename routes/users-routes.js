@@ -1,12 +1,14 @@
 const express = require('express');
 const router = express.Router();
-const { createUser, getUsers, updateUser, deleteUser ,loginUser ,logout} = require('../controllers/users-controller');
+const { createUser, getUsers, updateUser, deleteUser ,loginUser ,logout,currentUser} = require('../controllers/users-controller');
 
 router.post('/register', createUser);
 
 router.post('/login', loginUser);
 
 router.get('/getUsers', getUsers);
+
+router.get('/getCurrentUser', currentUser);
 
 router.patch('/updateUser', updateUser);
 

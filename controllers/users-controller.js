@@ -22,19 +22,34 @@ const loginUser = async (req, res) => {
     try {
         const user = await User.findOne({ username: req.body.username });
         if (!user) {
-            return res.status(400).json({msg: 'User not found'});
+            return res.status(400).json({ msg: 'User not found' });
         }
         if (await bcrypt.compare(req.body.password, user.password)) {
             req.session.userId = user._id;
             req.session.user = user;
             res.status(200).json({ msg: 'Login successful', user: user.username });
         } else {
-            res.status(400).json({msg: 'Invalid credentials'});
+            res.status(400).json({ msg: 'Invalid credentials' });
         }
     } catch (error) {
         res.status(500).send(error);
     }
 };
+
+//getting the current user
+const currentUser = async (req, res) => {
+    try {
+        if (req.session.userId) {
+            const current = await User.findById(req.session.userId);
+            res.status(200).send({ userId: current._id, username: current.username });
+        } else {
+            res.status(401).send({ msg: 'No user logged in' });
+        }
+    } catch (error) {
+        res.status(500).send(error);
+    }
+};
+
 //getting all users
 const getUsers = async (req, res) => {
     try {
@@ -94,4 +109,4 @@ const logout = (req, res) => {
 }
 
 //exporting the functions
-module.exports = { createUser, getUsers, updateUser, deleteUser, loginUser , logout};
+module.exports = { createUser, getUsers, updateUser, deleteUser, loginUser , logout , currentUser};

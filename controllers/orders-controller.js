@@ -1,22 +1,42 @@
 const express = require('express');
 const router = express.Router();
 const Order = require('../models/ordersDB');
+const Product = require('../models/productsDB');
+const User = require('../models/usersDB');
 
 //creating a new order
 const createOrder = async (req, res) => {
     try {
+        const { userId, productIds } = req.body;
+
+        // Fetch the user to get the username
+        const user = await User.findById(userId);
+        if (!user) {
+            return res.status(404).send({ error: 'User not found' });
+        }
+
+        // Fetch product details
+        const products = await Product.find({ _id: { $in: productIds } });
+
+        // Map the products to include name and price
+        const orderProducts = products.map(product => ({
+            productId: product._id,
+            name: product.name,
+            price: product.price,
+            quantity: 1 // Adjust quantity as needed
+        }));
+
         const order = new Order({
-            user: req.body.user,
-            product: req.body.product,
-            quantity: req.body.quantity,
+            user: user.username,
+            products: orderProducts,
         });
         await order.save();
         res.status(201).send(order);
-    }
-    catch (error) {
+    } catch (error) {
         res.status(400).send(error);
     }
 }
+
 //getting all orders
 const getOrders = async (req, res) => {
     try {
