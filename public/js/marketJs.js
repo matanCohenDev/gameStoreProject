@@ -49,6 +49,14 @@ function updateCartDisplay() {
                 addToCartBtn.addEventListener('click', addToCartBtn.handler);
             }
             updateCartDisplay();
+             if(productsHaveAddedList.length === 0){
+                const cartDisplayBtn = document.getElementById('cart');
+                if(cartDisplayBtn.children[2]){
+                    cartDisplayBtn.children[2].remove();
+                }
+            }
+        
+            updateCartQuantity();
         });
     });
 }
