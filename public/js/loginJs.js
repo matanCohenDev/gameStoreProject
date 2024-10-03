@@ -12,10 +12,10 @@ document.getElementById('toggleFormBtn').addEventListener('click', function () {
 
     if (flipContainer.classList.contains('flipped')) {
         flipContainer.classList.remove('flipped');
-        toggleBtn.textContent = "Switch to Register";
+        toggleBtn.textContent = "Create Account";
     } else {
         flipContainer.classList.add('flipped');
-        toggleBtn.textContent = "Switch to Login";
+        toggleBtn.textContent = "Already have an account? Sign in";
     }
 });
 

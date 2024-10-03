@@ -24,6 +24,17 @@
             <!-- Users Section -->
             <div id="usersSection" class="section hidden">
                 <h2>Users</h2>
+            
+                <!-- Single Search Bar and Date Filter -->
+                <div class="search-container">
+                    <input type="text" id="searchInput" placeholder="Search" class="search-field">
+                    <div class="date-filter">
+                        <label for="searchDate">Create at:</label>
+                        <input type="date" id="searchDate" class="search-field">
+                    </div>
+                    <button id="searchBtn" class="control-btn"><i class="fas fa-search"></i> Search</button>
+                </div>
+            
                 <table>
                     <thead>
                         <tr>
@@ -38,6 +49,8 @@
                     </tbody>
                 </table>
             </div>
+            
+            <!-- end filter -->
 
             <!-- Products Section -->
             <div id="productsSection" class="section hidden">
@@ -124,7 +137,13 @@
                 <textarea id="productDescription" name="description" required></textarea>
 
                 <label for="productCategory">Category:</label>
-                <input type="text" id="productCategory" name="category" required>
+                <select id="productCategory" name="category" required>
+                    <option value="" disabled selected>Select Category</option> <!-- אפשרות לא ניתנת לבחירה -->
+                    <option value="Memory">Memory</option>
+                    <option value="Board">Board</option>
+                    <option value="Cards">Cards</option>
+                    <option value="Strategy">Strategy</option>
+                </select>
 
                 <button type="submit" class="modal-btn" id="AddProduct">Submit</button>
             </form>

@@ -449,3 +449,132 @@ tbody tr.selected {
     transition: box-shadow 0.2s ease;
     margin-bottom: 20px;
 }
+
+/* filter */
+/* Search container styles */
+.search-container {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    gap: 15px;
+    align-items: center;
+}
+
+.search-field {
+    flex-grow: 2; /* גדל כדי להיות ארוך יותר */
+    padding: 10px;
+    border-radius: 6px;
+    border: none;
+    background-color: rgba(50, 50, 70, 0.9);
+    color: var(--text-color);
+    font-size: 16px;
+}
+
+.date-filter {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--text-color);
+}
+
+#searchBtn {
+    padding: 8px 12px; /* כפתור קטן יותר */
+    font-size: 14px; /* גודל כפתור קטן יותר */
+    cursor: pointer;
+    border-radius: 6px;
+    flex-shrink: 0;
+    background-color: var(--primary-color);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .toolbar {
+        width: 30vw; /* ה-toolbar קטן יותר במסכים קטנים */
+        padding: 15px 10px;
+    }
+
+    .container {
+        margin-left: 30vw; /* התאמת התוכן לרוחב ה-toolbar */
+        padding: 10px;
+    }
+
+    .control-btn, .tab-btn, .logout-btn {
+        font-size: 14px;
+        padding: 10px 12px;
+    }
+
+    table {
+        width: 100%;
+        font-size: 14px;
+    }
+
+    th, td {
+        padding: 10px;
+    }
+
+    .search-container {
+        flex-direction: column;
+        gap: 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    .toolbar {
+        width: 100%;
+        height: auto;
+        padding: 10px;
+    }
+
+    .container {
+        margin-left: 0;
+        padding: 10px;
+    }
+
+    table {
+        width: 100%;
+        font-size: 12px;
+    }
+
+    .search-container {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .date-filter {
+        flex-direction: column;
+    }
+
+    .container {
+        overflow-x: auto;
+    }
+}
+
+/*category field*/
+/* Styling for the select dropdown to match the website */
+select {
+    width: 100%; /* למלא את הרוחב */
+    padding: 12px; /* התאמה לסגנון הטופס */
+    margin-top: 8px;
+    border-radius: 6px;
+    border: none;
+    background-color: rgba(50, 50, 70, 0.9); /* רקע כהה, בדומה לשדות אחרים */
+    color: var(--text-color); /* טקסט בצבע לבן */
+    font-size: 16px; /* גודל גופן זהה לטופס */
+    cursor: pointer;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1); /* צל פנימי */
+    transition: box-shadow 0.2s ease; /* אפקט לחיצה */
+}
+
+select:focus {
+    outline: none; /* ביטול קו מסביב */
+    box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.2); /* הדגשת לחיצה */
+}
+
+option {
+    background-color: rgba(50, 50, 70, 0.9); /* רקע כהה לאפשרויות */
+    color: var(--text-color); /* טקסט בצבע לבן */
+}
+
+option[disabled] {
+    color: rgba(255, 255, 255, 0.5); /* טקסט בהיר יותר לאפשרות שאינה ניתנת לבחירה */
+}

@@ -89,10 +89,16 @@ function fetchAllUsersAndInsertToTable() {
         .then(data => {
             data.forEach(user => {
                 const tr = document.createElement('tr');
+                if(user.roleLevel == 1)
+                    var role = "User";
+                else if(user.roleLevel == 2)
+                    var role = "Creator";
+                else if(user.roleLevel == 3)
+                    var role = "Admin";
                 tr.innerHTML = `
                     <td>${user.username}</td>
                     <td>${user.email}</td>
-                    <td>${user.roleLevel}</td>
+                    <td>${role}</td>
                     <td>${formatDate(user.createdAt)}</td>
                 `;
                 usersTableBody.appendChild(tr);
@@ -134,12 +140,15 @@ function fetchAllOrdersAndInsertToTable() {
         .then(data => {
             data.forEach(order => {
                 const tr = document.createElement('tr');
+                const productNames = order.products.map(product => product.name).join(', ');
+                const productQuantity = order.products.map(product => product.quantity).join(', ');
                 tr.innerHTML = `
-                    <td>${order.username}</td>
-                    <td>${order.products}</td>
-                    <td>${order.quantity}</td>
+                    <td>${order.user}</td>
+                    <td>${productNames}</td>
+                    <td>${productQuantity}</td>
                     <td>${formatDate(order.createdAt)}</td>
                 `;
+                console.log(order.user);
                 ordersTableBody.appendChild(tr);
             });
         })
@@ -508,3 +517,82 @@ homeBtn.addEventListener('click', () => {
 
 usersBtn.click(); // Default tab
 
+//filter
+document.getElementById('searchBtn').addEventListener('click', function () {
+    const searchValue = document.getElementById('searchInput').value.toLowerCase();
+    const dateFilter = document.getElementById('searchDate').value;  // Get the date from input field (YYYY-MM-DD)
+
+    console.log("Search value:", searchValue);
+    console.log("Date filter:", dateFilter);
+
+    const table = document.getElementById('usersTableBody');
+    const rows = table.getElementsByTagName('tr');
+
+    // Split the date filter into year, month, and day
+    let dateFilterYear = "";
+    let dateFilterMonth = "";
+    let dateFilterDay = "";
+
+    if (dateFilter) {
+        const dateParts = dateFilter.split("-");
+        dateFilterYear = dateParts[0];
+        dateFilterMonth = dateParts[1];
+        dateFilterDay = dateParts[2];
+
+        console.log("Date filter year:", dateFilterYear);
+        console.log("Date filter month:", dateFilterMonth);
+        console.log("Date filter day:", dateFilterDay);
+    }
+
+    for (let i = 0; i < rows.length; i++) {
+        let username = rows[i].getElementsByTagName('td')[0].textContent.toLowerCase();
+        let email = rows[i].getElementsByTagName('td')[1].textContent.toLowerCase();
+        let createdAt = rows[i].getElementsByTagName('td')[3].textContent.trim();
+
+        console.log(`Row ${i + 1} - Username:`, username);
+        console.log(`Row ${i + 1} - Email:`, email);
+        console.log(`Row ${i + 1} - Created At (raw):`, createdAt);
+
+        // Extract the year part from createdAt by taking the first 4 characters
+        let createdAtYear = "";
+        let createdAtMonth = "";
+        let createdAtDay = "";
+
+        if (createdAt) {
+            const createdAtParts = createdAt.split('/');  // Split by '/' in case the format is DD/MM/YYYY
+            createdAtDay = createdAtParts[0];    // Day part
+            createdAtMonth = createdAtParts[1];  // Month part
+            createdAtYear = createdAtParts[2].substring(0, 4);   // Take only the first 4 characters of the year
+
+            console.log(`Row ${i + 1} - Created At day:`, createdAtDay);
+            console.log(`Row ${i + 1} - Created At month:`, createdAtMonth);
+            console.log(`Row ${i + 1} - Created At year (only):`, createdAtYear);
+        }
+
+        // Check if the search matches username or email
+        let matchSearch = (
+            username.indexOf(searchValue) > -1 || 
+            email.indexOf(searchValue) > -1
+        );
+
+        console.log(`Row ${i + 1} - Match search:`, matchSearch);
+
+        // Check if the year, month, and day match the date filter
+        let matchDate = (
+            (createdAtYear === dateFilterYear || dateFilterYear === "") &&
+            (createdAtMonth === dateFilterMonth || dateFilterMonth === "") &&
+            (createdAtDay === dateFilterDay || dateFilterDay === "")
+        );
+
+        console.log(`Row ${i + 1} - Match date:`, matchDate);
+
+        // Show the row if both match the search criteria
+        if ((matchSearch || searchValue === "") && matchDate) {
+            rows[i].style.display = "";
+            console.log(`Row ${i + 1} - Displaying row.`);
+        } else {
+            rows[i].style.display = "none";
+            console.log(`Row ${i + 1} - Hiding row.`);
+        }
+    }
+});
