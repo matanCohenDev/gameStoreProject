@@ -5,8 +5,13 @@ const cartItems = document.getElementById("cart-items");
 const logoutBtn = document.getElementById("logoutBtn");
 const cartModal = document.getElementById("cart-popup");
 const checkoutModal = document.getElementById("checkoutPopup");
-
+const chatBtn = document.getElementById('chat-btn');
+const chatWindow = document.getElementById('chat-window');
+const chatMessages = document.getElementById('chat-messages');
+const chatInput = document.getElementById('chat-input');
+const closeChatBtn = document.getElementById('closeChatBtn');
 const productsHaveAddedList = [];
+
 let productsNames = [];
 let productsPrices = [];
 let productDescription = [];
@@ -14,6 +19,8 @@ let productCategory = [];
 let currentUser = "";
 let productsIds = [];
 let countProductsInCart = 0;
+let pollingInterval;
+
 
 // Update the cart display
 function updateCartDisplay() {
@@ -385,12 +392,122 @@ function filterByNameAndCategory() {
     if (matchesName && matchesCategory) {
       productCards[i].style.display = "flex"; // Show matching products
     } else {
-      productCards[i].style.display = "none"; // Hide non-matching products
+      productCards[i].style.display = "none"; 
     }
   }
 }
 
-// Attach filter logic to the "Apply Filters" button
 document.getElementById("apply-filters").addEventListener("click", function () {
-  filterByNameAndCategory(); // Filter by both game name and category
+  filterByNameAndCategory(); 
 });
+
+//get all the current-user messages
+async function fetchMessages() {
+  try {
+    const response = await fetch(`/api/messages/getMessages?user=${encodeURIComponent(currentUser.username)}`, {
+      method: 'GET',
+      headers: { 'Content-Type': 'application/json' },
+    });
+
+    if (response.ok) {
+      const data = await response.json();
+      displayMessages(data);
+    } else {
+      console.error('Failed to fetch messages');
+    }
+  } catch (error) {
+    console.error('Error fetching messages:', error);
+  }
+}
+//display chat history
+function displayMessages(messages) {
+  chatMessages.innerHTML = ''; 
+
+  messages.forEach((msg) => {
+    if (
+      (msg.sender === currentUser.username && msg.receiver === 'admin') ||
+      (msg.sender === 'admin' && msg.receiver === currentUser.username)
+    ) {
+      const messageElement = document.createElement('div');
+      messageElement.classList.add('message');
+
+      if (msg.sender === currentUser.username) {
+        messageElement.classList.add('sent');
+      } else {
+        messageElement.classList.add('received');
+      }
+
+      const messageBubble = document.createElement('div');
+      messageBubble.classList.add('message-bubble');
+      messageBubble.textContent = msg.message;
+
+      const messageMeta = document.createElement('div');
+      messageMeta.classList.add('message-meta');
+      
+
+      messageElement.appendChild(messageBubble);
+      messageElement.appendChild(messageMeta);
+      chatMessages.appendChild(messageElement);
+    }
+  });
+
+  chatMessages.scrollTop = chatMessages.scrollHeight;
+}
+
+// Send Messages
+async function sendMessage() {
+  const message = chatInput.value.trim();
+  if (message) {
+    try {
+      const response = await fetch('/api/messages/createMessage', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          sender: currentUser.username,
+          receiver: 'admin',
+          message,
+        }),
+      });
+
+      if (response.ok) {
+        chatInput.value = '';
+        fetchMessages(); // Refresh messages
+      } else {
+        console.error('Failed to send message');
+      }
+    } catch (error) {
+      console.error('Error sending message:', error);
+    }
+  }
+}
+
+// allow user to realtime chat
+function startPolling() {
+  if (pollingInterval) clearInterval(pollingInterval);
+  pollingInterval = setInterval(fetchMessages, 5000); // Fetch messages every 5 seconds
+}
+//stop the realtime chat
+function stopPolling() {
+  if (pollingInterval) clearInterval(pollingInterval);
+}
+
+// open chat window
+chatBtn.addEventListener('click', () => {
+  chatWindow.style.display = 'flex';
+  fetchMessages();
+  startPolling();
+});
+//close chat window
+closeChatBtn.addEventListener('click', () => {
+  chatWindow.style.display = 'none';
+  stopPolling();
+});
+//send message
+document.getElementById('sendChatBtn').addEventListener('click', sendMessage);
+//send message by pressing enter
+chatInput.addEventListener('keypress', (e) => {
+  if (e.key === 'Enter') {
+    sendMessage();
+  }
+});
+
