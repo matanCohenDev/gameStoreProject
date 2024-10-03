@@ -702,6 +702,13 @@ h1 {
   background-color: #e03e00;
   box-shadow: 0 0 12px rgba(255, 69, 0, 0.8);
 }
+/* Default: Keep the filter bar on the same line */
+.filter-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: nowrap; /* No wrapping */
+}
 @media (max-width: 1920px) {
   .filter-container {
     flex-wrap: wrap;
@@ -718,23 +725,33 @@ h1 {
     width: 100%;
   }
 }
-@media (max-width: 1024px) {
+
+/* Adjustments for screens between 768px and 1920px-- Keeps the search and the category on the same line */
+@media (min-width: 768px) and (max-width: 1920px) {
   .filter-container {
-    flex-wrap: wrap;
-    justify-content: center;
+    flex-direction: column;
+    align-items: stretch;
   }
 
   .search-bar input {
-    width: 70%;
+    width: 100%;
+    margin-bottom: 15px;
+    flex-direction: space-between;
   }
 
   .filter-category select,
   .filter-price input,
   .btn {
-    width: 70%;
+    width: 100%;
+    margin-bottom: 15px;
+  }
+
+  .btn {
+    padding: 12px;
   }
 }
 
+/* Adjustments for screens below 768px */
 @media (max-width: 768px) {
   .filter-container {
     flex-direction: column;
@@ -759,6 +776,7 @@ h1 {
   }
 }
 
+/* Adjustments for screens below 576px */
 @media (max-width: 576px) {
   .filter-container {
     padding: 10px;
@@ -775,16 +793,6 @@ h1 {
     padding: 8px 10px;
   }
 }
-/* Chat Icon Styles */
-:root {
-  --primary-color: #ff4500;
-  --secondary-color: #e6d4d4;
-  --accent-color: #f0f0f0;
-  --text-color: #fff;
-  --font-family: "Orbitron", sans-serif;
-}
-
-/* ... [Your existing CSS remains unchanged up to the chat window styles] ... */
 
 /* Chat Icon Styles */
 #chat-btn {
@@ -812,9 +820,9 @@ h1 {
 
 /* Chat Window Styles */
 #chat-window {
-  display: none; 
+  display: none;
   position: fixed;
-  bottom: 80px; 
+  bottom: 80px;
   right: 20px;
   width: 300px;
   max-height: 400px;
@@ -827,7 +835,12 @@ h1 {
 }
 
 #chat-window header {
-  background-color: rgba(0, 0, 0, 0.9); /* Match your existing toolbar background */
+  background-color: rgba(
+    0,
+    0,
+    0,
+    0.9
+  ); /* Match your existing toolbar background */
   padding: 10px;
   color: var(--text-color);
   display: flex;
@@ -849,7 +862,9 @@ h1 {
   flex: 1;
   padding: 10px;
   overflow-y: auto;
-  background-color: var(--secondary-color); /* Use your existing background color */
+  background-color: var(
+    --secondary-color
+  ); /* Use your existing background color */
 }
 
 /* Message Container */
@@ -942,5 +957,3 @@ h1 {
 #chat-window .input-area button:hover {
   background-color: #e03e00;
 }
-
-

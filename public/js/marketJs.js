@@ -5,11 +5,11 @@ const cartItems = document.getElementById("cart-items");
 const logoutBtn = document.getElementById("logoutBtn");
 const cartModal = document.getElementById("cart-popup");
 const checkoutModal = document.getElementById("checkoutPopup");
-const chatBtn = document.getElementById('chat-btn');
-const chatWindow = document.getElementById('chat-window');
-const chatMessages = document.getElementById('chat-messages');
-const chatInput = document.getElementById('chat-input');
-const closeChatBtn = document.getElementById('closeChatBtn');
+const chatBtn = document.getElementById("chat-btn");
+const chatWindow = document.getElementById("chat-window");
+const chatMessages = document.getElementById("chat-messages");
+const chatInput = document.getElementById("chat-input");
+const closeChatBtn = document.getElementById("closeChatBtn");
 const productsHaveAddedList = [];
 
 let productsNames = [];
@@ -20,7 +20,6 @@ let currentUser = "";
 let productsIds = [];
 let countProductsInCart = 0;
 let pollingInterval;
-
 
 // Update the cart display
 function updateCartDisplay() {
@@ -330,7 +329,11 @@ async function Logout() {
 }
 logoutBtn.addEventListener("click", Logout);
 
-//Price filter bar
+// Global variables to store min and max values
+let savedMinVal = 0;
+let savedMaxVal = 100;
+
+// Price filter bar
 function updateRangeSlider() {
   const minSlider = document.getElementById("price-min");
   const maxSlider = document.getElementById("price-max");
@@ -351,6 +354,10 @@ function updateRangeSlider() {
   document.getElementById("price-min-val").textContent = `$${minSlider.value}`;
   document.getElementById("price-max-val").textContent = `$${maxSlider.value}`;
 
+  // Save the values to the global variables
+  savedMinVal = minSlider.value;
+  savedMaxVal = maxSlider.value;
+
   // Update the highlighted range
   const rangeTrack = minSlider.parentElement;
   const minPercent =
@@ -364,7 +371,7 @@ function updateRangeSlider() {
 // Set initial state
 updateRangeSlider();
 
-// Search bar
+// Search bar+category filter+price filter
 function filterByNameAndCategory() {
   const searchValue = document
     .getElementById("search-game")
@@ -378,72 +385,82 @@ function filterByNameAndCategory() {
     const productName = productCards[i]
       .querySelector(".product-info h2")
       .textContent.toLowerCase();
-
     const productCategory = productCards[i]
       .querySelector(".product-info p:last-of-type")
-      .textContent.toLowerCase(); // Assumes category is the last <p> in product info
+      .textContent.toLowerCase();
+    const productPrice = parseInt(
+      productCards[i]
+        .querySelector(".product-info p:nth-last-of-type(2)")
+        .textContent.replace("$", "")
+    );
 
-    // Check if the product name matches the search term and the category matches the selected category
+    // Check if the product matches the search term, category, and price range
     const matchesName = productName.includes(searchValue);
     const matchesCategory =
       selectedCategory === "" || productCategory === selectedCategory;
+    const matchesPrice =
+      productPrice >= savedMinVal && productPrice <= savedMaxVal;
 
-    // Show or hide the product based on whether it matches both the name and category
-    if (matchesName && matchesCategory) {
+    // Show or hide the product based on whether it matches name, category, and price
+    if (matchesName && matchesCategory && matchesPrice) {
       productCards[i].style.display = "flex"; // Show matching products
     } else {
-      productCards[i].style.display = "none"; 
+      productCards[i].style.display = "none"; // Hide non-matching products
     }
   }
 }
 
 document.getElementById("apply-filters").addEventListener("click", function () {
-  filterByNameAndCategory(); 
+  filterByNameAndCategory();
 });
 
 //get all the current-user messages
 async function fetchMessages() {
   try {
-    const response = await fetch(`/api/messages/getMessages?user=${encodeURIComponent(currentUser.username)}`, {
-      method: 'GET',
-      headers: { 'Content-Type': 'application/json' },
-    });
+    const response = await fetch(
+      `/api/messages/getMessages?user=${encodeURIComponent(
+        currentUser.username
+      )}`,
+      {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+      }
+    );
 
     if (response.ok) {
       const data = await response.json();
       displayMessages(data);
     } else {
-      console.error('Failed to fetch messages');
+      console.error("Failed to fetch messages");
     }
   } catch (error) {
-    console.error('Error fetching messages:', error);
+    console.error("Error fetching messages:", error);
   }
 }
 //display chat history
 function displayMessages(messages) {
-  chatMessages.innerHTML = ''; 
+  chatMessages.innerHTML = "";
 
   messages.forEach((msg) => {
     if (
-      (msg.sender === currentUser.username && msg.receiver === 'admin') ||
-      (msg.sender === 'admin' && msg.receiver === currentUser.username)
+      (msg.sender === currentUser.username && msg.receiver === "admin") ||
+      (msg.sender === "admin" && msg.receiver === currentUser.username)
     ) {
-      const messageElement = document.createElement('div');
-      messageElement.classList.add('message');
+      const messageElement = document.createElement("div");
+      messageElement.classList.add("message");
 
       if (msg.sender === currentUser.username) {
-        messageElement.classList.add('sent');
+        messageElement.classList.add("sent");
       } else {
-        messageElement.classList.add('received');
+        messageElement.classList.add("received");
       }
 
-      const messageBubble = document.createElement('div');
-      messageBubble.classList.add('message-bubble');
+      const messageBubble = document.createElement("div");
+      messageBubble.classList.add("message-bubble");
       messageBubble.textContent = msg.message;
 
-      const messageMeta = document.createElement('div');
-      messageMeta.classList.add('message-meta');
-      
+      const messageMeta = document.createElement("div");
+      messageMeta.classList.add("message-meta");
 
       messageElement.appendChild(messageBubble);
       messageElement.appendChild(messageMeta);
@@ -459,24 +476,24 @@ async function sendMessage() {
   const message = chatInput.value.trim();
   if (message) {
     try {
-      const response = await fetch('/api/messages/createMessage', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+      const response = await fetch("/api/messages/createMessage", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           sender: currentUser.username,
-          receiver: 'admin',
+          receiver: "admin",
           message,
         }),
       });
 
       if (response.ok) {
-        chatInput.value = '';
+        chatInput.value = "";
         fetchMessages(); // Refresh messages
       } else {
-        console.error('Failed to send message');
+        console.error("Failed to send message");
       }
     } catch (error) {
-      console.error('Error sending message:', error);
+      console.error("Error sending message:", error);
     }
   }
 }
@@ -492,22 +509,21 @@ function stopPolling() {
 }
 
 // open chat window
-chatBtn.addEventListener('click', () => {
-  chatWindow.style.display = 'flex';
+chatBtn.addEventListener("click", () => {
+  chatWindow.style.display = "flex";
   fetchMessages();
   startPolling();
 });
 //close chat window
-closeChatBtn.addEventListener('click', () => {
-  chatWindow.style.display = 'none';
+closeChatBtn.addEventListener("click", () => {
+  chatWindow.style.display = "none";
   stopPolling();
 });
 //send message
-document.getElementById('sendChatBtn').addEventListener('click', sendMessage);
+document.getElementById("sendChatBtn").addEventListener("click", sendMessage);
 //send message by pressing enter
-chatInput.addEventListener('keypress', (e) => {
-  if (e.key === 'Enter') {
+chatInput.addEventListener("keypress", (e) => {
+  if (e.key === "Enter") {
     sendMessage();
   }
 });
-
