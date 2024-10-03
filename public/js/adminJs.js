@@ -208,6 +208,10 @@ addProductBtn.addEventListener('click', async (event) => {
         alert('Please fill in all fields correctly.');
         return;
     }
+    if(productPrice < 0){
+        alert('Price cannot be negative');
+        return;
+    }
 
     try {
         const response = await fetch('/api/products/createProduct', {
