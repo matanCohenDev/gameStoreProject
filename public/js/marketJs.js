@@ -384,22 +384,22 @@ function filterByNameAndCategory() {
   for (let i = 0; i < productCards.length; i++) {
     const productName = productCards[i]
       .querySelector(".product-info h2")
-      .textContent.toLowerCase();
+      .textContent.toLowerCase(); //get the h2 tag
     const productCategory = productCards[i]
       .querySelector(".product-info p:last-of-type")
-      .textContent.toLowerCase();
+      .textContent.toLowerCase(); //get the last p tag
     const productPrice = parseInt(
       productCards[i]
         .querySelector(".product-info p:nth-last-of-type(2)")
-        .textContent.replace("$", "")
+        .textContent.replace("$", "") //remove dollar sign
     );
 
     // Check if the product matches the search term, category, and price range
     const matchesName = productName.includes(searchValue);
     const matchesCategory =
-      selectedCategory === "" || productCategory === selectedCategory;
+      selectedCategory === "" || productCategory === selectedCategory; //check if the category is selected
     const matchesPrice =
-      productPrice >= savedMinVal && productPrice <= savedMaxVal;
+      productPrice >= savedMinVal && productPrice <= savedMaxVal; //check if the price is in the range
 
     // Show or hide the product based on whether it matches name, category, and price
     if (matchesName && matchesCategory && matchesPrice) {

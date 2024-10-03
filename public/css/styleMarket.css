@@ -91,16 +91,22 @@ h1 {
 }
 
 .product-card {
+  display: flex;
+  flex-direction: column; /* space between the element on the card */
+  justify-content: space-between; /*  space is divedid equel */
   background: rgba(34, 34, 44, 0.9);
   border-radius: 12px;
   padding: 20px;
   width: calc(33% - 20px);
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
   transition: transform 0.3s, box-shadow 0.3s;
-  display: flex;
-  flex-direction: column;
   overflow: hidden;
 }
+
+.product-info {
+  flex-grow: 1; /* more space*/
+}
+
 .product-card h2 {
   font-size: 24px;
   margin-bottom: 10px;
@@ -145,7 +151,7 @@ h1 {
 .product-buttons {
   margin-top: auto;
 }
-
+/*Does somthing?*/
 .btn {
   background-color: var(--primary-color);
   color: var(--text-color);
