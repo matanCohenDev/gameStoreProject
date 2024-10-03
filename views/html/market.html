@@ -1,99 +1,193 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
+  <head>
+    <meta charset="UTF-8" />
     <title>GameStore - Market</title>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" href="/css/styleMarket.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-</head>
-<body>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+      integrity="sha512-..."
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link rel="stylesheet" href="/css/styleMarket.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  </head>
+  <body>
     <!-- Toolbar -->
     <div class="toolbar">
-        <h2>Game Store</h2>
-        <button class="tab-btn" id="home">
-            <i class="fas fa-home icon"></i>
-            <span>Home</span>
-        </button>
-        
-        <button class="tab-btn" id="cart">
-            <i class="fas fa-shopping-cart icon"></i>
-            <span>Cart</span>
-        </button>
-        
-        <button class="tab-btn" id="my-games">
-            <i class="fas fa-gamepad icon"></i>
-            <span>My Games</span>
-        </button>
+      <h2>Game Store</h2>
+      <button class="tab-btn" id="home">
+        <i class="fas fa-home icon"></i>
+        <span>Home</span>
+      </button>
 
-        <button class="tab-btn" id="ContactUs" onclick="openContactPopup()">
-            <i class="fas fa-envelope icon"></i> 
-            <span>Contact Us</span>
-        </button>
-        
-        
-        <button class="tab-btn" id="logoutBtn">
-            <i class="fas fa-sign-out-alt icon"></i>
-            <span>Logout</span>
-        </button>
+      <button class="tab-btn" id="cart">
+        <i class="fas fa-shopping-cart icon"></i>
+        <span>Cart</span>
+      </button>
+
+      <button class="tab-btn" id="my-games">
+        <i class="fas fa-gamepad icon"></i>
+        <span>My Games</span>
+      </button>
+
+      <button class="tab-btn" id="ContactUs" onclick="openContactPopup()">
+        <i class="fas fa-envelope icon"></i>
+        <span>Contact Us</span>
+      </button>
+
+      <button class="tab-btn" id="logoutBtn">
+        <i class="fas fa-sign-out-alt icon"></i>
+        <span>Logout</span>
+      </button>
     </div>
     <div class="container">
-        <h1>Explore Our Products</h1>
-        <div class="product-list">
-            <!-- Product Cards will be dynamically inserted here -->
+      <h1>Explore Our Products</h1>
+      <!--filter Html-->
+      <div class="filter-container">
+        <div class="search-bar">
+          <input
+            type="text"
+            id="search-game"
+            placeholder="Search for a game..."
+          />
         </div>
+
+        <div class="filter-category">
+          <select id="category">
+            <option value="">All Categories</option>
+            <option value="Memory">Memory</option>
+            <option value="Board">Board</option>
+            <option value="Cards">Cards</option>
+            <option value="Strategy">Strategy</option>
+          </select>
+        </div>
+        <div class="filter-price">
+          <div class="range-values">
+            <span id="price-min-val">$217</span>
+            <!-- Left side of the slider -->
+            <div class="range-slider">
+              <input
+                type="range"
+                id="price-min"
+                min="0"
+                max="100"
+                value="0"
+                oninput="updateRangeSlider()"
+              />
+              <input
+                type="range"
+                id="price-max"
+                min="0"
+                max="100"
+                value="100"
+                oninput="updateRangeSlider()"
+              />
+            </div>
+            <span id="price-max-val">$465</span>
+            <!-- Right side of the slider -->
+          </div>
+          <div class="range-labels">
+            <span id="min-label">$0</span>
+            <span id="mid-label">$50</span>
+            <span id="max-label">$100</span>
+          </div>
+        </div>
+
+        <button class="btn" id="apply-filters">Apply Filters</button>
+      </div>
+
+      <div class="product-list">
+        <!-- Product Cards will be dynamically inserted here -->
+      </div>
     </div>
     <!-- Cart Popup -->
     <div id="cart-popup" class="cart-popup">
-        <div class="cart-content">
-            <span class="close-btn" id="closeCartPopup">&times;</span>
-            <h2>Your Cart</h2>
-            <ul id="cart-items"></ul> 
-            <button class="btn" id="checkout-btn">Checkout</button>
-        </div>
+      <div class="cart-content">
+        <span class="close-btn" id="closeCartPopup">&times;</span>
+        <h2>Your Cart</h2>
+        <ul id="cart-items"></ul>
+        <button class="btn" id="checkout-btn">Checkout</button>
+      </div>
     </div>
     <!--Contact us Popup-->
     <div id="contactPopup" class="popup">
-        <div class="popup-content">
-            <span class="close-popup" onclick="closeContactPopup()">&times;</span>
-            <h2>Contact Us</h2>
-            <form id="contactForm">
-                <input type="text" placeholder="Your Name" required>
-                <input type="email" placeholder="Your Email" required>
-                <textarea placeholder="Your Message" rows="5" required></textarea>
-                <button type="submit" class="btn">Send Message</button>
-            </form>
-        </div>
+      <div class="popup-content">
+        <span class="close-popup" onclick="closeContactPopup()">&times;</span>
+        <h2>Contact Us</h2>
+        <form id="contactForm">
+          <input type="text" placeholder="Your Name" required />
+          <input type="email" placeholder="Your Email" required />
+          <textarea placeholder="Your Message" rows="5" required></textarea>
+          <button type="submit" class="btn">Send Message</button>
+        </form>
+      </div>
     </div>
 
     <!-- Checkout Popup -->
-<div id="checkoutPopup" class="checkoutPopup">
-    <div class="popup-content">
+    <div id="checkoutPopup" class="checkoutPopup">
+      <div class="popup-content">
         <span class="close-popup" id="closeCheckoutPopup">&times;</span>
         <h2>Checkout</h2>
         <form id="checkoutForm">
-            <!-- Payment Details -->
-            <input type="text" id="CardholderName" placeholder="Cardholder Name" required>
-            <input type="text"id="cardNumber" laceholder="Card Number" required>
-            <div class="form-row">
-                <input type="text"id="expiryDate" placeholder="Expiry Date (MM/YY)" required>
-                <input type="text"id="cvv" placeholder="CVV" required>
-            </div>
-            <!-- Billing Address -->
-            <input type="text" id="billingAddress" placeholder="Billing Address" required>
-            <input type="text"id="city" placeholder="City" required>
-            <input type="text"id="postalCode" placeholder="Postal Code" required>
-            <!-- Submit Button -->
-            <div class="button-row">
-                <button type="submit" class="btn confirm-btn" id="confirmCheckoutBtn">Confirm Payment</button>
-                <button type="button" class="btn cancel-btn" id="cancelCheckoutBtn">Cancel</button>
-            </div>
+          <!-- Payment Details -->
+          <input
+            type="text"
+            id="CardholderName"
+            placeholder="Cardholder Name"
+            required
+          />
+          <input
+            type="text"
+            id="cardNumber"
+            laceholder="Card Number"
+            required
+          />
+          <div class="form-row">
+            <input
+              type="text"
+              id="expiryDate"
+              placeholder="Expiry Date (MM/YY)"
+              required
+            />
+            <input type="text" id="cvv" placeholder="CVV" required />
+          </div>
+          <!-- Billing Address -->
+          <input
+            type="text"
+            id="billingAddress"
+            placeholder="Billing Address"
+            required
+          />
+          <input type="text" id="city" placeholder="City" required />
+          <input
+            type="text"
+            id="postalCode"
+            placeholder="Postal Code"
+            required
+          />
+          <!-- Submit Button -->
+          <div class="button-row">
+            <button
+              type="submit"
+              class="btn confirm-btn"
+              id="confirmCheckoutBtn"
+            >
+              Confirm Payment
+            </button>
+            <button type="button" class="btn cancel-btn" id="cancelCheckoutBtn">
+              Cancel
+            </button>
+          </div>
         </form>
+      </div>
     </div>
-</div>
-
 
     <script src="/js/marketJs.js"></script>
-</body>
+  </body>
 </html>
