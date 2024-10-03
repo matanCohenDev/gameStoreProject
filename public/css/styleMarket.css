@@ -775,3 +775,172 @@ h1 {
     padding: 8px 10px;
   }
 }
+/* Chat Icon Styles */
+:root {
+  --primary-color: #ff4500;
+  --secondary-color: #e6d4d4;
+  --accent-color: #f0f0f0;
+  --text-color: #fff;
+  --font-family: "Orbitron", sans-serif;
+}
+
+/* ... [Your existing CSS remains unchanged up to the chat window styles] ... */
+
+/* Chat Icon Styles */
+#chat-btn {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: var(--primary-color);
+  color: var(--text-color);
+  padding: 15px;
+  border: none;
+  border-radius: 50%;
+  font-size: 24px;
+  cursor: pointer;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  z-index: 1000;
+}
+
+#chat-btn i {
+  pointer-events: none; /* Allow clicking anywhere on the button */
+}
+
+#chat-btn:hover {
+  background-color: #e03e00;
+}
+
+/* Chat Window Styles */
+#chat-window {
+  display: none; 
+  position: fixed;
+  bottom: 80px; 
+  right: 20px;
+  width: 300px;
+  max-height: 400px;
+  background-color: rgba(0, 0, 0, 0.9); /* Adjusted to match your theme */
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+  overflow: hidden;
+  z-index: 1000;
+  flex-direction: column;
+}
+
+#chat-window header {
+  background-color: rgba(0, 0, 0, 0.9); /* Match your existing toolbar background */
+  padding: 10px;
+  color: var(--text-color);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#chat-window header h2 {
+  font-size: 18px;
+  margin: 0;
+}
+
+#chat-window header .close-chat {
+  cursor: pointer;
+  font-size: 20px;
+}
+
+#chat-window .messages {
+  flex: 1;
+  padding: 10px;
+  overflow-y: auto;
+  background-color: var(--secondary-color); /* Use your existing background color */
+}
+
+/* Message Container */
+#chat-window .messages .message {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+  max-width: 80%;
+}
+
+/* Sent Messages (Your messages) */
+#chat-window .messages .message.sent {
+  align-self: flex-end;
+  align-items: flex-end;
+}
+
+/* Received Messages (Other users) */
+#chat-window .messages .message.received {
+  align-self: flex-start;
+  align-items: flex-start;
+}
+
+/* Message Bubble */
+#chat-window .message-bubble {
+  padding: 10px 15px;
+  border-radius: 12px;
+  position: relative;
+  word-wrap: break-word;
+  font-size: 16px;
+  line-height: 1.4;
+  color: var(--text-color);
+}
+
+/* Sent Message Bubble */
+#chat-window .message.sent .message-bubble {
+  background-color: var(--primary-color); /* Your existing primary color */
+  color: var(--text-color);
+  border-bottom-right-radius: 0;
+}
+
+/* Received Message Bubble */
+#chat-window .message.received .message-bubble {
+  background-color: rgba(45, 47, 65, 0.85); /* A contrasting color */
+  color: var(--text-color);
+  border-bottom-left-radius: 0;
+}
+
+/* Message Meta (Timestamp) */
+#chat-window .message-meta {
+  font-size: 12px;
+  color: #ccc;
+  margin-top: 5px;
+}
+
+/* Align Meta Data */
+#chat-window .message.sent .message-meta {
+  text-align: right;
+}
+
+#chat-window .message.received .message-meta {
+  text-align: left;
+}
+
+#chat-window .input-area {
+  display: flex;
+  border-top: 1px solid #555;
+}
+
+#chat-window .input-area input {
+  flex: 1;
+  padding: 10px;
+  background-color: #2a2a2a;
+  color: var(--text-color);
+  border: none;
+  outline: none;
+}
+
+#chat-window .input-area input::placeholder {
+  color: #888;
+}
+
+#chat-window .input-area button {
+  background-color: var(--primary-color);
+  color: var(--text-color);
+  border: none;
+  padding: 10px 15px;
+  cursor: pointer;
+}
+
+#chat-window .input-area button:hover {
+  background-color: #e03e00;
+}
+
+
