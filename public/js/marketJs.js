@@ -10,6 +10,12 @@ const chatWindow = document.getElementById("chat-window");
 const chatMessages = document.getElementById("chat-messages");
 const chatInput = document.getElementById("chat-input");
 const closeChatBtn = document.getElementById("closeChatBtn");
+
+const CardholderName = document.getElementById("displayCardholderName");
+const cardNumber = document.getElementById("displayCardNumber");
+const CardexpiryDate = document.getElementById("displayExpiryDate");
+const Cardcvv = document.getElementById("displayCVV");
+const cardDisplay = document.getElementById("credit-card");
 const productsHaveAddedList = [];
 
 let productsNames = [];
@@ -293,9 +299,6 @@ document
     productsHaveAddedList.length = 0;
     updateCartDisplay();
     document.getElementById("checkoutForm").reset();
-    //} //else {
-
-    //}
   });
 //update cart quantity
 function updateCartQuantity() {
@@ -527,3 +530,119 @@ chatInput.addEventListener("keypress", (e) => {
     sendMessage();
   }
 });
+
+function countUnreadMessages(messages) {
+  let count = 0;
+  messages.forEach((msg) => {
+    if (msg.sender === "admin" && msg.receiver === currentUser.username && !msg.read) 
+      count++;
+  });
+  return count;
+}
+
+function createElementShowsUnreadMessages(count) {
+  const unreadMessages = document.createElement("div");
+  unreadMessages.classList.add("unread-messages");
+  unreadMessages.textContent = count;
+  return unreadMessages;
+}
+
+async function showUnreadMessagesElement(){
+  await fetch('/api/messages/getMessages', {
+    method: 'GET',
+    headers: { 'Content-Type': 'application/json' }
+  })
+  .then(response => response.json())
+  .then(data => {
+    const count = countUnreadMessages(data);
+    if (count > 0) {
+      const chatDisplayBtn = document.getElementById('chat-btn');
+      chatDisplayBtn.appendChild(createElementShowsUnreadMessages(count));
+    }
+  });
+}
+window.addEventListener('load', showUnreadMessagesElement);
+
+function changeInDbToReadWhenClicker(user){
+  fetch('/api/messages/getMessages')
+      .then(response => response.json())
+      .then(data => {
+          data.forEach(msg => {
+              if(msg.sender === "admin" && msg.receiver === user){
+                  fetch('/api/messages/updateMessage', {
+                      method: 'PUT',
+                      headers: { 'Content-Type': 'application/json' },
+                      body: JSON.stringify({ id: msg._id })
+                  })
+                  .catch(error => console.error('Error updating post:', error));
+              }
+          });
+      })
+      .catch(error => console.error('Error fetching messages:', error));
+}
+
+chatBtn.addEventListener('click', () => {
+  changeInDbToReadWhenClicker(currentUser.username);
+  const unreadMessages = document.querySelector('.unread-messages');
+  if(unreadMessages) unreadMessages.remove();
+});
+
+
+document.getElementById("CardholderName").addEventListener("input", () => {
+  CardholderName.textContent = document.getElementById("CardholderName").value;
+});
+document.getElementById("cardNumber").addEventListener("input", () => {
+  const cardInput = document.getElementById("cardNumber");
+  const count = cardInput.value.length;
+  cardNumber.textContent = "";
+  for(let i = 0 ; i < count ; i++){
+    if(i % 4 === 0 && i !== 0)
+      cardNumber.textContent += " ";
+    cardNumber.textContent += cardInput.value[i];
+  }
+  for(let i = count ; i < 16 ; i++){
+    if(i % 4 === 0)
+      cardNumber.textContent += " ";
+    cardNumber.textContent += "0";
+  }
+});
+
+document.getElementById("expiryDate").addEventListener("input", () => {
+  const CardexpiryDateInput = document.getElementById("expiryDate");
+  const count = CardexpiryDateInput.value.length;
+  CardexpiryDate.textContent = "";
+  for(let i = 0 ; i < count ; i++){
+    if(i === 2)
+      CardexpiryDate.textContent += "/";
+    CardexpiryDate.textContent += CardexpiryDateInput.value[i];
+  }
+  for(let i = count ; i <= 5 ; i++){
+    if(i === 2)
+      CardexpiryDate.textContent += "/";
+    if(i == 2 || i == 3)
+      CardexpiryDate.textContent += "Y";
+    if(i==0 || i==1)
+      CardexpiryDate.textContent += "M";
+  }
+});
+
+document.getElementById("cvv").addEventListener("focus", () => {
+  const card = document.querySelector('.credit-card');
+  card.classList.add("flipped");
+});
+
+document.getElementById("cvv").addEventListener("input", () => {
+  const CardcvvInput = document.getElementById("cvv");
+  const count = CardcvvInput.value.length;
+  Cardcvv.textContent = "";
+  for(let i = 0 ; i < count ; i++)
+    Cardcvv.textContent += CardcvvInput.value[i];
+  for(let i = count ; i < 3 ; i++)
+    Cardcvv.textContent += "#";
+});
+
+document.getElementById("cvv").addEventListener("blur", () => {
+  const card = document.querySelector('.credit-card');
+  card.classList.remove("flipped");
+});
+
