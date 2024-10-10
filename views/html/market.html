@@ -140,7 +140,7 @@
           <input
             type="text"
             id="cardNumber"
-            laceholder="Card Number"
+            placeholder="Card Number"
             required
           />
           <div class="form-row">
@@ -150,38 +150,52 @@
               placeholder="Expiry Date (MM/YY)"
               required
             />
-            <input type="text" id="cvv" placeholder="CVV" required />
+            <input
+              type="text"
+              id="cvv"
+              placeholder="CVV"
+              required
+            />
           </div>
           <!-- Billing Address -->
-          <input
-            type="text"
-            id="billingAddress"
-            placeholder="Billing Address"
-            required
-          />
+          <input type="text" id="billingAddress" placeholder="Billing Address" required />
           <input type="text" id="city" placeholder="City" required />
-          <input
-            type="text"
-            id="postalCode"
-            placeholder="Postal Code"
-            required
-          />
+          <input type="text" id="postalCode" placeholder="Postal Code" required />
+          
+          <!-- Realistic Credit Card Animation -->
+          <div class="credit-card-container">
+            <div class="credit-card">
+              <div class="card-front">
+                <div class="chip"></div>
+                <div class="card-number" id="displayCardNumber">0000 0000 0000 0000</div>
+                <div class="card-holder">
+                  <label>Cardholder</label>
+                  <div id="displayCardholderName">Full Name</div>
+                </div>
+                <div class="card-expiry">
+                  <label>Expires</label>
+                  <div id="displayExpiryDate">MM/YY</div>
+                </div>
+              </div>
+              <div class="card-back">
+                <div class="magnetic-stripe"></div>
+                <div class="cvv-section">
+                  <div class="cvv-label">CVV</div>
+                  <div class="cvv-box" id="displayCVV">###</div>
+                </div>
+                <div class="signature">Authorized Signature</div>
+              </div>
+            </div>
+          </div>
           <!-- Submit Button -->
           <div class="button-row">
-            <button
-              type="submit"
-              class="btn confirm-btn"
-              id="confirmCheckoutBtn"
-            >
-              Confirm Payment
-            </button>
-            <button type="button" class="btn cancel-btn" id="cancelCheckoutBtn">
-              Cancel
-            </button>
+            <button type="submit" class="btn confirm-btn" id="confirmCheckoutBtn">Confirm Payment</button>
+            <button type="button" class="btn cancel-btn" id="cancelCheckoutBtn">Cancel</button>
           </div>
         </form>
       </div>
     </div>
+    
     <button id="chat-btn">
       <i class="fas fa-comments"></i>
     </button>
