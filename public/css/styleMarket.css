@@ -531,7 +531,7 @@ h1 {
   width: 320px;
   height: 200px;
   border-radius: 15px;
-  background: linear-gradient(135deg, #00aaff, #001f3f);
+  background: linear-gradient(180deg, #ff9500, #eccb79);
   color: #fff;
   position: relative;
   transform-style: preserve-3d;
@@ -574,7 +574,7 @@ h1 {
 }
 
 .credit-card .card-back {
-  background: linear-gradient(135deg, #00aaff, #001f3f);
+  background: linear-gradient(135deg, #ff9500, #eccb79);
   transform: rotateY(180deg);
   display: flex;
   flex-direction: column;
@@ -632,6 +632,7 @@ h1 {
 /* Styles for the buttons in the checkout popup */
 .button-row {
   display: flex;
+  flex-direction: column;
   justify-content: space-between;
   gap: 10px;
   margin-top: 20px;
