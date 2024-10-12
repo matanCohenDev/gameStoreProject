@@ -195,30 +195,33 @@ document.getElementById("cancelCheckoutBtn").addEventListener("click", () => {
 });
 //check for card expiry date
 function validateExpiryDate(expiry) {
-  const [monthStr, yearStr] = expiry.split("/");
-  if (!monthStr || !yearStr || monthStr.length !== 2 || yearStr.length !== 2) {
+  if (expiry.length !== 4) 
     return false;
-  }
+  
+  const monthStr = expiry.slice(0, 2); 
+  const yearStr = expiry.slice(2);     
 
+  if (!monthStr || !yearStr || monthStr.length !== 2 || yearStr.length !== 2) 
+    return false;
+  
   const month = parseInt(monthStr, 10);
   let year = parseInt(yearStr, 10);
 
-  if (isNaN(month) || isNaN(year) || month < 1 || month > 12) {
+  if (isNaN(month) || isNaN(year) || month < 1 || month > 12) 
     return false;
-  }
 
-  year += 2000;
+  year += 2000; 
 
   const now = new Date();
-  const currentMonth = now.getMonth() + 1;
+  const currentMonth = now.getMonth() + 1; 
   const currentYear = now.getFullYear();
 
-  if (year < currentYear || (year === currentYear && month < currentMonth)) {
+  if (year < currentYear || (year === currentYear && month < currentMonth)) 
     return false;
-  }
-
+  
   return true;
 }
+
 //check for valid checkout
 function validCheckout() {
   const CardholderName = document.getElementById("CardholderName").value;
@@ -229,7 +232,7 @@ function validCheckout() {
   const city = document.getElementById("city").value;
   const postalCode = document.getElementById("postalCode").value;
 
-  if (CardholderName != currentUser || !billingAddress || !city) {
+  if (CardholderName != currentUser.username || !billingAddress || !city) {
     alert("Please fill in all fields.");
     return false;
   }
@@ -269,9 +272,7 @@ function getCurrentUser() {
 
 getCurrentUser();
 // Handle the checkout form submission
-document
-  .getElementById("checkoutForm")
-  .addEventListener("submit", async function (event) {
+document.getElementById("checkoutForm").addEventListener("submit", async function (event) {
     event.preventDefault();
     if (validCheckout()) {
     try {
@@ -301,6 +302,7 @@ document
     document.getElementById("checkoutForm").reset();
     }
   });
+
 //update cart quantity
 function updateCartQuantity() {
   if (productsHaveAddedList.length > 0) {
@@ -527,9 +529,9 @@ closeChatBtn.addEventListener("click", () => {
 document.getElementById("sendChatBtn").addEventListener("click", sendMessage);
 //send message by pressing enter
 chatInput.addEventListener("keypress", (e) => {
-  if (e.key === "Enter") {
+  if (e.key === "Enter") 
     sendMessage();
-  }
+  
 });
 
 function countUnreadMessages(messages) {
