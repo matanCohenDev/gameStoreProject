@@ -229,7 +229,7 @@ function validCheckout() {
   const city = document.getElementById("city").value;
   const postalCode = document.getElementById("postalCode").value;
 
-  if (!CardholderName || !billingAddress || !city) {
+  if (CardholderName != currentUser || !billingAddress || !city) {
     alert("Please fill in all fields.");
     return false;
   }
@@ -273,7 +273,7 @@ document
   .getElementById("checkoutForm")
   .addEventListener("submit", async function (event) {
     event.preventDefault();
-    //if (validCheckout()) {
+    if (validCheckout()) {
     try {
       const response = await fetch("/api/orders/createOrder", {
         method: "POST",
@@ -299,6 +299,7 @@ document
     productsHaveAddedList.length = 0;
     updateCartDisplay();
     document.getElementById("checkoutForm").reset();
+    }
   });
 //update cart quantity
 function updateCartQuantity() {
