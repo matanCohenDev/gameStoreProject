@@ -14,6 +14,7 @@ const chatSection = document.getElementById('chatSection');
 const usersTableBody = document.getElementById('usersTableBody');
 const productsTableBody = document.getElementById('productsTableBody');
 const ordersTableBody = document.getElementById('ordersTableBody');
+const summaryTableBody = document.getElementById('productSummaryTableBody'); // מזהה את גוף הטבלה להצגת הסיכום
 
 // Modals
 const productModal = document.getElementById('productModal');
@@ -61,6 +62,7 @@ function formatDate(isoString) {
 function clearTables() {
     usersTableBody.innerHTML = '';
     productsTableBody.innerHTML = '';
+    summaryTableBody.innerHTML = ''; // מנקה את תוכן הטבלה הקיים
     ordersTableBody.innerHTML = '';
 
 }
@@ -133,6 +135,27 @@ function fetchAllProductsAndInsertToTable() {
         .catch(error => console.error('Error fetching products:', error));
 }
 
+// Fetch and Display Products- group by category
+// פונקציה שמבצעת בקשה לשרת לקבלת סיכום המוצרים לפי קטגוריה
+function fetchProductSummary() {
+    fetch('/api/products/getSummery') // הנתיב הנוכחי לשליפת סיכום הקטגוריות
+        .then(response => response.json())
+        .then(data => {
+            //console.log('Product summary:', data); // מדפיס את הסיכום בקונסול
+            
+            // עובר על כל קטגוריה בסיכום ומוסיף שורה לטבלה
+            data.forEach(categorySummary => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>${categorySummary._id}</td>
+                    <td>${categorySummary.count}</td>
+                `;
+                summaryTableBody.appendChild(tr); // מוסיף את השורה לטבלה
+            });
+        })
+        .catch(error => console.error('Error fetching product summary:', error)); // טיפול בשגיאות במקרה של כשל
+}
+
 // Fetch and Display Orders
 function fetchAllOrdersAndInsertToTable() {
     fetch('/api/orders/getOrders')
@@ -176,6 +199,7 @@ productsBtn.addEventListener('click', () => {
     clearTables();
     showSection('products');
     fetchAllProductsAndInsertToTable();
+    fetchProductSummary();
 });
 
 ordersBtn.addEventListener('click', () => {

@@ -53,5 +53,32 @@ const deleteProduct = async (req, res) => {
         res.status(500).send(error);
     }
 }
+
+// פונקציה לשליפת סיכום מוצרים לפי קטגוריה
+// הפונקציה מבצעת שאילתת group כדי לספור כמה מוצרים יש בכל קטגוריה בטבלת "products"
+const getProductSummary = async (req, res) => {
+    try {
+        console.log('getProductSummary');
+        
+        const summary = await Product.aggregate([
+            {
+                // מבצע קיבוץ לפי קטגוריה ומחשב את סך המוצרים בכל קטגוריה
+                $group: {
+                    _id: "$category", // מקבץ לפי השדה "category"
+                    count: { $sum: 1 } // סופר את מספר המוצרים באותה קטגוריה
+                }
+            }
+        ]);
+        res.json(summary);
+        // מחזיר את התוצאה כ-JSON עם סיכום המוצרים לפי קטגוריה
+
+        //res.json(summary);
+    } catch (error) {
+        // במקרה של שגיאה, מחזיר הודעת שגיאה עם קוד 500
+        //console.log('error log'+ res);
+        res.status(500).send({ error: 'Failed to retrieve product summary' });
+    }
+}
+
 //exporting the functions
-module.exports = { createProduct, getProducts, updateProduct, deleteProduct };
+module.exports = { createProduct, getProducts, updateProduct, deleteProduct, getProductSummary };

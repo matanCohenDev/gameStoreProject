@@ -55,11 +55,13 @@
             <!-- Products Section -->
             <div id="productsSection" class="section hidden">
                 <h2>Products</h2>
+            
                 <div class="product-controls">
                     <button class="control-btn" id="createProductBtn"><i class="fas fa-plus-circle"></i> Create Product</button>
                     <button class="control-btn" id="updateProductBtn"><i class="fas fa-edit"></i> Update Product</button>
                     <button class="control-btn" id="deleteProductBtn"><i class="fas fa-trash-alt"></i> Delete Product</button>
                 </div>
+
                 <table>
                     <thead>
                         <tr>
@@ -72,6 +74,20 @@
                     </thead>
                     <tbody id="productsTableBody">
                         <!-- Product data will be populated here -->
+                    </tbody>
+                </table>
+
+                <!-- Product Summary Section - using Group by -->
+                <h2>Product Summary</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Category</th>
+                            <th>Product Count</th>
+                        </tr>
+                    </thead>
+                    <tbody id="productSummaryTableBody">
+                        <!-- Category data will be populated here -->
                     </tbody>
                 </table>
             </div>
