@@ -298,8 +298,10 @@ document.getElementById("checkoutForm").addEventListener("submit", async functio
     alert("Payment processed successfully!");
     closeCheckoutPopup();
     productsHaveAddedList.length = 0;
+
     updateCartDisplay();
     document.getElementById("checkoutForm").reset();
+    document.getElementById("cart").children[2].remove();
     }
   });
 
