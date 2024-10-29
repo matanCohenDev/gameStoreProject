@@ -58,8 +58,6 @@ const deleteProduct = async (req, res) => {
 // הפונקציה מבצעת שאילתת group כדי לספור כמה מוצרים יש בכל קטגוריה בטבלת "products"
 const getProductSummary = async (req, res) => {
     try {
-        console.log('getProductSummary');
-        
         const summary = await Product.aggregate([
             {
                 // מבצע קיבוץ לפי קטגוריה ומחשב את סך המוצרים בכל קטגוריה

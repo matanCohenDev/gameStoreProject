@@ -232,7 +232,7 @@ function validCheckout() {
   const city = document.getElementById("city").value;
   const postalCode = document.getElementById("postalCode").value;
 
-  if (CardholderName != currentUser.username || !billingAddress || !city) {
+  if (!CardholderName || !billingAddress || !city) {
     alert("Please fill in all fields.");
     return false;
   }
