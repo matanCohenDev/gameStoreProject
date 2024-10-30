@@ -16,7 +16,7 @@ const cardNumber = document.getElementById("displayCardNumber");
 const CardexpiryDate = document.getElementById("displayExpiryDate");
 const Cardcvv = document.getElementById("displayCVV");
 const cardDisplay = document.getElementById("credit-card");
-const productsHaveAddedList = [];
+let productsHaveAddedList = [];
 
 let productsNames = [];
 let productsPrices = [];
@@ -116,18 +116,44 @@ function displayProducts() {
       "</p>";
     product.appendChild(productInfo);
 
-    let addToCart = document.createElement("button");
-    addToCart.className = "btn add-to-cart";
-    addToCart.setAttribute("data-product-name", productsNames[i]);
-    addToCart.innerHTML = "Add to cart";
-    product.appendChild(addToCart);
+    getCurrentUser();
+     // בדיקת קיום המוצר במערך לפי productId
+     console.log("product " + i + " current user " + currentUser);
+     console.log("product " + i + " current user products " + currentUser.products);
+     
+     //בדיקה האם המשתמש כבר קנה את המוצר
+     const isProductInCart = currentUser.products.some(
+      (product) => product.productId === productsIds[i]
+    );
 
-    addToCart.handler = () => {
-      addProductToCart(productsNames[i]);
-      addToCart.disabled = true;
-    };
+    // אם המשתמש עדיין לא קנה את המוצר
+    if (!isProductInCart)
+    {
+      console.log("currentUser.products: ", currentUser.products + " not found");
+      
+      let addToCart = document.createElement("button");
+      addToCart.className = "btn add-to-cart";
+      addToCart.setAttribute("data-product-name", productsNames[i]);
+      addToCart.innerHTML = "Add to cart";
+      product.appendChild(addToCart);
 
-    addToCart.addEventListener("click", addToCart.handler);
+      addToCart.handler = () => {
+        addProductToCart(productsNames[i]);
+        addToCart.disabled = true;
+      };
+
+      addToCart.addEventListener("click", addToCart.handler);
+    }
+
+    //אם המשתמש כבר קנה את המוצר, הוא לא יכול להוסיף אותו לסל
+    else
+    {
+      console.log("product " + i + " currentUser.products: ", currentUser.products + " found");
+      let owned = document.createElement("button");
+      owned.className = "btn owned";
+      owned.innerHTML = "Owned";
+      product.appendChild(owned);
+    }
   }
 }
 // Fetch products
@@ -255,6 +281,7 @@ function validCheckout() {
 
   return true;
 }
+
 //give current user
 function getCurrentUser() {
   fetch("/api/users/getCurrentUser", {
@@ -297,11 +324,59 @@ document.getElementById("checkoutForm").addEventListener("submit", async functio
 
     alert("Payment processed successfully!");
     closeCheckoutPopup();
-    productsHaveAddedList.length = 0;
+    addProductToUser();
+    changeButtons();
+    productsHaveAddedList= [];
+
     updateCartDisplay();
     document.getElementById("checkoutForm").reset();
     }
   });
+
+  // Add products that the user buy to user's Products Array
+  async function addProductToUser() {
+    try {
+        const response = await fetch('/api/users/addProducts', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ 
+              userId: currentUser.userId,
+              newproducts: productsHaveAddedList.map((product) => product.id), // שינוי ל-newproducts כדי להתאים לשרת
+            })
+        });
+
+        if (!response.ok) {
+            const errorData = await response.json();
+            console.error('Error adding products:', errorData.message);
+            return { success: false, message: errorData.message || 'Failed to add products to user.' };
+        }
+
+        const updatedUser = await response.json();
+        console.log('Products added successfully: ', updatedUser);
+
+        return { success: true, user: updatedUser };
+    } catch (error) {
+        console.error('Error:', error);
+        return { success: false, message: 'An error occurred. Please try again later.' };
+    }
+}
+
+//change buttons from "add to cart" to "owned"
+function changeButtons() {
+    console.log("productsHaveAddedList len: ", productsHaveAddedList.length);
+    productsHaveAddedList.forEach((product) => {
+    console.log("product: ", product.name);
+
+    const button = document.querySelector(`.add-to-cart[data-product-name="${product.name}"]`);
+    console.log("addToCartButton: ", button);
+
+    button.className = "btn owned"; // משנה את הכיתה ל-owned
+    button.innerHTML = "Owned"; // משנה את הטקסט ל-Owned
+    button.disabled = true; // מבטלת את אפשרות הלחיצה
+  });
+}
 
 //update cart quantity
 function updateCartQuantity() {
@@ -312,10 +387,12 @@ function updateCartQuantity() {
     }
     let cartItems = document.createElement("div");
     cartItems.className = "cart-items";
+    
     cartItems.innerHTML = productsHaveAddedList.length;
     cartDisplayBtn.appendChild(cartItems);
   }
 }
+
 //logout
 async function Logout() {
   try {

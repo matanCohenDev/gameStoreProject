@@ -23,8 +23,24 @@ const userSchema = new mongoose.Schema({
     createdAt: {
         type: Date,
         default: Date.now,
-    }
+    },
+    products: [
+        {
+            productId: {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'Product',
+                default: null,
+            },
+            name: String,
+            price: Number,
+            quantity: {
+                type: Number,
+                default: 0,
+            }
+        }
+    ],
 });
+
 //exporting the model
 module.exports = mongoose.model('User', userSchema);
 

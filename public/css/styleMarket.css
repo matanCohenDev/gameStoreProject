@@ -1037,3 +1037,17 @@ h1 {
   border-radius: 20px;
   font-size: 14px;
 }
+
+.owned {
+  background-color: gray; /* צבע רקע אפור */
+  color: white; /* צבע טקסט לבן */
+  cursor: default; /* שינוי הסמן כדי להראות שהכפתור לא לחיץ */
+  border: none; /* הסרת מסגרת */
+}
+
+/* הגדרת מצב hover ללא שינוי בצבע */
+.owned:hover {
+  background-color: gray; /* הצבע נשאר אפור גם כשמרחפים מעל */
+  color: white; /* הצבע נשאר לבן */
+  box-shadow: none; /* הסרת הצל */
+}
