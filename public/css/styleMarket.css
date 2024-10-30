@@ -662,7 +662,13 @@ h1 {
   background-color: white;
   color: black;
   margin-left: auto;
-  padding: 10px;
+  padding: 5px; /* שימי לב שאפשר לשנות את זה בהתאם */
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px; /* אפשר לשנות את הגודל של המספר */
 }
 
 /*Serach bar css*/

@@ -327,9 +327,11 @@ document.getElementById("checkoutForm").addEventListener("submit", async functio
     addProductToUser();
     changeButtons();
     productsHaveAddedList= [];
+    productsHaveAddedList.length = 0;
 
     updateCartDisplay();
     document.getElementById("checkoutForm").reset();
+    document.getElementById("cart").children[2].remove();
     }
   });
 
