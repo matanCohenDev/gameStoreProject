@@ -26,10 +26,16 @@
         <span>Home</span>
       </button>
 
+      <button class="tab-btn" id="shop">
+        <i class="fas fa-store icon"></i>
+        <span>Shop</span>
+      </button>
+      
       <button class="tab-btn" id="cart">
         <i class="fas fa-shopping-cart icon"></i>
         <span>Cart</span>
       </button>
+      
 
       <button class="tab-btn" id="my-games">
         <i class="fas fa-gamepad icon"></i>
@@ -41,6 +47,20 @@
         <span>Logout</span>
       </button>
     </div>
+    <section class="landing-page">
+      <div class="welcome-container">
+        <h1>ברוכים הבאים לחנות המשחקים שלנו!</h1>
+        <p>
+          כאן תמצאו מבחר עצום של משחקים, החל ממשחקי אסטרטגיה ועד משחקי פאזלים מאתגרים.
+          <br />
+          הצטרפו להרפתקה, שדרגו את האוסף שלכם, והתכוננו לשעות של הנאה בלתי נגמרת!
+        </p>
+        <br>
+        <button class="btn go-shop-btn" id="goToShopBtn">צאו לגלות עכשיו</button>
+      </div>
+    </section>
+    
+    <section class ="virtual-products-shop hidden">
     <div class="container">
       <h1>Explore Our Products</h1>
       <!--filter Html-->
@@ -101,6 +121,7 @@
         <!-- Product Cards will be dynamically inserted here -->
       </div>
     </div>
+  </section>
     <!-- Cart Popup -->
     <div id="cart-popup" class="cart-popup">
       <div class="cart-content">
@@ -163,7 +184,7 @@
           <!-- Billing Address -->
           <input type="text" id="billingAddress" placeholder="Billing Address" required />
           <input type="text" id="city" placeholder="City" required />
-          <input type="text" id="postalCode" placeholder="Postal Code" required />
+          <input type="text" id="postalCode" placeholder="Postal Code" maxlength="6" required />
           
           <!-- Realistic Credit Card Animation -->
           <div class="credit-card-container">

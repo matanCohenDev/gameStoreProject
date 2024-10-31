@@ -87,7 +87,13 @@ function addProductToCart(productName) {
 }
 
 // Display products
+// Function to display products on the page
 function displayProducts() {
+  if (!currentUser || !Array.isArray(currentUser.products)) {
+    console.error("currentUser or currentUser.products is not defined or not an array.");
+    return; // Exit the function if `currentUser` is not valid
+  }
+
   for (let i = 0; i < productsNames.length; i++) {
     let product = document.createElement("div");
     product.className = "product-card";
@@ -116,21 +122,12 @@ function displayProducts() {
       "</p>";
     product.appendChild(productInfo);
 
-    getCurrentUser();
-     // בדיקת קיום המוצר במערך לפי productId
-     console.log("product " + i + " current user " + currentUser);
-     console.log("product " + i + " current user products " + currentUser.products);
-     
-     //בדיקה האם המשתמש כבר קנה את המוצר
-     const isProductInCart = currentUser.products.some(
+    // Check if the product is in the user's purchased list
+    const isProductInCart = currentUser.products.some(
       (product) => product.productId === productsIds[i]
     );
 
-    // אם המשתמש עדיין לא קנה את המוצר
-    if (!isProductInCart)
-    {
-      console.log("currentUser.products: ", currentUser.products + " not found");
-      
+    if (!isProductInCart) {
       let addToCart = document.createElement("button");
       addToCart.className = "btn add-to-cart";
       addToCart.setAttribute("data-product-name", productsNames[i]);
@@ -143,12 +140,7 @@ function displayProducts() {
       };
 
       addToCart.addEventListener("click", addToCart.handler);
-    }
-
-    //אם המשתמש כבר קנה את המוצר, הוא לא יכול להוסיף אותו לסל
-    else
-    {
-      console.log("product " + i + " currentUser.products: ", currentUser.products + " found");
+    } else {
       let owned = document.createElement("button");
       owned.className = "btn owned";
       owned.innerHTML = "Owned";
@@ -156,12 +148,18 @@ function displayProducts() {
     }
   }
 }
+
+
 // Fetch products
 async function getProducts() {
   try {
+    // Wait for currentUser to be fetched before proceeding
+    await getCurrentUser();
+
     const response = await fetch("/api/products/getProducts");
     const data = await response.json();
 
+    // Populate product arrays
     data.forEach((product) => {
       productsNames.push(product.name);
       productsPrices.push(product.price);
@@ -170,11 +168,13 @@ async function getProducts() {
       productsIds.push(product._id);
     });
 
+    // Call displayProducts to show products on the page
     displayProducts();
   } catch (error) {
     console.error("Error fetching products:", error);
   }
 }
+
 document.addEventListener("DOMContentLoaded", getProducts);
 //show cart modal
 cartBtn.addEventListener("click", () => {
@@ -207,8 +207,13 @@ function closeContactPopup() {
   document.getElementById("contactPopup").style.display = "none";
 }
 document.getElementById("checkout-btn").addEventListener("click", () => {
-  cartModal.style.display = "none";
-  checkoutModal.style.display = "flex";
+  if (productsHaveAddedList.length !== 0) {
+    cartModal.style.display = "none";
+    checkoutModal.style.display = "flex";
+  }
+  else{
+    alert("Cart is empty");
+  }
 });
 function closeCheckoutPopup() {
   checkoutModal.style.display = "none";
@@ -283,19 +288,25 @@ function validCheckout() {
 }
 
 //give current user
-function getCurrentUser() {
-  fetch("/api/users/getCurrentUser", {
-    method: "GET",
-    credentials: "include",
-  })
-    .then((response) => response.json())
-    .then((data) => {
-      currentUser = data;
-    })
-    .catch((error) => {
-      console.error("Error fetching current user:", error);
+async function getCurrentUser() {
+  try {
+    const response = await fetch("/api/users/getCurrentUser", {
+      method: "GET",
+      credentials: "include",
     });
+
+    if (response.ok) {
+      currentUser = await response.json();
+    } else {
+      console.error("Failed to fetch current user. Response status:", response.status);
+      currentUser = null; // Set to null if the user is not authenticated
+    }
+  } catch (error) {
+    console.error("Error fetching current user:", error);
+    currentUser = null;
+  }
 }
+
 
 getCurrentUser();
 // Handle the checkout form submission
@@ -727,4 +738,21 @@ document.getElementById("cvv").addEventListener("blur", () => {
   const card = document.querySelector('.credit-card');
   card.classList.remove("flipped");
 });
+
+
+function OpenVirtualShop() {
+  const virtualProducts = document.querySelector(".virtual-products-shop");
+  const landingPage = document.querySelector(".landing-page");
+
+  // Check if elements exist before attempting to modify them
+  if (virtualProducts && landingPage) {
+    virtualProducts.classList.remove("hidden");
+    landingPage.classList.add("hidden");
+  } else {
+    console.error("Elements not found: Please check your HTML structure.");
+  }
+}
+
+document.getElementById("shop").addEventListener("click", OpenVirtualShop);
+
 
