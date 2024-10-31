@@ -56,6 +56,48 @@ body {
   transition: background-color 0.3s, box-shadow 0.3s;
 }
 
+.tab-second-btn {
+  width: 90%;
+  background-color: rgba(45, 47, 65, 0.85);
+  color: var(--text-color);
+  border: none;
+  padding: 0 20px; 
+  font-size: 15px;
+  cursor: pointer;
+  border-radius: 6px;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  opacity: 0;
+  max-height: 0;
+  overflow: hidden;
+  transform: scaleY(0); 
+  transform-origin: top; 
+  transition: opacity 0.5s ease-in-out, max-height 0.5s ease-in-out, transform 0.5s ease-in-out, padding 0.5s ease-in-out;
+  margin-top: 0; 
+  margin-bottom: 0;
+
+}
+
+.tab-second-btn.show {
+  opacity: 1;
+  max-height: 50px; 
+  transform: scaleY(1); 
+  margin-top: 5px;
+  padding: 15px 20px; 
+  margin-bottom: 20px;
+}
+
+.tab-second-btn:hover {
+  background-color: var(--primary-color);
+  box-shadow: 0 0 12px rgba(255, 69, 0, 0.8);
+}
+
+.hidden {
+  display: none;
+}
+
+
 .tab-btn .icon {
   margin-right: 10px;
   font-size: 20px;
@@ -76,6 +118,19 @@ body {
   background: rgba(0, 0, 0, 0.8);
   min-height: 100vh;
 }
+
+.welcome-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-left: 250px;
+  padding: 40px 60px;
+  background: rgba(0, 0, 0, 0.8);
+  min-height: 100vh;
+  text-align: center;
+}
+
 
 h1 {
   font-size: 36px;
@@ -1056,4 +1111,36 @@ h1 {
   background-color: gray; /* הצבע נשאר אפור גם כשמרחפים מעל */
   color: white; /* הצבע נשאר לבן */
   box-shadow: none; /* הסרת הצל */
+}
+
+
+.product-carousel {
+  display: flex;
+  align-items: center;
+}
+
+.product-list {
+  display: flex;
+  overflow: hidden;
+  width: calc(25% * 4); /* 4 products width */
+}
+
+.product-card {
+  flex: 0 0 25%; /* 25% width for each product */
+  box-sizing: border-box;
+  margin: 10px;
+}
+
+.arrow-btn {
+  background-color: #333;
+  color: white;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  font-size: 24px;
+}
+
+.arrow-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }

@@ -99,3 +99,17 @@ document.getElementById('sendMessageBtn').addEventListener('click', function(eve
 });
 
 getProducts();
+
+document.addEventListener("DOMContentLoaded", function () {
+    const images = document.querySelectorAll(".carousel-image");
+    const angle = 360 / images.length;
+    const radius = 1700; 
+
+    images.forEach((img, index) => {
+        const rotation = angle * index / 1.5;
+        img.style.transform = `rotateY(${rotation}deg) translateZ(${radius}px)`;
+    });
+});
+
+
+
