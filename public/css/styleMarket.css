@@ -122,6 +122,16 @@ body {
   min-height: 100vh;
 }
 
+.game-list{
+  margin-left: 250px;
+  padding: 40px 60px;
+  background: rgba(0, 0, 0, 0.8);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
 .welcome-container {
   display: flex;
   flex-direction: column;
@@ -142,6 +152,12 @@ h1 {
 }
 
 .product-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.my-games-list{
   display: flex;
   flex-wrap: wrap;
   gap: 20px;
@@ -210,6 +226,18 @@ h1 {
 }
 /*Does somthing?*/
 .btn {
+  background-color: var(--primary-color);
+  color: var(--text-color);
+  border: none;
+  padding: 12px;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 6px;
+  width: 100%;
+  transition: background-color 0.3s, box-shadow 0.3s;
+}
+
+.btn-play{
   background-color: var(--primary-color);
   color: var(--text-color);
   border: none;

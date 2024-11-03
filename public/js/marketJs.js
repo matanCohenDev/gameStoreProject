@@ -335,7 +335,9 @@ document
         alert("An error occurred. Please try again later.");
         return;
       }
-
+      
+      await getCurrentUser(); 
+      displayProductsOfUser();
       alert("Payment processed successfully!");
       closeCheckoutPopup();
       addProductToUser();
@@ -745,10 +747,12 @@ document.getElementById("cvv").addEventListener("blur", () => {
 function OpenVirtualShop() {
   const virtualProducts = document.querySelector(".virtual-products-shop");
   const landingPage = document.querySelector(".landing-page");
+  const myGamesList = document.querySelector(".my-play-games");
 
   // Check if elements exist before attempting to modify them
   if (virtualProducts && landingPage) {
     virtualProducts.classList.remove("hidden");
+    myGamesList.classList.add("hidden");
     landingPage.classList.add("hidden");
   } else {
     console.error("Elements not found: Please check your HTML structure.");
@@ -757,38 +761,55 @@ function OpenVirtualShop() {
 
 document.getElementById("shop").addEventListener("click", OpenVirtualShop);
 
-// Function to display products of the current user
 function displayProductsOfUser() {
+  const virtualProducts = document.querySelector(".virtual-products-shop");
+  const landingPage = document.querySelector(".landing-page");
+  const myGamesList = document.querySelector(".my-play-games");
+  const gameList = document.querySelector(".game-list");
+  virtualProducts.classList.add("hidden");
+  landingPage.classList.add("hidden");
+  myGamesList.classList.remove("hidden");
+  gameList.innerHTML = "";
+
+  const containerMyGames = document.querySelector(".game-list");
+
   myGames = currentUser.products.map((product) => product.name);
   console.log("myGames: ", myGames);
 
-  // Clear existing products if needed
-  const myGamesContainer = document.getElementById("product-list-myGames"); // Example container for products
-  document.getElementById("product-list").classList.add("hidden");
-  document.getElementById("landing-page").classList.add("hidden");
-  document.getElementById("product-list-myGames").classList.remove("hidden");
-
-  for (let i = 0; i < myGames.length; i++) {
+  for(let i = 0; i < myGames.length; i++) {
     let product = document.createElement("div");
     product.className = "product-card";
+    myGamesList.appendChild(product);
+
+    let name = document.createElement("h2");
+    name.innerHTML = myGames[i];
+    product.appendChild(name); 
 
     let productImage = document.createElement("img");
     productImage.className = "product-image";
-    productImage.src = `/pics/${productList[i].name}.webp`;
-    productImage.alt = productList[i].name;
+    productImage.src = "/pics/" + myGames[i] + ".webp";
+    productImage.alt = myGames[i];
     product.appendChild(productImage);
 
-    let productInfo = document.createElement("div");
-    productInfo.className = "product-info";
-    productInfo.innerHTML = `<h2>${productList[i].name}</h2>
-                               <p>${productList[i].description}</p>
-                               <p>${productList[i].price}$</p>
-                               <p>${productList[i].category}</p>`;
-    product.appendChild(productInfo);
+    let productBtn = document.createElement("button");
+    productBtn.className = "btn-play";
+    productBtn.id = myGames[i] + " btn-play";
+    productBtn.innerHTML = "Play Game";
 
-    myGamesContainer.appendChild(product);
+    product.appendChild(productBtn);
+    containerMyGames.appendChild(product);
   }
 }
+
+document.addEventListener("click", (event) => {
+  if (event.target && event.target.classList.contains("btn-play")) {
+    const parts = event.target.id.split(" ");
+    gameName = parts.slice(0, parts.indexOf("btn-play")).join(" ");
+    gameNameLowerCase = gameName.toLowerCase().replace(/ /g, "-");
+    console.log("gameName: ", gameNameLowerCase);
+    window.location.href = `/game/${gameNameLowerCase}`;
+  }
+});
 
 document.getElementById("my-games").addEventListener("click", () => {
   displayProductsOfUser();

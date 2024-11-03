@@ -43,6 +43,52 @@ app.use('/api/users', require('./routes/users-routes'));
 app.use('/api/products', require('./routes/products-routes'));
 app.use('/api/orders', require('./routes/orders-routes'));
 
+
+app.use('/game/snake', (req, res) => {
+    if(req.session.user){
+        res.sendFile(path.join(__dirname, 'views', 'htmlGames', 'snake.html'));
+    }
+    else{
+        res.sendFile(path.join(__dirname, 'views' , 'html', 'login.html'));
+    }
+});
+  
+app.use('/game/memory-game', (req, res) => {
+    if(req.session.user){
+        res.sendFile(path.join(__dirname, 'views', 'htmlGames', 'memory-card.html'));
+    }
+    else{
+        res.sendFile(path.join(__dirname, 'views' , 'html', 'login.html'));
+    }
+});
+  
+app.use('/game/simon-game', (req, res) => {
+    if(req.session.user){
+        res.sendFile(path.join(__dirname, 'views', 'htmlGames', 'simon-game.html'));
+    }
+    else{
+        res.sendFile(path.join(__dirname, 'views' , 'html', 'login.html'));
+    }
+});
+  
+app.use('/game/soduko', (req, res) => {
+    if(req.session.user){
+        res.sendFile(path.join(__dirname, 'views', 'htmlGames', 'soduko.html'));
+    }
+    else{
+        res.sendFile(path.join(__dirname, 'views' , 'html', 'login.html'));
+    }
+});
+  
+app.use('/game/checkers', (req, res) => {
+    if(req.session.user){
+        res.sendFile(path.join(__dirname, 'views', 'htmlGames', 'checkers.html'));
+    }
+    else{
+        res.sendFile(path.join(__dirname, 'views' , 'html', 'login.html'));
+    }
+});
+  
 app.use('/admin', (req, res) => {
     res.sendFile(path.join(__dirname, 'views' , 'html', 'admin.html'));
 });
@@ -50,7 +96,6 @@ app.use('/admin', (req, res) => {
 app.use('/user' , (req, res) => {
     res.sendFile(path.join(__dirname, 'views' , 'html', 'market.html'));
 });
-
 
 app.use('/login', (req, res) => {
     if(req.session.user && req.session.user.username === 'admin'){
