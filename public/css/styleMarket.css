@@ -20,6 +20,10 @@ body {
   overflow-x: hidden;
 }
 
+.hidden {
+  display: none;
+}
+
 .toolbar {
   position: fixed;
   top: 0;
@@ -61,7 +65,7 @@ body {
   background-color: rgba(45, 47, 65, 0.85);
   color: var(--text-color);
   border: none;
-  padding: 0 20px; 
+  padding: 0 20px;
   font-size: 15px;
   cursor: pointer;
   border-radius: 6px;
@@ -71,20 +75,20 @@ body {
   opacity: 0;
   max-height: 0;
   overflow: hidden;
-  transform: scaleY(0); 
-  transform-origin: top; 
-  transition: opacity 0.5s ease-in-out, max-height 0.5s ease-in-out, transform 0.5s ease-in-out, padding 0.5s ease-in-out;
-  margin-top: 0; 
+  transform: scaleY(0);
+  transform-origin: top;
+  transition: opacity 0.5s ease-in-out, max-height 0.5s ease-in-out,
+    transform 0.5s ease-in-out, padding 0.5s ease-in-out;
+  margin-top: 0;
   margin-bottom: 0;
-
 }
 
 .tab-second-btn.show {
   opacity: 1;
-  max-height: 50px; 
-  transform: scaleY(1); 
+  max-height: 50px;
+  transform: scaleY(1);
   margin-top: 5px;
-  padding: 15px 20px; 
+  padding: 15px 20px;
   margin-bottom: 20px;
 }
 
@@ -96,7 +100,6 @@ body {
 .hidden {
   display: none;
 }
-
 
 .tab-btn .icon {
   margin-right: 10px;
@@ -130,7 +133,6 @@ body {
   min-height: 100vh;
   text-align: center;
 }
-
 
 h1 {
   font-size: 36px;
@@ -1112,7 +1114,6 @@ h1 {
   color: white; /* הצבע נשאר לבן */
   box-shadow: none; /* הסרת הצל */
 }
-
 
 .product-carousel {
   display: flex;
