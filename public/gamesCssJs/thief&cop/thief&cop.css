@@ -30,20 +30,20 @@ body {
   }
   
   .thief {
-    background: url('/pics/thief.webp') no-repeat center;
+    background: url('/gamesCssJs/thief&cop/pics/thief.webp') no-repeat center;
     background-size: contain;
     border-radius: 50%;
     animation: pulse 1s infinite;
   }
   
   .cop {
-    background: url('/pics/cop.webp') no-repeat center;
+    background: url('/gamesCssJs/thief&cop/pics/cop.webp') no-repeat center;
     background-size: contain;
     border-radius: 50%;
   }
   
   .car {
-    background: url('/pics/coins.webp') no-repeat center;
+    background: url('/gamesCssJs/thief&cop/pics/coins.webp') no-repeat center;
     background-size: contain;
     border-radius: 50%;
   }
