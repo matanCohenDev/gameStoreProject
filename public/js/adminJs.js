@@ -15,6 +15,7 @@ const statsSection = document.getElementById('statsSection');
 const usersTableBody = document.getElementById('usersTableBody');
 const productsTableBody = document.getElementById('productsTableBody');
 const ordersTableBody = document.getElementById('ordersTableBody');
+const summaryTableBody = document.getElementById('productSummaryTableBody'); 
 
 // Modals
 const productModal = document.getElementById('productModal');
@@ -62,6 +63,7 @@ function formatDate(isoString) {
 function clearTables() {
     usersTableBody.innerHTML = '';
     productsTableBody.innerHTML = '';
+    summaryTableBody.innerHTML = ''; // מנקה את תוכן הטבלה הקיים
     ordersTableBody.innerHTML = '';
 
 }
@@ -137,6 +139,27 @@ function fetchAllProductsAndInsertToTable() {
         .catch(error => console.error('Error fetching products:', error));
 }
 
+// Fetch and Display Products- group by category
+// פונקציה שמבצעת בקשה לשרת לקבלת סיכום המוצרים לפי קטגוריה
+function fetchProductSummary() {
+    fetch('/api/products/getSummery') // הנתיב הנוכחי לשליפת סיכום הקטגוריות
+        .then(response => response.json())
+        .then(data => {
+            //console.log('Product summary:', data); // מדפיס את הסיכום בקונסול
+            
+            // עובר על כל קטגוריה בסיכום ומוסיף שורה לטבלה
+            data.forEach(categorySummary => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>${categorySummary._id}</td>
+                    <td>${categorySummary.count}</td>
+                `;
+                summaryTableBody.appendChild(tr); // מוסיף את השורה לטבלה
+            });
+        })
+        .catch(error => console.error('Error fetching product summary:', error)); // טיפול בשגיאות במקרה של כשל
+}
+
 // Fetch and Display Orders
 function fetchAllOrdersAndInsertToTable() {
     fetch('/api/orders/getOrders')
@@ -180,6 +203,7 @@ productsBtn.addEventListener('click', () => {
     clearTables();
     showSection('products');
     fetchAllProductsAndInsertToTable();
+    fetchProductSummary();
 });
 
 statsBtn.addEventListener('click', () => {
@@ -199,6 +223,14 @@ ordersBtn.addEventListener('click', () => {
 // Show Create Product Modal
 createProductBtn.addEventListener('click', () => {
     productModal.classList.add('active');
+    const productName = document.getElementById('productName');
+    const productPrice = document.getElementById('productPrice');
+    const productDescription = document.getElementById('productDescription');
+    const productCategory = document.getElementById('productCategory');
+    productName.value = '';
+    productPrice.value = '';
+    productDescription.value = '';
+    productCategory.value = productCategory.options[0].value;
 });
 
 // Close Create Product Modal
@@ -208,6 +240,7 @@ closeProductModalBtn.addEventListener('click', () => {
 
 // Add New Product
 addProductBtn.addEventListener('click', async (event) => {
+
     event.preventDefault();
 
     const productName = document.getElementById('productName').value.trim();
@@ -215,7 +248,7 @@ addProductBtn.addEventListener('click', async (event) => {
     const productDescription = document.getElementById('productDescription').value.trim();
     const productCategory = document.getElementById('productCategory').value.trim();
 
-    if (!productName || isNaN(productPrice) || !productDescription || !productCategory) {
+    if (!productName || isNaN(productPrice) || productPrice < 0 || !productDescription || !productCategory) {
         alert('Please fill in all fields correctly.');
         return;
     }
@@ -274,7 +307,7 @@ updateProductFormBtn.addEventListener('click', async (event) => {
 
     const updatedPrice = parseFloat(document.getElementById('productPriceUpdate').value);
 
-    if (isNaN(updatedPrice)) {
+    if (isNaN(updatedPrice) || updatedPrice < 0) {
         alert('Please enter a valid price.');
         return;
     }
@@ -446,11 +479,12 @@ function fetchMessages(user) {
                     messageContainer.appendChild(messageDiv); 
                 }
             });
+            setTimeout(() => {
+                messageContainer.scrollTop = messageContainer.scrollHeight;
+            }, 10);
         })
         .catch(error => console.error('Error fetching messages:', error));
-        setTimeout(() => {
-            messageContainer.scrollTop = messageContainer.scrollHeight;
-        }, 100);
+        
 }
 
 function sendMessage() {
@@ -537,17 +571,13 @@ homeBtn.addEventListener('click', () => {
 usersBtn.click(); // Default tab
 
 //filter
-document.getElementById('searchBtn').addEventListener('click', function () {
+function filterUsersTable() {
     const searchValue = document.getElementById('searchInput').value.toLowerCase();
-    const dateFilter = document.getElementById('searchDate').value;  // Get the date from input field (YYYY-MM-DD)
-
-    console.log("Search value:", searchValue);
-    console.log("Date filter:", dateFilter);
+    const dateFilter = document.getElementById('searchDate').value;
 
     const table = document.getElementById('usersTableBody');
     const rows = table.getElementsByTagName('tr');
 
-    // Split the date filter into year, month, and day
     let dateFilterYear = "";
     let dateFilterMonth = "";
     let dateFilterDay = "";
@@ -572,40 +602,29 @@ document.getElementById('searchBtn').addEventListener('click', function () {
         console.log(`Row ${i + 1} - Email:`, email);
         console.log(`Row ${i + 1} - Created At (raw):`, createdAt);
 
-        // Extract the year part from createdAt by taking the first 4 characters
         let createdAtYear = "";
         let createdAtMonth = "";
         let createdAtDay = "";
 
         if (createdAt) {
-            const createdAtParts = createdAt.split('/');  // Split by '/' in case the format is DD/MM/YYYY
-            createdAtDay = createdAtParts[0];    // Day part
-            createdAtMonth = createdAtParts[1];  // Month part
-            createdAtYear = createdAtParts[2].substring(0, 4);   // Take only the first 4 characters of the year
+            const createdAtParts = createdAt.split('/');
+            createdAtDay = createdAtParts[0];
+            createdAtMonth = createdAtParts[1];
+            createdAtYear = createdAtParts[2].substring(0, 4);
 
             console.log(`Row ${i + 1} - Created At day:`, createdAtDay);
             console.log(`Row ${i + 1} - Created At month:`, createdAtMonth);
             console.log(`Row ${i + 1} - Created At year (only):`, createdAtYear);
         }
 
-        // Check if the search matches username or email
-        let matchSearch = (
-            username.indexOf(searchValue) > -1 || 
-            email.indexOf(searchValue) > -1
-        );
+        let matchSearch = username.indexOf(searchValue) > -1;
 
-        console.log(`Row ${i + 1} - Match search:`, matchSearch);
-
-        // Check if the year, month, and day match the date filter
         let matchDate = (
             (createdAtYear === dateFilterYear || dateFilterYear === "") &&
             (createdAtMonth === dateFilterMonth || dateFilterMonth === "") &&
             (createdAtDay === dateFilterDay || dateFilterDay === "")
         );
 
-        console.log(`Row ${i + 1} - Match date:`, matchDate);
-
-        // Show the row if both match the search criteria
         if ((matchSearch || searchValue === "") && matchDate) {
             rows[i].style.display = "";
             console.log(`Row ${i + 1} - Displaying row.`);
@@ -614,4 +633,23 @@ document.getElementById('searchBtn').addEventListener('click', function () {
             console.log(`Row ${i + 1} - Hiding row.`);
         }
     }
+}
+
+document.getElementById('searchInput').addEventListener('keyup', filterUsersTable);
+document.getElementById('searchDate').addEventListener('input', function() {
+    const dateYear = this.value.substring(0, 4);
+    if (this.value.length === 10) { 
+        if(dateYear > 2024)
+            filterUsersTable();
+        else if(dateYear.substring(0, 1) != 0){
+            alert('enetr a valid date');
+            this.value = "";
+        }
+    }
+});
+
+document.getElementById('delBtn').addEventListener('click', () => {
+    document.getElementById('searchInput').value = "";
+    document.getElementById('searchDate').value = "";
+    filterUsersTable();
 });

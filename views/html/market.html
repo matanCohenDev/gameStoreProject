@@ -26,6 +26,11 @@
         <span>Home</span>
       </button>
 
+      <button class="tab-btn" id="shop">
+        <i class="fas fa-store icon"></i>
+        <span>Shop</span>
+      </button>
+
       <button class="tab-btn" id="cart">
         <i class="fas fa-shopping-cart icon"></i>
         <span>Cart</span>
@@ -41,66 +46,90 @@
         <span>Logout</span>
       </button>
     </div>
-    <div class="container">
-      <h1>Explore Our Products</h1>
-      <!--filter Html-->
-      <div class="filter-container">
-        <div class="search-bar">
-          <input
-            type="text"
-            id="search-game"
-            placeholder="Search for a game..."
-          />
-        </div>
+    <section class="landing-page">
+      <div class="welcome-container">
+        <h1>ברוכים הבאים לחנות המשחקים שלנו!</h1>
+        <p>
+          כאן תמצאו מבחר עצום של משחקים, החל ממשחקי אסטרטגיה ועד משחקי פאזלים
+          מאתגרים.
+          <br />
+          הצטרפו להרפתקה, שדרגו את האוסף שלכם, והתכוננו לשעות של הנאה בלתי
+          נגמרת!
+        </p>
+        <br />
+        <button class="btn go-shop-btn" id="goToShopBtn">
+          צאו לגלות עכשיו
+        </button>
+      </div>
+    </section>
 
-        <div class="filter-category">
-          <select id="category">
-            <option value="">All Categories</option>
-            <option value="Memory">Memory</option>
-            <option value="Board">Board</option>
-            <option value="Cards">Cards</option>
-            <option value="Strategy">Strategy</option>
-          </select>
-        </div>
-        <div class="filter-price">
-          <div class="range-values">
-            <span id="price-min-val">$0</span>
-            <!-- Left side of the slider -->
-            <div class="range-slider">
-              <input
-                type="range"
-                id="price-min"
-                min="0"
-                max="100"
-                value="0"
-                oninput="updateRangeSlider()"
-              />
-              <input
-                type="range"
-                id="price-max"
-                min="0"
-                max="100"
-                value="100"
-                oninput="updateRangeSlider()"
-              />
+    <section class="virtual-products-shop hidden">
+      <div class="container">
+        
+        <h1>Explore Our Products</h1>
+        <!--filter Html-->
+        <div class="filter-container">
+          <div class="search-bar">
+            <input
+              type="text"
+              id="search-game"
+              placeholder="Search for a game..."
+            />
+          </div>
+
+          <div class="filter-category">
+            <select id="category">
+              <option value="">All Categories</option>
+              <option value="Memory">Memory</option>
+              <option value="Board">Board</option>
+              <option value="Cards">Cards</option>
+              <option value="Strategy">Strategy</option>
+            </select>
+          </div>
+          <div class="filter-price">
+            <div class="range-values">
+              <span id="price-min-val">$0</span>
+              <!-- Left side of the slider -->
+              <div class="range-slider">
+                <input
+                  type="range"
+                  id="price-min"
+                  min="0"
+                  max="100"
+                  value="0"
+                  oninput="updateRangeSlider()"
+                />
+                <input
+                  type="range"
+                  id="price-max"
+                  min="0"
+                  max="100"
+                  value="100"
+                  oninput="updateRangeSlider()"
+                />
+              </div>
+              <span id="price-max-val">$100</span>
+              <!-- Right side of the slider -->
             </div>
-            <span id="price-max-val">$100</span>
-            <!-- Right side of the slider -->
+            <div class="range-labels">
+              <span id="min-label">$0</span>
+              <span id="mid-label">$50</span>
+              <span id="max-label">$100</span>
+            </div>
           </div>
-          <div class="range-labels">
-            <span id="min-label">$0</span>
-            <span id="mid-label">$50</span>
-            <span id="max-label">$100</span>
-          </div>
+
+          <button class="btn" id="apply-filters">Apply Filters</button>
         </div>
 
-        <button class="btn" id="apply-filters">Apply Filters</button>
+        <div class="product-list">
+          <!-- Product Cards will be dynamically inserted here -->
+        </div>
+        
+    </section>
+    <div class="my-play-games">
+            <div class="game-list">
+            </div>
       </div>
-
-      <div class="product-list">
-        <!-- Product Cards will be dynamically inserted here -->
-      </div>
-    </div>
     <!-- Cart Popup -->
     <div id="cart-popup" class="cart-popup">
       <div class="cart-content">
@@ -141,6 +170,7 @@
             type="text"
             id="cardNumber"
             placeholder="Card Number"
+            maxlength="16"
             required
           />
           <div class="form-row">
@@ -148,26 +178,41 @@
               type="text"
               id="expiryDate"
               placeholder="Expiry Date (MM/YY)"
+              maxlength="4"
               required
             />
             <input
               type="text"
               id="cvv"
               placeholder="CVV"
+              maxlength="3"
               required
             />
           </div>
           <!-- Billing Address -->
-          <input type="text" id="billingAddress" placeholder="Billing Address" required />
+          <input
+            type="text"
+            id="billingAddress"
+            placeholder="Billing Address"
+            required
+          />
           <input type="text" id="city" placeholder="City" required />
-          <input type="text" id="postalCode" placeholder="Postal Code" required />
-          
+          <input
+            type="text"
+            id="postalCode"
+            placeholder="Postal Code"
+            maxlength="6"
+            required
+          />
+
           <!-- Realistic Credit Card Animation -->
           <div class="credit-card-container">
             <div class="credit-card">
               <div class="card-front">
                 <div class="chip"></div>
-                <div class="card-number" id="displayCardNumber">0000 0000 0000 0000</div>
+                <div class="card-number" id="displayCardNumber">
+                  0000 0000 0000 0000
+                </div>
                 <div class="card-holder">
                   <label>Cardholder</label>
                   <div id="displayCardholderName">Full Name</div>
@@ -189,13 +234,21 @@
           </div>
           <!-- Submit Button -->
           <div class="button-row">
-            <button type="submit" class="btn confirm-btn" id="confirmCheckoutBtn">Confirm Payment</button>
-            <button type="button" class="btn cancel-btn" id="cancelCheckoutBtn">Cancel</button>
+            <button
+              type="submit"
+              class="btn confirm-btn"
+              id="confirmCheckoutBtn"
+            >
+              Confirm Payment
+            </button>
+            <button type="button" class="btn cancel-btn" id="cancelCheckoutBtn">
+              Cancel
+            </button>
           </div>
         </form>
       </div>
     </div>
-    
+
     <button id="chat-btn">
       <i class="fas fa-comments"></i>
     </button>
@@ -213,6 +266,8 @@
         <button id="sendChatBtn">Send</button>
       </div>
     </div>
+
+    
 
     <script src="/js/marketJs.js"></script>
   </body>

@@ -51,7 +51,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function startGame() {
         cardGrid.innerHTML = ''; 
-        const cardImages = Array.from({ length: 54 }, (_, i) => `/public/gamesCssJs/memory-card/Cards/${i + 1}.png`);
+        const cardImages = Array.from({ length: 54 }, (_, i) => `/gamesCssJs/memory-card/Cards/${i + 1}.png`);
         numCards = numPairs * 2;
 
         const selectedCards = [];

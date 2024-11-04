@@ -4,16 +4,10 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Admin Page - GameStore</title>
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
-      integrity="sha512-..."
-      crossorigin="anonymous"
-      referrerpolicy="no-referrer"
-    />
-    <link rel="stylesheet" href="/css/styleAdmin.css" />
-  </head>
-  <body>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="/css/styleAdmin.css">
+</head>
+<body>
     <!-- Toolbar -->
     <div class="toolbar">
       <h1>Admin Dashboard</h1>
@@ -42,74 +36,61 @@
     </div>
 
     <div class="container" id="conatiner">
-      <div class="content">
-        <!-- Users Section -->
-        <div id="usersSection" class="section hidden">
-          <h2>Users</h2>
-
-          <!-- Single Search Bar and Date Filter -->
-          <div class="search-container">
-            <input
-              type="text"
-              id="searchInput"
-              placeholder="Search"
-              class="search-field"
-            />
-            <div class="date-filter">
-              <label for="searchDate">Create at:</label>
-              <input type="date" id="searchDate" class="search-field" />
+        <div class="content">
+            <!-- Users Section -->
+            <div id="usersSection" class="section hidden">
+                <h2>Users</h2>
+            
+                <!-- Single Search Bar and Date Filter -->
+                <div class="search-container">
+                    <input type="text" id="searchInput" placeholder="Search" class="search-field">
+                    <div class="date-filter">
+                        <label for="searchDate">Create at:</label>
+                        <input type="date" id="searchDate" class="search-field">
+                    </div>
+                    <button id="searchBtn" class="control-btn"><i class="fas fa-search"></i> Search</button>
+                </div>
+            
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Username</th>
+                            <th>Email</th>
+                            <th>Role Level</th>
+                            <th>Created At</th>
+                        </tr>
+                    </thead>
+                    <tbody id="usersTableBody">
+                        <!-- User data will be populated here -->
+                    </tbody>
+                </table>
             </div>
-            <button id="searchBtn" class="control-btn">
-              <i class="fas fa-search"></i> Search
-            </button>
-          </div>
+            
+            <!-- end filter -->
 
-          <table>
-            <thead>
-              <tr>
-                <th>Username</th>
-                <th>Email</th>
-                <th>Role Level</th>
-                <th>Created At</th>
-              </tr>
-            </thead>
-            <tbody id="usersTableBody">
-              <!-- User data will be populated here -->
-            </tbody>
-          </table>
-        </div>
-
-        <!-- end filter -->
-
-        <!-- Products Section -->
-        <div id="productsSection" class="section hidden">
-          <h2>Products</h2>
-          <div class="product-controls">
-            <button class="control-btn" id="createProductBtn">
-              <i class="fas fa-plus-circle"></i> Create Product
-            </button>
-            <button class="control-btn" id="updateProductBtn">
-              <i class="fas fa-edit"></i> Update Product
-            </button>
-            <button class="control-btn" id="deleteProductBtn">
-              <i class="fas fa-trash-alt"></i> Delete Product
-            </button>
-          </div>
-          <table>
-            <thead>
-              <tr>
-                <th>Name</th>
-                <th>Price</th>
-                <th>Description</th>
-                <th>Category</th>
-                <th>Created At</th>
-              </tr>
-            </thead>
-            <tbody id="productsTableBody">
-              <!-- Product data will be populated here -->
-            </tbody>
-          </table>
-        </div>
+            <!-- Products Section -->
+            <div id="productsSection" class="section hidden">
+                <h2>Products</h2>
+                <div class="product-controls">
+                    <button class="control-btn" id="createProductBtn"><i class="fas fa-plus-circle"></i> Create Product</button>
+                    <button class="control-btn" id="updateProductBtn"><i class="fas fa-edit"></i> Update Product</button>
+                    <button class="control-btn" id="deleteProductBtn"><i class="fas fa-trash-alt"></i> Delete Product</button>
+                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Price</th>
+                            <th>Description</th>
+                            <th>Category</th>
+                            <th>Created At</th>
+                        </tr>
+                    </thead>
+                    <tbody id="productsTableBody">
+                        <!-- Product data will be populated here -->
+                    </tbody>
+                </table>
+            </div>
 
         <!-- Orders Section -->
         <div id="ordersSection" class="section hidden">
