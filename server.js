@@ -52,6 +52,42 @@ app.use('/game/snake', (req, res) => {
         res.sendFile(path.join(__dirname, 'views' , 'html', 'login.html'));
     }
 });
+
+app.use('/game/tic-tac-toe', (req, res) => {
+    if(req.session.user){
+        res.sendFile(path.join(__dirname, 'views', 'htmlGames', 'tic-tac-toe.html'));
+    }
+    else{
+        res.sendFile(path.join(__dirname, 'views' , 'html', 'login.html'));
+    }
+});
+
+app.use('/game/thief-&-cop', (req, res) => {
+    if(req.session.user){
+        res.sendFile(path.join(__dirname, 'views', 'htmlGames', 'thief&cop.html'));
+    }
+    else{
+        res.sendFile(path.join(__dirname, 'views' , 'html', 'login.html'));
+    }
+});
+
+app.use('/game/maze', (req, res) => {
+    if(req.session.user){
+        res.sendFile(path.join(__dirname, 'views', 'htmlGames', 'maze.html'));
+    }
+    else{
+        res.sendFile(path.join(__dirname, 'views' , 'html', 'login.html'));
+    }
+});
+
+app.use('/game/four-in-a-row', (req, res) => {
+    if(req.session.user){
+        res.sendFile(path.join(__dirname, 'views', 'htmlGames', 'four-in-a-row.html'));
+    }
+    else{
+        res.sendFile(path.join(__dirname, 'views' , 'html', 'login.html'));
+    }
+});
   
 app.use('/game/memory-game', (req, res) => {
     if(req.session.user){
