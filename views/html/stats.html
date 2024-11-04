@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Order Statistics by Date</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <style>
+      /* Global Styles */
+      body {
+        font-family: "Arial", sans-serif;
+        background: linear-gradient(to bottom, #e3f2fd, #90caf9);
+        margin: 0;
+        padding: 20px;
+      }
+
+      h1 {
+        text-align: center;
+        margin-bottom: 10px;
+        font-size: 28px;
+        color: #0d47a1;
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+      }
+
+      #chart-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 20px;
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+        border-radius: 8px;
+        overflow: hidden;
+        background-color: white;
+        padding: 20px;
+      }
+
+      .bar {
+        fill: #42a5f5;
+        transition: fill 0.3s, height 0.6s ease-out;
+      }
+
+      .bar:hover {
+        fill: #1e88e5;
+      }
+
+      .tooltip {
+        position: absolute;
+        text-align: center;
+        padding: 8px 12px;
+        background: rgba(0, 0, 0, 0.8);
+        color: white;
+        border-radius: 4px;
+        pointer-events: none;
+        opacity: 0;
+        transition: opacity 0.3s ease-in-out;
+        font-size: 14px;
+      }
+
+      .axis-label {
+        font-size: 14px;
+        font-family: "Arial", sans-serif;
+      }
+
+      svg text {
+        font-family: "Arial", sans-serif;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Average Order Amount by Date</h1>
+    <div id="chart-container">
+      <svg id="chart" width="800" height="400"></svg>
+    </div>
+    <div class="tooltip" id="tooltip"></div>
+
+    <script>
+      async function fetchAndRenderStats() {
+        const response = await fetch("/api/orders-stats/by-date");
+        const data = await response.json();
+
+        console.log(data); // Debugging output to ensure data is correct
+
+        // Parse the date strings to JavaScript Date objects
+        data.forEach((d) => (d.date = new Date(d.date)));
+
+        const svg = d3.select("#chart");
+        const margin = { top: 20, right: 30, bottom: 50, left: 60 };
+        const width = +svg.attr("width") - margin.left - margin.right;
+        const height = +svg.attr("height") - margin.top - margin.bottom;
+
+        const g = svg
+          .append("g")
+          .attr("transform", `translate(${margin.left},${margin.top})`);
+
+        const tooltip = d3.select("#tooltip");
+
+        // Use scaleBand for even spacing of bars
+        const x = d3
+          .scaleBand()
+          .domain(data.map((d) => d3.timeFormat("%Y-%m-%d")(d.date)))
+          .range([0, width])
+          .padding(0.1);
+
+        const y = d3
+          .scaleLinear()
+          .domain([0, d3.max(data, (d) => d.averageOrderAmount)])
+          .nice()
+          .range([height, 0]);
+
+        // Add X axis
+        g.append("g")
+          .attr("class", "axis-label")
+          .attr("transform", `translate(0,${height})`)
+          .call(d3.axisBottom(x))
+          .selectAll("text")
+          .attr("transform", "rotate(-45)")
+          .style("text-anchor", "end")
+          .attr("dy", "0.8em"); // Adjust vertical alignment slightly
+
+        // Add Y axis
+        g.append("g").attr("class", "axis-label").call(d3.axisLeft(y));
+
+        // Add Bars
+        const bars = g
+          .selectAll(".bar")
+          .data(data)
+          .enter()
+          .append("rect")
+          .attr("class", "bar")
+          .attr("x", (d) => x(d3.timeFormat("%Y-%m-%d")(d.date)))
+          .attr("y", (d) => y(0)) // Start from y = 0 for animation
+          .attr("width", x.bandwidth())
+          .attr("height", 0) // Start with height 0 for animation
+          .on("mouseover", (event, d) => {
+            tooltip
+              .style("opacity", 1)
+              .html(
+                `Date: ${d3.timeFormat("%Y-%m-%d")(
+                  d.date
+                )}<br>Avg: $${d.averageOrderAmount.toFixed(2)}`
+              )
+              .style("left", event.pageX + 10 + "px")
+              .style("top", event.pageY - 20 + "px");
+          })
+          .on("mouseout", () => {
+            tooltip.style("opacity", 0);
+          });
+
+        // Animate bars to grow to their value
+        bars
+          .transition()
+          .duration(800)
+          .attr("y", (d) => y(d.averageOrderAmount))
+          .attr("height", (d) => height - y(d.averageOrderAmount));
+      }
+
+      fetchAndRenderStats();
+    </script>
+  </body>
+</html>
