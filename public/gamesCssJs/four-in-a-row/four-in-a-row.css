@@ -1,0 +1,148 @@
+.board button {
+	width: 100px;
+	height: 100px;
+	background-color: gray;
+	margin: 1px;
+	border: 4px solid black;
+	border-radius: 50%;
+  }
+  
+  .navbar, .footer {
+	height: 80px;
+	background-color: black;
+	color: white;
+	align-self: center;
+  }
+  
+  .footer {
+	height: 80px;
+	background-color: black;
+	color: white;
+	align-self: center;
+	margin-top: 30px;
+	width: 100%;
+	position: fixed;
+	bottom: 0;
+  }
+  
+  #nameOfGame, p {
+	align-self: center;
+	font-size: 50px;
+	color: white;
+  }
+  
+  body {
+	background-color: gray;
+  }
+  
+  #gamepage {
+	display: none;
+  }
+  
+  #start > button {
+	margin: 200px 0px;
+	font-size: 32px;
+	padding: 10px 20px;
+	background-color: orange;
+	color: white;
+	border: 1px solid black;
+	border-radius: 30px;
+  }
+  
+  #nameInput {
+	height: 100%;
+	width: 100%;
+	background-color: rgba(0, 0, 0, 0.4);
+	font-size: 20px;
+	position: fixed;
+	left: 0;
+	top: 0;
+	display: none;
+	z-index: 1;
+  }
+  
+  #modal {
+	border: 1px solid black;
+	border-radius: 10px;
+	width: fit-content;
+	padding: 20px 40px;
+	background-color: #ffcc99; /* Light orange background for the modal */
+	z-index: 2;
+	margin: 15% auto;
+	box-shadow: 0 10px 20px 0 rgba(0, 0, 0, 0.5), 0 12px 30px 0 rgba(0, 0, 0, 0.5);
+  }
+  
+  #modal > button {
+	padding: 5px 20px;
+	background-color: orange;
+	color: white;
+	border: 1px solid black;
+	border-radius: 30px;
+  }
+  
+  input {
+	color: white;
+	border: 2px solid black;
+	background-color: #2b2b2b; /* Dark gray background for inputs */
+	border-radius: 2px;
+  }
+  
+  .activePlayer {
+	padding: 5px 10px;
+	background-color: orange;
+	color: white;
+	border: 2px solid black;
+	border-radius: 25px;
+	position: fixed;
+	left: 5%;
+  }
+  
+  .inactivePlayer {
+	padding: 5px 10px;
+	background-color: gray;
+	color: white;
+	border: 2px solid black;
+	border-radius: 25px;
+	position: fixed;
+	right: 5%;
+  }
+  
+  .close {
+	color: #ff3300; /* Bright red-orange color for the close button */
+	float: right;
+	font-size: 32px;
+	font-weight: bold;
+  }
+  
+  .close:active, .close:hover {
+	cursor: pointer;
+  }
+  
+  #timer-wrap {
+	background-color: black;
+	border: none;
+	border-radius: 3px;
+	color: white;
+	padding: 6px;
+	text-align: center;
+	text-decoration: none;
+	font-size: 12px;
+  }
+  
+  .centered {
+	position: absolute;
+	top: 30%;
+	left: 45%;
+  }
+  
+  /* Remove arrow signs in number input fields */
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+	-webkit-appearance: none;
+	margin: 0;
+  }
+  
+  input[type=number] {
+	-moz-appearance: textfield;
+  }
+  
