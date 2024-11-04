@@ -37,6 +37,31 @@
 
     <div class="container" id="conatiner">
         <div class="content">
+
+           <!-- Stats Section -->
+        <!-- Stats Section -->
+<!-- Stats Section -->
+<div id="statsSection" class="section hidden">
+    <h2 class="stats-title">Order Statistics Overview</h2>
+    <h4 class="stats-subtitle">Gain valuable insights into sales trends and customer behavior with detailed visual analytics</h4>
+    
+    <!-- First Chart: Average Order Amount by Date -->
+    <div id="chart-container">
+        <svg id="chart" width="800" height="400"></svg>
+    </div>
+
+    <!-- Second Chart: Number of Orders per Product -->
+    <h3 class="stats-subtitle">Product Popularity Overview</h3>
+    <h4 class="stats-subtitle">Understand which products are in demand based on the number of orders</h4>
+    <div id="product-chart-container">
+        <svg id="product-chart" width="800" height="400"></svg>
+    </div>
+
+    <div class="tooltip" id="tooltip"></div>
+</div>
+
+
+
             <!-- Users Section -->
             <div id="usersSection" class="section hidden">
                 <h2>Users</h2>
@@ -324,14 +349,7 @@
           </table>
         </div>
 
-        <!-- Stats Section -->
-        <div id="statsSection" class="section hidden">
-          <h2>Order Statistics</h2>
-          <div id="chart-container">
-            <svg id="chart" width="800" height="400"></svg>
-          </div>
-          <div class="tooltip" id="tooltip"></div>
-        </div>
+       
 
         <!-- Orders Section -->
         <div id="ordersSection" class="section hidden">
@@ -386,9 +404,9 @@
       </div>
     </div>
 
-    <script>
-      // Stats Section D3.js Logic
-      async function fetchAndRenderStats() {
+   <script>
+    // Stats Section D3.js Logic
+    async function fetchAndRenderStats() {
         const response = await fetch("/api/orders-stats/by-date");
         const data = await response.json();
         data.forEach((d) => (d.date = new Date(d.date)));
@@ -399,46 +417,99 @@
         const height = +svg.attr("height") - margin.top - margin.bottom;
 
         const g = svg
-          .append("g")
-          .attr("transform", `translate(${margin.left},${margin.top})`);
+            .append("g")
+            .attr("transform", `translate(${margin.left},${margin.top})`);
 
         const x = d3
-          .scaleBand()
-          .domain(data.map((d) => d3.timeFormat("%Y-%m-%d")(d.date)))
-          .range([0, width])
-          .padding(0.1);
+            .scaleBand()
+            .domain(data.map((d) => d3.timeFormat("%Y-%m-%d")(d.date)))
+            .range([0, width])
+            .padding(0.1);
 
         const y = d3
-          .scaleLinear()
-          .domain([0, d3.max(data, (d) => d.averageOrderAmount)])
-          .range([height, 0]);
+            .scaleLinear()
+            .domain([0, d3.max(data, (d) => d.averageOrderAmount)])
+            .range([height, 0]);
 
         g.append("g")
-          .attr("transform", `translate(0,${height})`)
-          .call(d3.axisBottom(x).tickSize(0))
-          .selectAll("text")
-          .attr("transform", "rotate(-45)")
-          .style("text-anchor", "end");
+            .attr("transform", `translate(0,${height})`)
+            .call(d3.axisBottom(x).tickSize(0))
+            .selectAll("text")
+            .attr("transform", "rotate(-45)")
+            .style("text-anchor", "end");
 
         g.append("g").call(d3.axisLeft(y));
 
         g.selectAll(".bar")
-          .data(data)
-          .enter()
-          .append("rect")
-          .attr("class", "bar")
-          .attr("x", (d) => x(d3.timeFormat("%Y-%m-%d")(d.date)))
-          .attr("y", (d) => y(0))
-          .attr("width", x.bandwidth())
-          .attr("height", 0)
-          .transition()
-          .duration(800)
-          .attr("y", (d) => y(d.averageOrderAmount))
-          .attr("height", (d) => height - y(d.averageOrderAmount));
-      }
+            .data(data)
+            .enter()
+            .append("rect")
+            .attr("class", "bar")
+            .attr("x", (d) => x(d3.timeFormat("%Y-%m-%d")(d.date)))
+            .attr("y", (d) => y(0))
+            .attr("width", x.bandwidth())
+            .attr("height", 0)
+            .transition()
+            .duration(800)
+            .attr("y", (d) => y(d.averageOrderAmount))
+            .attr("height", (d) => height - y(d.averageOrderAmount));
+    }
 
-      fetchAndRenderStats();
-    </script>
+    // Function to Fetch and Render Product Orders Chart
+    async function fetchAndRenderProductOrdersStats() {
+        const response = await fetch("/api/order-stats/products-orders-stats");
+        const data = await response.json();
+        console.log(data);
+        alert(2);
+        const svg = d3.select("#product-chart");
+        const margin = { top: 20, right: 30, bottom: 70, left: 60 };
+        const width = +svg.attr("width") - margin.left - margin.right;
+        const height = +svg.attr("height") - margin.top - margin.bottom;
+
+        const g = svg
+            .append("g")
+            .attr("transform", `translate(${margin.left},${margin.top})`);
+
+        const x = d3
+            .scaleBand()
+            .domain(data.map((d) => d.productName))
+            .range([0, width])
+            .padding(0.1);
+
+        const y = d3
+            .scaleLinear()
+            .domain([0, d3.max(data, (d) => d.orderCount)])
+            .range([height, 0]);
+
+        g.append("g")
+            .attr("transform", `translate(0,${height})`)
+            .call(d3.axisBottom(x).tickSize(0))
+            .selectAll("text")
+            .attr("transform", "rotate(-45)")
+            .style("text-anchor", "end");
+
+        g.append("g").call(d3.axisLeft(y));
+
+        g.selectAll(".bar")
+            .data(data)
+            .enter()
+            .append("rect")
+            .attr("class", "bar")
+            .attr("x", (d) => x(d.productName))
+            .attr("y", (d) => y(0))
+            .attr("width", x.bandwidth())
+            .attr("height", 0)
+            .transition()
+            .duration(800)
+            .attr("y", (d) => y(d.orderCount))
+            .attr("height", (d) => height - y(d.orderCount));
+    }
+
+    // Call both functions to render the charts
+    fetchAndRenderStats();
+    fetchAndRenderProductOrdersStats();
+</script>
+
   </body>
 </html>
 >

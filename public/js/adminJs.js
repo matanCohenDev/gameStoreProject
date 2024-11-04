@@ -63,7 +63,8 @@ function formatDate(isoString) {
 function clearTables() {
     usersTableBody.innerHTML = '';
     productsTableBody.innerHTML = '';
-    summaryTableBody.innerHTML = ''; // מנקה את תוכן הטבלה הקיים
+    if(summaryTableBody)
+        summaryTableBody.innerHTML = ''; // מנקה את תוכן הטבלה הקיים
     ordersTableBody.innerHTML = '';
 
 }
@@ -71,16 +72,10 @@ function clearTables() {
 // Show Section Function
 function showSection(section) {
     console.log(`Showing section: ${section}`);
-    
     // Hide all sections first
-    usersSection.classList.add('hidden');
-    productsSection.classList.add('hidden');
-    ordersSection.classList.add('hidden');
-    statsSection.classList.add('hidden');
-    chatSection.classList.add('hidden');
-
+    document.querySelectorAll('.section').forEach(sec => sec.classList.add('hidden'));
     // Show the correct section based on the parameter
-    if (section === 'users') usersSection.classList.remove('hidden');
+  if (section === 'users') usersSection.classList.remove('hidden');
     else if (section === 'products') productsSection.classList.remove('hidden');
     else if (section === 'orders') ordersSection.classList.remove('hidden');
     else if (section === 'chat') chatSection.classList.remove('hidden');
@@ -210,7 +205,6 @@ statsBtn.addEventListener('click', () => {
     chatSection.classList.add('hidden');
     clearTables();
     showSection('stats');
-    fetchAllProductsAndInsertToTable();
 });
 
 ordersBtn.addEventListener('click', () => {
@@ -406,6 +400,7 @@ chatBtn.addEventListener('click', () => {
     usersSection.classList.add('hidden');
     productsSection.classList.add('hidden');
     ordersSection.classList.add('hidden');
+    statsSection.classList.add('hidden');
     if (chatContainer.classList.contains('hidden')) {
         chatContainer.classList.remove('hidden');
     } else {
