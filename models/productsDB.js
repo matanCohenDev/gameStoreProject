@@ -16,7 +16,7 @@ const productSchema = new mongoose.Schema({
   },
   category: {
     type: String,
-    enum: ["Memory", "Board", "Cards", "Startegy"],
+    enum: ["Memory", "Board", "Cards", "Strategy"],
     default: "Memory",
     required: true,
   },

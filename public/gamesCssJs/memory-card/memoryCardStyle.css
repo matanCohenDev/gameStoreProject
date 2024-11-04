@@ -51,7 +51,7 @@ header h1 {
 .card {
     width: 100px;
     height: 130px;
-    background: url('/public/gamesCssJs/memory-card/Cards/backCard.png') no-repeat center center / cover;
+    background: url('/gamesCssJs/memory-card/Cards/backCard.png') no-repeat center center / cover;
     border-radius: 10px;
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
     position: relative;

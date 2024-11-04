@@ -51,7 +51,7 @@ function nextSequence(){
   playSound(randomChosenColour);
 }
 function playSound(name) {
-  var audio = new Audio("/public/gamesCssJs/simon-game/sounds/" + name + ".mp3");
+  var audio = new Audio("/gamesCssJs/simon-game/sounds/" + name + ".mp3");
   audio.play();
 }
 

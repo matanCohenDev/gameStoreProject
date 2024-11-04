@@ -1,0 +1,59 @@
+body {
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
+    font-family: Arial, sans-serif;
+  }
+  
+  .game-board {
+    display: grid;
+    grid-template-columns: repeat(10, 60px);
+    grid-template-rows: repeat(10, 60px);
+    gap: 2px;
+    border: 4px solid #fff;
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+    margin-right: 10%;
+  }
+  
+  .cell {
+    width: 60px;
+    height: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #1e1e1e;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+  }
+  
+  .thief {
+    background: url('/gamesCssJs/thief&cop/pics/thief.webp') no-repeat center;
+    background-size: contain;
+    border-radius: 50%;
+    animation: pulse 1s infinite;
+  }
+  
+  .cop {
+    background: url('/gamesCssJs/thief&cop/pics/cop.webp') no-repeat center;
+    background-size: contain;
+    border-radius: 50%;
+  }
+  
+  .car {
+    background: url('/gamesCssJs/thief&cop/pics/coins.webp') no-repeat center;
+    background-size: contain;
+    border-radius: 50%;
+  }
+  
+  @keyframes pulse {
+    0%, 100% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.1);
+    }
+  }
+  
