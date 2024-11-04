@@ -4,12 +4,13 @@ const productsBtn = document.getElementById('productsBtn');
 const ordersBtn = document.getElementById('ordersBtn');
 const chatBtn = document.getElementById('messagesBtn');
 const homeBtn = document.getElementById('homeBtn');
+const statsBtn = document.getElementById('statsBtn');
 // Sections
 const usersSection = document.getElementById('usersSection');
 const productsSection = document.getElementById('productsSection');
 const ordersSection = document.getElementById('ordersSection');
 const chatSection = document.getElementById('chatSection');
-
+const statsSection = document.getElementById('statsSection');
 // Tables
 const usersTableBody = document.getElementById('usersTableBody');
 const productsTableBody = document.getElementById('productsTableBody');
@@ -67,20 +68,23 @@ function clearTables() {
 
 // Show Section Function
 function showSection(section) {
+    console.log(`Showing section: ${section}`);
+    
+    // Hide all sections first
     usersSection.classList.add('hidden');
     productsSection.classList.add('hidden');
     ordersSection.classList.add('hidden');
+    statsSection.classList.add('hidden');
+    chatSection.classList.add('hidden');
 
-    if (section === 'users') {
-        usersSection.classList.remove('hidden');
-    } else if (section === 'products') {
-        productsSection.classList.remove('hidden');
-    } else if (section === 'orders') {
-        ordersSection.classList.remove('hidden');
-    } else if(section === 'chat'){
-        chatSection.classList.remove('hidden');
-    }
+    // Show the correct section based on the parameter
+    if (section === 'users') usersSection.classList.remove('hidden');
+    else if (section === 'products') productsSection.classList.remove('hidden');
+    else if (section === 'orders') ordersSection.classList.remove('hidden');
+    else if (section === 'chat') chatSection.classList.remove('hidden');
+    else if (section === 'stats') statsSection.classList.remove('hidden');
 }
+
 
 // Fetch and Display Users
 function fetchAllUsersAndInsertToTable() {
@@ -175,6 +179,13 @@ productsBtn.addEventListener('click', () => {
     chatSection.classList.add('hidden');
     clearTables();
     showSection('products');
+    fetchAllProductsAndInsertToTable();
+});
+
+statsBtn.addEventListener('click', () => {
+    chatSection.classList.add('hidden');
+    clearTables();
+    showSection('stats');
     fetchAllProductsAndInsertToTable();
 });
 
@@ -368,6 +379,10 @@ chatBtn.addEventListener('click', () => {
         chatContainer.classList.add('hidden');
     }
 });
+
+
+
+
 
 async function fetchAllUsers() {
     try {

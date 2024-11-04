@@ -1,60 +1,94 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Login/Register - GameStore</title>
-    
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" href="/css/loginAndRegStyle.css">
-</head>
-<body>
-    <div class="container">
-        <div class="flip-container" id="flip-container">
-            <div class="flipper">
-                <!-- Login Form -->
-                <div class="front">
-                    <form id="loginForm" class="form">
-                        <h2>Login</h2>
-                        <div class="input-group">
-                            <i class="fas fa-user"></i>
-                            <input type="text" id="usernameLogin" placeholder="Username" required>
-                        </div>
-                        <div class="input-group">
-                            <i class="fas fa-lock"></i>
-                            <input type="password" id="passwordLogin" placeholder="Password" required>
-                        </div>
-                        <div class="message" id="loginMessage"></div> 
-                        <button type="submit" class="btn" id="loginBtn">Login</button>
-                    </form>
-                </div>
 
-                <!-- Register Form -->
-                <div class="back">
-                    <form id="registerForm" class="form">
-                        <h2>Register</h2>
-                        <div class="input-group">
-                            <i class="fas fa-user-plus"></i>
-                            <input type="text" id="usernameRegister" placeholder="Username" required>
-                        </div>
-                        <div class="input-group">
-                            <i class="fas fa-envelope"></i>
-                            <input type="email" id="emailRegister" placeholder="Email" required>
-                        </div>
-                        <div class="input-group">
-                            <i class="fas fa-lock"></i>
-                            <input type="password" id="passwordRegister" placeholder="Password" required>
-                        </div>
-                        <div class="message" id="registerMessage"></div> 
-                        <button type="submit" class="btn">Register</button>
-                    </form>
-                </div>
-            </div>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+      integrity="sha512-..."
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link rel="stylesheet" href="/css/loginAndRegStyle.css" />
+  </head>
+  <body>
+    <div class="container">
+      <div class="flip-container" id="flip-container">
+        <div class="flipper">
+          <!-- Login Form -->
+          <div class="front">
+            <form id="loginForm" class="form">
+              <h2>Login</h2>
+              <div class="input-group">
+                <i class="fas fa-user"></i>
+                <input
+                  type="text"
+                  id="usernameLogin"
+                  placeholder="Username"
+                  required
+                />
+              </div>
+              <div class="input-group">
+                <i class="fas fa-lock"></i>
+                <input
+                  type="password"
+                  id="passwordLogin"
+                  placeholder="Password"
+                  required
+                />
+              </div>
+              <div class="message" id="loginMessage"></div>
+              <button type="submit" class="btn" id="loginBtn">Login</button>
+            </form>
+          </div>
+
+          <!-- Register Form -->
+          <div class="back">
+            <form id="registerForm" class="form">
+              <h2>Register</h2>
+              <div class="input-group">
+                <i class="fas fa-user-plus"></i>
+                <input
+                  type="text"
+                  id="usernameRegister"
+                  placeholder="Username"
+                  required
+                />
+              </div>
+              <div class="input-group">
+                <i class="fas fa-envelope"></i>
+                <input
+                  type="email"
+                  id="emailRegister"
+                  placeholder="Email"
+                  required
+                />
+              </div>
+              <div class="input-group">
+                <i class="fas fa-lock"></i>
+                <input
+                  type="password"
+                  id="passwordRegister"
+                  placeholder="Password"
+                  required
+                />
+              </div>
+              <div class="message" id="registerMessage"></div>
+              <button type="submit" class="btn">Register</button>
+            </form>
+          </div>
         </div>
-        <button id="toggleFormBtn" class="flip-btn">Create Account</button>
+      </div>
+      <button id="toggleFormBtn" class="flip-btn">Create Account</button>
     </div>
 
     <script src="/js/loginJs.js"></script>
-</body>
+  </body>
 </html>

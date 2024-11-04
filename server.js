@@ -42,6 +42,8 @@ app.use('/api/messages', require('./routes/messages-routes'));
 app.use('/api/users', require('./routes/users-routes'));
 app.use('/api/products', require('./routes/products-routes'));
 app.use('/api/orders', require('./routes/orders-routes'));
+app.use('/api/orders-stats', require('./routes/orders-stats-routes'));
+
 
 app.use('/admin', (req, res) => {
     res.sendFile(path.join(__dirname, 'views' , 'html', 'admin.html'));
@@ -49,6 +51,10 @@ app.use('/admin', (req, res) => {
 
 app.use('/user' , (req, res) => {
     res.sendFile(path.join(__dirname, 'views' , 'html', 'market.html'));
+});
+
+app.use('/stats', (req, res) => {
+  res.sendFile(path.join(__dirname, 'views', 'html', 'stats.html'));
 });
 
 
