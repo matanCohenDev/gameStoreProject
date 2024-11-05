@@ -19,6 +19,7 @@ body {
     background-color: var(--secondary-color);
     background-size: cover;
     color: var(--text-color);
+    overscroll-behavior: none;
 }
 
 /* Toolbar for Admin Page */

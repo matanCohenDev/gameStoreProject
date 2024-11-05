@@ -23,6 +23,7 @@ body {
     color: var(--text-color);
     position: relative;
     overflow: hidden;
+    overscroll-behavior: none;
 }
 
 body::after {
