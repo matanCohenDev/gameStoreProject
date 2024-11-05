@@ -20,7 +20,7 @@ body {
     font-family: var(--font-family);
     background-color: var(--secondary-color);
     color: var(--text-color);
-    scroll-behavior: smooth;
+    overscroll-behavior: none;
 }
 
 main {

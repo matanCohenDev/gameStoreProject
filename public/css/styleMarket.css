@@ -18,6 +18,7 @@ body {
   background-size: cover;
   color: var(--text-color);
   overflow-x: hidden;
+  overscroll-behavior: none;
 }
 
 .hidden {

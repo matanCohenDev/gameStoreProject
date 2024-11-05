@@ -336,15 +336,20 @@ document
         return;
       }
       
-      await getCurrentUser(); 
-      displayProductsOfUser();
+      productsHaveAddedList.forEach((product) => {
+        currentUser.products.push({
+          productId: product.id,
+          name: product.name,
+          price: product.price
+        });
+      });
       alert("Payment processed successfully!");
       closeCheckoutPopup();
       addProductToUser();
       changeButtons();
+      //displayProductsOfUser();
       productsHaveAddedList = [];
       productsHaveAddedList.length = 0;
-
       updateCartDisplay();
       document.getElementById("checkoutForm").reset();
       document.getElementById("cart").children[2].remove();
