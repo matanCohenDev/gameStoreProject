@@ -405,7 +405,7 @@
     </div>
 
    <script>
-    // Stats Section D3.js Logic
+    // Function to Fetch and Render Order Stats as a Line Graph
     async function fetchAndRenderStats() {
         const response = await fetch("/api/orders-stats/by-date");
         const data = await response.json();
@@ -420,47 +420,60 @@
             .append("g")
             .attr("transform", `translate(${margin.left},${margin.top})`);
 
+        // Setting up scales for X and Y axes
         const x = d3
-            .scaleBand()
-            .domain(data.map((d) => d3.timeFormat("%Y-%m-%d")(d.date)))
-            .range([0, width])
-            .padding(0.1);
+            .scaleTime()
+            .domain(d3.extent(data, (d) => d.date))
+            .range([0, width]);
 
         const y = d3
             .scaleLinear()
             .domain([0, d3.max(data, (d) => d.averageOrderAmount)])
             .range([height, 0]);
 
+        // Adding the X-axis
         g.append("g")
             .attr("transform", `translate(0,${height})`)
-            .call(d3.axisBottom(x).tickSize(0))
+            .call(d3.axisBottom(x).tickFormat(d3.timeFormat("%b %d")).tickSize(0))
             .selectAll("text")
             .attr("transform", "rotate(-45)")
             .style("text-anchor", "end");
 
+        // Adding the Y-axis
         g.append("g").call(d3.axisLeft(y));
 
-        g.selectAll(".bar")
+        // Adding a line to represent the data
+        const line = d3
+            .line()
+            .x((d) => x(d.date))
+            .y((d) => y(d.averageOrderAmount));
+
+        g.append("path")
+            .datum(data)
+            .attr("fill", "none")
+            .attr("stroke", "steelblue")
+            .attr("stroke-width", 2)
+            .attr("d", line);
+
+        // Adding data points as circles on the line
+        g.selectAll(".dot")
             .data(data)
             .enter()
-            .append("rect")
-            .attr("class", "bar")
-            .attr("x", (d) => x(d3.timeFormat("%Y-%m-%d")(d.date)))
-            .attr("y", (d) => y(0))
-            .attr("width", x.bandwidth())
-            .attr("height", 0)
-            .transition()
-            .duration(800)
-            .attr("y", (d) => y(d.averageOrderAmount))
-            .attr("height", (d) => height - y(d.averageOrderAmount));
+            .append("circle")
+            .attr("class", "dot")
+            .attr("cx", (d) => x(d.date))
+            .attr("cy", (d) => y(d.averageOrderAmount))
+            .attr("r", 4)
+            .attr("fill", "steelblue")
+            .append("title") // Adding tooltip
+            .text((d) => `Date: ${d3.timeFormat("%b %d, %Y")(d.date)}\nAvg Order Amount: $${d.averageOrderAmount.toFixed(2)}`);
     }
 
-    // Function to Fetch and Render Product Orders Chart
+    // Function to Fetch and Render Product Orders Chart (unchanged)
     async function fetchAndRenderProductOrdersStats() {
-        const response = await fetch("/api/order-stats/products-orders-stats");
+        const response = await fetch("/api/orders-stats/products-orders-stats");
         const data = await response.json();
-        console.log(data);
-        alert(2);
+
         const svg = d3.select("#product-chart");
         const margin = { top: 20, right: 30, bottom: 70, left: 60 };
         const width = +svg.attr("width") - margin.left - margin.right;
@@ -504,6 +517,12 @@
             .attr("y", (d) => y(d.orderCount))
             .attr("height", (d) => height - y(d.orderCount));
     }
+
+    // Call both functions to render the charts
+    fetchAndRenderStats();
+    fetchAndRenderProductOrdersStats();
+</script>
+
 
     // Call both functions to render the charts
     fetchAndRenderStats();

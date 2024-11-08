@@ -37,7 +37,7 @@ router.get("/products-orders-stats", async (req, res) => {
       {
         $group: {
           _id: "$products.name", // Group by product name
-          orderCount: { $sum: "$products.quantity" }, // Sum quantities for each product
+          orderCount: { $sum: "$products.quantity" },
         },
       },
       {
@@ -46,12 +46,12 @@ router.get("/products-orders-stats", async (req, res) => {
           orderCount: 1,
         },
       },
-      { $sort: { orderCount: -1 } }, // Sort by order count descending
+      { $sort: { orderCount: -1 } }, // Sort by the number of orders in descending order
     ]);
 
     res.json(stats);
   } catch (error) {
-    res.status(500).json({ message: "Error fetching product order statistics", error });
+    res.status(500).json({ message: "Error fetching product orders statistics", error });
   }
 });
 
