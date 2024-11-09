@@ -115,7 +115,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 async function fetchPopularGames() {
     const apiKey = "784fcaf5773e4e3eb57d6a78e9e6191b";
-    const url = `https://api.rawg.io/api/games?key=${apiKey}&ordering=-rating&dates=2023-01-01,2023-12-31&page_size=8`;
+    const url = `https://api.rawg.io/api/games?key=${apiKey}&ordering=-rating&dates=2023-01-01,2023-12-31&page_size=9`;
 
     try {
         const response = await fetch(url);

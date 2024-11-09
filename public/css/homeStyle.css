@@ -479,10 +479,10 @@ p,
 
 .newsgames {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 20px; /* Adjust space between items */
-  max-width: 800px; /* Optional: to control the grid width */
-  margin: 0 auto; /* Center the grid */
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  max-width: 800px;
+  margin: 0 auto;
 }
 
 .game {

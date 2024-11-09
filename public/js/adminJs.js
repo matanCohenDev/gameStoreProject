@@ -653,7 +653,6 @@ document.getElementById('delBtn').addEventListener('click', () => {
 
 
 async function fetchAndRenderStats() {
-    alert(123);
     const response = await fetch("/api/orders-stats/by-date");
     const data = await response.json();
     data.forEach((d) => (d.date = new Date(d.date)));
