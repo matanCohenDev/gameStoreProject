@@ -1,456 +1,505 @@
 :root {
-    --primary-color: #ff4500;
-    --secondary-color: #1a1a1a;
-    --accent-color: #f0f0f0;
-    --text-color: #fff;
-    --font-family: 'Roboto', sans-serif;
+  --primary-color: #ff4500;
+  --secondary-color: #1a1a1a;
+  --accent-color: #f0f0f0;
+  --text-color: #fff;
+  --font-family: "Roboto", sans-serif;
 }
 
-html, body {
-    margin: 0;
-    padding: 0;
-    overflow-x: hidden; 
+html,
+body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
 }
 
 body {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-    margin: 0;
-    font-family: var(--font-family);
-    background-color: var(--secondary-color);
-    color: var(--text-color);
-    overscroll-behavior: none;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  margin: 0;
+  font-family: var(--font-family);
+  background-color: var(--secondary-color);
+  color: var(--text-color);
+  overscroll-behavior: none;
 }
 
 main {
-    flex: 1; 
+  flex: 1;
 }
 
 nav {
-    position: fixed;
-    width: 100%;
-    background: rgba(0, 0, 0, 0.8);
-    color: var(--text-color);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 15px 50px;
-    z-index: 1000;
-    backdrop-filter: blur(10px);
+  position: fixed;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  color: var(--text-color);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 50px;
+  z-index: 1000;
+  backdrop-filter: blur(10px);
 }
 
 .logo {
-    font-size: 28px;
-    font-weight: bold;
-    letter-spacing: 2px;
+  font-size: 28px;
+  font-weight: bold;
+  letter-spacing: 2px;
 }
 
 .menu-toggle {
-    display: none;
-    font-size: 24px;
-    cursor: pointer;
+  display: none;
+  font-size: 24px;
+  cursor: pointer;
 }
 
 .nav-links {
-    list-style: none;
-    display: flex;
+  list-style: none;
+  display: flex;
 }
 
 .nav-links li {
-    margin-left: 30px;
+  margin-left: 30px;
 }
 
 .nav-links a {
-    color: var(--text-color);
-    text-decoration: none;
-    font-size: 16px;
-    transition: color 0.3s;
+  color: var(--text-color);
+  text-decoration: none;
+  font-size: 16px;
+  transition: color 0.3s;
 }
 
 .nav-links a:hover {
-    color: var(--primary-color);
+  color: var(--primary-color);
 }
 
 .section {
-    min-height: 80vh; 
-    padding: 50px 30px; 
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    background-size: cover;
-    background-attachment: fixed;
-    position: relative;
+  min-height: 80vh;
+  padding: 50px 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background-size: cover;
+  background-attachment: fixed;
+  position: relative;
 }
 
 .section::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.5);
-    z-index: -1;
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: -1;
 }
 
 #home {
-    background-image: url('images/home-bg.jpg');
-    color: var(--text-color);
-    text-align: center;
+  background-image: url("images/home-bg.jpg");
+  color: var(--text-color);
+  text-align: center;
 }
 
 .hero-content {
-    margin-top: 200px;
+  margin-top: 200px;
 }
 
 .hero-content h1 {
-    font-size: 50px;
-    margin-bottom: 20px;
+  font-size: 50px;
+  margin-bottom: 20px;
 }
 
 .hero-content h1 span {
-    color: var(--primary-color);
+  color: var(--primary-color);
 }
 
 .hero-content p {
-    font-size: 20px;
-    margin-bottom: 30px;
+  font-size: 20px;
+  margin-bottom: 30px;
 }
 
 .btn {
-    padding: 12px 30px;
-    background: var(--primary-color);
-    color: var(--text-color);
-    text-decoration: none;
-    border-radius: 5px;
-    font-weight: bold;
-    transition: background 0.3s;
+  padding: 12px 30px;
+  background: var(--primary-color);
+  color: var(--text-color);
+  text-decoration: none;
+  border-radius: 5px;
+  font-weight: bold;
+  transition: background 0.3s;
 }
 
 .btn:hover {
-    background: #e03e00;
+  background: #e03e00;
 }
 
 #games {
-    background-image: url('images/games-bg.jpg');
-    padding: 40px 0;
-    text-align: center;
+  background-image: url("images/games-bg.jpg");
+  padding: 40px 0;
+  text-align: center;
 }
 
 .games {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
 }
 
 .game-item {
-    background-color: var(--accent-color);
-    border-radius: 12px;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    overflow: hidden;
-    width: 300px;
-    height: 400px; 
-    text-align: center;
+  background-color: var(--accent-color);
+  border-radius: 12px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  overflow: hidden;
+  width: 300px;
+  height: 400px;
+  text-align: center;
 }
 
 .game-item:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
+  transform: translateY(-10px);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
 }
 
 .game-image {
-    width: 100%;
-    height: 250px; 
-    object-fit: cover;
-    border-bottom: 2px solid var(--primary-color);
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+  border-bottom: 2px solid var(--primary-color);
 }
 
 .game-name {
-    padding: 20px;
+  padding: 20px;
 }
 
 .game-name h2 {
-    color: var(--primary-color);
-    font-size: 20px;
-    margin: 10px 0;
-    transition: color 0.3s;
+  color: var(--primary-color);
+  font-size: 20px;
+  margin: 10px 0;
+  transition: color 0.3s;
 }
 
 .game-name h2:hover {
-    color: #e03e00;
+  color: #e03e00;
 }
 
 .btn {
-    margin-top: 10px;
-    padding: 12px 20px;
-    background-color: var(--primary-color);
-    color: var(--text-color);
-    text-transform: uppercase;
-    font-weight: bold;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
+  margin-top: 10px;
+  padding: 12px 20px;
+  background-color: var(--primary-color);
+  color: var(--text-color);
+  text-transform: uppercase;
+  font-weight: bold;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
 .btn:hover {
-    background-color: #e03e00;
+  background-color: #e03e00;
 }
 
 #features {
-    background-image: url('images/features-bg.jpg');
+  background-image: url("images/features-bg.jpg");
 }
 
 .features {
-    display: flex;
-    justify-content: space-around;
-    margin-top: 40px;
+  display: flex;
+  justify-content: space-around;
+  margin-top: 40px;
 }
 
 .feature-item {
-    text-align: center;
-    max-width: 300px;
+  text-align: center;
+  max-width: 300px;
 }
 
 .feature-item i {
-    font-size: 50px;
-    color: var(--primary-color);
-    margin-bottom: 20px;
+  font-size: 50px;
+  color: var(--primary-color);
+  margin-bottom: 20px;
 }
 
 footer {
-    background: #000;
-    color: var(--text-color);
-    text-align: center;
-    padding: 20px 50px;
+  background: #000;
+  color: var(--text-color);
+  text-align: center;
+  padding: 20px 50px;
 }
 
 .social-icons {
-    margin-top: 10px;
+  margin-top: 10px;
 }
 
 ul {
-    list-style: none;
-    display: flex;
-    justify-content: center;
-    padding: 0;
-    margin-right: 5%;
+  list-style: none;
+  display: flex;
+  justify-content: center;
+  padding: 0;
+  margin-right: 5%;
 }
 
 .social-icons a {
-    color: var(--text-color);
-    margin: 0 10px;
-    font-size: 20px;
-    transition: color 0.3s;
+  color: var(--text-color);
+  margin: 0 10px;
+  font-size: 20px;
+  transition: color 0.3s;
 }
 
 social-icons a:hover {
-    color: var(--primary-color);
+  color: var(--primary-color);
 }
 
-h1, h2, h3, p, .btn {
-    animation: fadeInUp 1s ease-in-out;
+h1,
+h2,
+h3,
+p,
+.btn {
+  animation: fadeInUp 1s ease-in-out;
 }
 
 @keyframes fadeInUp {
-    from { opacity: 0; transform: translateY(30px); }
-    to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 @media (max-width: 768px) {
-    .menu-toggle {
-        display: block;
-    }
+  .menu-toggle {
+    display: block;
+  }
 
-    .nav-links {
-        display: none;
-        flex-direction: column;
-        position: absolute;
-        top: 70px;
-        right: 0;
-        background: rgba(0,0,0,0.9);
-        width: 200px;
-        padding: 20px;
-    }
+  .nav-links {
+    display: none;
+    flex-direction: column;
+    position: absolute;
+    top: 70px;
+    right: 0;
+    background: rgba(0, 0, 0, 0.9);
+    width: 200px;
+    padding: 20px;
+  }
 
-    .nav-links.active {
-        display: flex;
-    }
+  .nav-links.active {
+    display: flex;
+  }
 
-    .nav-links li {
-        margin: 0 0 20px 0;
-    }
+  .nav-links li {
+    margin: 0 0 20px 0;
+  }
 
-    .game-item {
-        width: 100%;
-        height: auto;
-    }
+  .game-item {
+    width: 100%;
+    height: auto;
+  }
 
-    .features {
-        flex-direction: column;
-        align-items: center;
-    }
+  .features {
+    flex-direction: column;
+    align-items: center;
+  }
 }
 
 .contact-btn {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    background-color: var(--primary-color);
-    color: var(--text-color);
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    font-size: 16px;
-    cursor: pointer;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-    transition: background-color 0.3s ease;
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: var(--primary-color);
+  color: var(--text-color);
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  transition: background-color 0.3s ease;
 }
 
 .contact-btn:hover {
-    background-color: #e03e00;
+  background-color: #e03e00;
 }
 
 .popup {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.7);
-    justify-content: center;
-    align-items: center;
-    z-index: 1000; 
-    animation: fadeIn 0.3s ease-in-out;
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  animation: fadeIn 0.3s ease-in-out;
 }
 
-
 .popup-content {
-    background-color: var(--secondary-color);
-    color: var(--text-color);
-    padding: 30px;
-    width: 400px;
-    border-radius: 10px;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
-    position: relative;
-    animation: slideIn 0.5s ease-in-out;
+  background-color: var(--secondary-color);
+  color: var(--text-color);
+  padding: 30px;
+  width: 400px;
+  border-radius: 10px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+  position: relative;
+  animation: slideIn 0.5s ease-in-out;
 }
 
 .close-popup {
-    position: absolute;
-    top: 10px;
-    right: 15px;
-    font-size: 24px;
-    color: var(--text-color);
-    cursor: pointer;
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  font-size: 24px;
+  color: var(--text-color);
+  cursor: pointer;
 }
 
 .close-popup:hover {
-    color: var(--primary-color);
+  color: var(--primary-color);
 }
 
 #contactForm {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
 }
 
-#contactForm input, #contactForm textarea {
-    background-color: #2a2a2a;
-    color: var(--text-color);
-    border: 1px solid #555;
-    padding: 10px;
-    margin-bottom: 15px;
-    border-radius: 5px;
-    font-size: 16px;
+#contactForm input,
+#contactForm textarea {
+  background-color: #2a2a2a;
+  color: var(--text-color);
+  border: 1px solid #555;
+  padding: 10px;
+  margin-bottom: 15px;
+  border-radius: 5px;
+  font-size: 16px;
 }
 
-#contactForm input:focus, #contactForm textarea:focus {
-    border-color: var(--primary-color);
-    outline: none;
+#contactForm input:focus,
+#contactForm textarea:focus {
+  border-color: var(--primary-color);
+  outline: none;
 }
 
 #contactForm button {
-    background-color: var(--primary-color);
-    color: var(--text-color);
-    padding: 12px;
-    font-size: 16px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
+  background-color: var(--primary-color);
+  color: var(--text-color);
+  padding: 12px;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
 #contactForm button:hover {
-    background-color: #e03e00;
+  background-color: #e03e00;
 }
 
 @keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 @keyframes slideIn {
-    from { transform: translateY(-50px); opacity: 0; }
-    to { transform: translateY(0); opacity: 1; }
+  from {
+    transform: translateY(-50px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
 }
 
 .message {
-    display: none;
-    margin-bottom: 15px;
-    padding: 10px;
-    border-radius: 5px;
-    font-size: 14px;
-    text-align: center;
-    width: 100%;
-    background-color: rgba(0, 255, 153, 0.2);
-    color: #00ff99;
-    border: 1px solid #00ff99;
+  display: none;
+  margin-bottom: 15px;
+  padding: 10px;
+  border-radius: 5px;
+  font-size: 14px;
+  text-align: center;
+  width: 100%;
+  background-color: rgba(0, 255, 153, 0.2);
+  color: #00ff99;
+  border: 1px solid #00ff99;
 }
 
 .carousel-3d-container {
-    perspective: 3500px;
-    width: 100%;
-    height: 500px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    overflow: hidden;
-    position: relative;
+  perspective: 3500px;
+  width: 100%;
+  height: 500px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  position: relative;
 }
 
 .carousel-3d {
-    display: flex;
-    transform-style: preserve-3d;
-    animation: rotateCarousel 30s linear infinite; 
-    transform-origin: center center; 
-    position: absolute; 
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%) rotateY(0deg); 
+  display: flex;
+  transform-style: preserve-3d;
+  animation: rotateCarousel 30s linear infinite;
+  transform-origin: center center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotateY(0deg);
 }
 
 .carousel-image {
-    width: 280px;
-    height: 180px;
-    object-fit: cover;
-    border-radius: 10px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-    position: absolute;
-    margin: 1px;
+  width: 280px;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  position: absolute;
+  margin: 1px;
 }
 
 @keyframes rotateCarousel {
-    from {
-        transform: translate(-50%, -50%) rotateY(0deg); 
-    }
-    to {
-        transform: translate(-50%, -50%) rotateY(360deg); 
-    }
+  from {
+    transform: translate(-50%, -50%) rotateY(0deg);
+  }
+  to {
+    transform: translate(-50%, -50%) rotateY(360deg);
+  }
 }
 
 .section {
-    overflow: hidden;
+  overflow: hidden;
+}
+
+.newsgames {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px; /* Adjust space between items */
+  max-width: 800px; /* Optional: to control the grid width */
+  margin: 0 auto; /* Center the grid */
+}
+
+.game {
+  border: 1px solid #ddd;
+  padding: 10px;
+  text-align: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+}
+
+.game-image {
+  width: 100%;
+  height: auto;
+  border-radius: 5px;
+  margin-bottom: 10px;
+}
+
+#gamesDisplay {
+  display: contents;
 }

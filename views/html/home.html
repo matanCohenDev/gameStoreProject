@@ -1,98 +1,183 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
+  <head>
+    <meta charset="UTF-8" />
     <title>GameStore Landing Page</title>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link rel="stylesheet" href="/css/homeStyle.css">
-</head>
-<body>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="/css/homeStyle.css" />
+  </head>
+  <body>
     <nav id="navbar">
-        <div class="logo">GameStore</div>
-        <ul class="nav-links">
-            <li id ="homeBtn"><a href="#home">Home</a></li>
-            <li id ="gamesBtn"><a href="#games">Games</a></li>
-            <li id ="featuresBtn"><a href="#features">Features</a></li>
-        </ul>
+      <div class="logo">GameStore</div>
+      <ul class="nav-links">
+        <li id="homeBtn"><a href="#home">Home</a></li>
+        <li id="gamesBtn"><a href="#games">Games</a></li>
+        <li id="featuresBtn"><a href="#features">Features</a></li>
+        <li id="newsBtn"><a href="#news">News</a></li>
+      </ul>
     </nav>
 
     <section id="home" class="section">
-        <div class="hero-content">
-            <h1>Welcome to <span>GameStore</span></h1>
-            <p>Your ultimate destination for the latest and greatest in gaming.</p>
-            <a href="/login" class="btn" id="signBtn">Get Started</a>
-            <div class="carousel-3d-container">
-                <div class="carousel-3d">
-                    <img src="/homePics/pic0.webp" alt="Picture 1" class="carousel-image">
-                    <img src="/homePics/pic1.webp" alt="Picture 2" class="carousel-image">
-                    <img src="/homePics/pic2.webp" alt="Picture 3" class="carousel-image">
-                    <img src="/homePics/pic3.webp" alt="Picture 1" class="carousel-image">
-                    <img src="/homePics/pic4.webp" alt="Picture 2" class="carousel-image">
-                    <img src="/homePics/pic5.webp" alt="Picture 3" class="carousel-image">
-                    <img src="/homePics/pic6.webp" alt="Picture 1" class="carousel-image">
-                    <img src="/homePics/pic7.webp" alt="Picture 2" class="carousel-image">
-                    <img src="/homePics/pic8.webp" alt="Picture 3" class="carousel-image">
-                    <img src="/homePics/pic9.webp" alt="Picture 1" class="carousel-image">
-                    <img src="/homePics/pic10.webp" alt="Picture 2" class="carousel-image">
-                    <img src="/homePics/pic11.webp" alt="Picture 3" class="carousel-image">
-                    <img src="/homePics/pic12.webp" alt="Picture 1" class="carousel-image">
-                    <img src="/homePics/pic13.webp" alt="Picture 2" class="carousel-image">
-                    <img src="/homePics/pic14.webp" alt="Picture 3" class="carousel-image">
-                </div>
-            </div>
+      <div class="hero-content">
+        <h1>Welcome to <span>GameStore</span></h1>
+        <p>Your ultimate destination for the latest and greatest in gaming.</p>
+        <a href="/login" class="btn" id="signBtn">Get Started</a>
+        <div class="carousel-3d-container">
+          <div class="carousel-3d">
+            <img
+              src="/homePics/pic0.webp"
+              alt="Picture 1"
+              class="carousel-image"
+            />
+            <img
+              src="/homePics/pic1.webp"
+              alt="Picture 2"
+              class="carousel-image"
+            />
+            <img
+              src="/homePics/pic2.webp"
+              alt="Picture 3"
+              class="carousel-image"
+            />
+            <img
+              src="/homePics/pic3.webp"
+              alt="Picture 1"
+              class="carousel-image"
+            />
+            <img
+              src="/homePics/pic4.webp"
+              alt="Picture 2"
+              class="carousel-image"
+            />
+            <img
+              src="/homePics/pic5.webp"
+              alt="Picture 3"
+              class="carousel-image"
+            />
+            <img
+              src="/homePics/pic6.webp"
+              alt="Picture 1"
+              class="carousel-image"
+            />
+            <img
+              src="/homePics/pic7.webp"
+              alt="Picture 2"
+              class="carousel-image"
+            />
+            <img
+              src="/homePics/pic8.webp"
+              alt="Picture 3"
+              class="carousel-image"
+            />
+            <img
+              src="/homePics/pic9.webp"
+              alt="Picture 1"
+              class="carousel-image"
+            />
+            <img
+              src="/homePics/pic10.webp"
+              alt="Picture 2"
+              class="carousel-image"
+            />
+            <img
+              src="/homePics/pic11.webp"
+              alt="Picture 3"
+              class="carousel-image"
+            />
+            <img
+              src="/homePics/pic12.webp"
+              alt="Picture 1"
+              class="carousel-image"
+            />
+            <img
+              src="/homePics/pic13.webp"
+              alt="Picture 2"
+              class="carousel-image"
+            />
+            <img
+              src="/homePics/pic14.webp"
+              alt="Picture 3"
+              class="carousel-image"
+            />
+          </div>
         </div>
+      </div>
     </section>
 
     <section id="games" class="section">
-        <h2>Featured Games</h2>
-        <div class="games" id="productList"></div>
+      <h2>Featured Games</h2>
+      <div class="games" id="productList"></div>
     </section>
 
     <section id="features" class="section">
-        <center><h2>Features</h2></center>
-        <div class="features">
-            <div class="feature-item">
-                <i class="fas fa-shield-alt"></i>
-                <h3>Secure Payments</h3>
-                <p>All transactions are protected with top-notch security.</p>
-            </div>
-            <div class="feature-item">
-                <i class="fas fa-download"></i>
-                <h3>Instant Downloads</h3>
-                <p>Get your games instantly after purchase.</p>
-            </div>
-            <div class="feature-item">
-                <i class="fas fa-users"></i>
-                <h3>Community Support</h3>
-                <p>Join our community for tips and support.</p>
-            </div>
+      <center><h2>Features</h2></center>
+      <div class="features">
+        <div class="feature-item">
+          <i class="fas fa-shield-alt"></i>
+          <h3>Secure Payments</h3>
+          <p>All transactions are protected with top-notch security.</p>
         </div>
+        <div class="feature-item">
+          <i class="fas fa-download"></i>
+          <h3>Instant Downloads</h3>
+          <p>Get your games instantly after purchase.</p>
+        </div>
+        <div class="feature-item">
+          <i class="fas fa-users"></i>
+          <h3>Community Support</h3>
+          <p>Join our community for tips and support.</p>
+        </div>
+      </div>
     </section>
 
-    <button class="btn contact-btn" onclick="openContactPopup()">Contact Us</button>
+    <button class="btn contact-btn" onclick="openContactPopup()">
+      Contact Us
+    </button>
     <div id="contactPopup" class="popup">
-        <div class="popup-content">
-            <span class="close-popup" onclick="closeContactPopup()">&times;</span>
-            <h2>Contact Us</h2>
-            <form id="contactForm">
-                <input type="text" placeholder="Your Name" id="sender" required>
-                <textarea placeholder="Your Message" rows="5" id="message" required></textarea>
-                <button type="submit" class="btn" id="sendMessageBtn">Send Message</button>
-                <div class="message" id="sendSuccecfulMessage">message sent succefully</div> 
-            </form>
-        </div>
+      <div class="popup-content">
+        <span class="close-popup" onclick="closeContactPopup()">&times;</span>
+        <h2>Contact Us</h2>
+        <form id="contactForm">
+          <input type="text" placeholder="Your Name" id="sender" required />
+          <textarea
+            placeholder="Your Message"
+            rows="5"
+            id="message"
+            required
+          ></textarea>
+          <button type="submit" class="btn" id="sendMessageBtn">
+            Send Message
+          </button>
+          <div class="message" id="sendSuccecfulMessage">
+            message sent succefully
+          </div>
+        </form>
+      </div>
     </div>
 
+    <section id="news" class="section">
+      <center><h2>Trending Games in the world</h2></center>
+      <div class="newsgames">
+        <div id="gamesDisplay">Loading games data...</div>
+      </div>
+    </section>
+
     <footer>
-        <p>&copy; 2024 GameStore. All rights reserved.</p>
-        <div class="social-icons">
-            <a href="#"><i class="fab fa-facebook-f"></i></a>
-            <a href="#"><i class="fab fa-twitter"></i></a>
-            <a href="#"><i class="fab fa-instagram"></i></a>
-        </div>
+      <p>&copy; 2024 GameStore. All rights reserved.</p>
+      <div class="social-icons">
+        <a href="#"><i class="fab fa-facebook-f"></i></a>
+        <a href="#"><i class="fab fa-twitter"></i></a>
+        <a href="#"><i class="fab fa-instagram"></i></a>
+      </div>
     </footer>
 
     <script src="/js/homeJs.js"></script>
-</body>
+  </body>
 </html>

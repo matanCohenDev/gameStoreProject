@@ -113,3 +113,34 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 
+async function fetchPopularGames() {
+    const apiKey = "784fcaf5773e4e3eb57d6a78e9e6191b";
+    const url = `https://api.rawg.io/api/games?key=${apiKey}&ordering=-rating&dates=2023-01-01,2023-12-31&page_size=8`;
+
+    try {
+        const response = await fetch(url);
+        if (!response.ok) throw new Error("Error fetching games data");
+
+        const data = await response.json();
+
+        displayGames(data.results);
+    } catch (error) {
+        console.error("Error:", error);
+        document.getElementById("gamesDisplay").innerText = "Failed to load games data";
+    }
+}
+
+function displayGames(games) {
+    const gamesDisplay = document.getElementById("gamesDisplay");
+    gamesDisplay.innerHTML = games.map(game => `
+        <div class="game">
+            <img src="${game.background_image}" alt="${game.name}" class="game-image">
+            <h3>${game.name}</h3>
+            <p>Released: ${game.released}</p>
+            <p>Rating: ${game.rating}</p>
+            <p>Platforms: ${game.platforms.map(platform => platform.platform.name).join(', ')}</p>
+        </div>
+    `).join('');
+}
+
+fetchPopularGames();
