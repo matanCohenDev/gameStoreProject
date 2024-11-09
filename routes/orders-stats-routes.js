@@ -2,55 +2,63 @@ const express = require("express");
 const router = express.Router();
 const Order = require("../models/ordersDB");
 
-// Route to fetch order statistics by date
+// Route to fetch total profit by date for the last two weeks
 router.get("/by-date", async (req, res) => {
   try {
+    // Calculate the date two weeks ago
+    const twoWeeksAgo = new Date();
+    twoWeeksAgo.setDate(twoWeeksAgo.getDate() - 14);
+
+    // Aggregation pipeline for calculating total profit by date
     const stats = await Order.aggregate([
-      { $unwind: "$products" },
+      { $match: { createdAt: { $gte: twoWeeksAgo } } }, // Filter orders from the last two weeks
+      { $unwind: "$products" }, // Deconstruct the products array
       {
         $group: {
-          _id: { $dateToString: { format: "%Y-%m-%d", date: "$createdAt" } }, // Group by exact date
-          totalAmount: { $sum: { $multiply: ["$products.price", "$products.quantity"] } },
-          orderCount: { $sum: 1 },
+          _id: { $dateToString: { format: "%Y-%m-%d", date: "$createdAt" } }, // Group by date
+          totalProfit: { $sum: { $multiply: ["$products.price", "$products.quantity"] } }, // Calculate total profit
         },
       },
       {
         $project: {
           date: "$_id",
-          averageOrderAmount: { $divide: ["$totalAmount", "$orderCount"] },
+          totalProfit: 1,
         },
       },
-      { $sort: { date: 1 } }, // Sort by date
+      { $sort: { date: 1 } }, // Sort by date in ascending order
     ]);
 
     res.json(stats);
   } catch (error) {
+    console.error("Error fetching statistics:", error); // Log error for debugging
     res.status(500).json({ message: "Error fetching statistics", error });
   }
 });
 
-// New route to fetch number of orders for each product
+// Route to fetch the number of orders per product
 router.get("/products-orders-stats", async (req, res) => {
   try {
+    // Aggregation pipeline for calculating order count per product
     const stats = await Order.aggregate([
-      { $unwind: "$products" },
+      { $unwind: "$products" }, // Deconstruct the products array
       {
         $group: {
           _id: "$products.name", // Group by product name
-          orderCount: { $sum: "$products.quantity" },
+          orderCount: { $sum: "$products.quantity" }, // Sum quantity to get order count
         },
       },
       {
         $project: {
           productName: "$_id",
-          orderCount: 1,
+          orderCount: { $toInt: "$orderCount" }, // Ensure orderCount is an integer
         },
       },
-      { $sort: { orderCount: -1 } }, // Sort by the number of orders in descending order
+      { $sort: { orderCount: -1 } }, // Sort by order count in descending order
     ]);
 
     res.json(stats);
   } catch (error) {
+    console.error("Error fetching product orders statistics:", error); // Log error for debugging
     res.status(500).json({ message: "Error fetching product orders statistics", error });
   }
 });

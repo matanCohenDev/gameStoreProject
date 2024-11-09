@@ -38,12 +38,10 @@
     <div class="container" id="conatiner">
         <div class="content">
 
-           <!-- Stats Section -->
-        <!-- Stats Section -->
-<!-- Stats Section -->
-<div id="statsSection" class="section hidden">
-    <h2 class="stats-title">Order Statistics Overview</h2>
-    <h4 class="stats-subtitle">Gain valuable insights into sales trends and customer behavior with detailed visual analytics</h4>
+    <!-- Stats Section -->
+    <div id="statsSection" class="section hidden">
+        <h2 class="stats-title">Order Statistics Overview</h2>
+    <h4 class="stats-subtitle">Track daily profit trends and revenue growth over the last two weeks with detailed visual analytics</h4>
     
     <!-- First Chart: Average Order Amount by Date -->
     <div id="chart-container">
@@ -404,134 +402,9 @@
       </div>
     </div>
 
-   <script>
-    // Function to Fetch and Render Order Stats as a Line Graph
-    async function fetchAndRenderStats() {
-        const response = await fetch("/api/orders-stats/by-date");
-        const data = await response.json();
-        data.forEach((d) => (d.date = new Date(d.date)));
-
-        const svg = d3.select("#chart");
-        const margin = { top: 20, right: 30, bottom: 70, left: 60 };
-        const width = +svg.attr("width") - margin.left - margin.right;
-        const height = +svg.attr("height") - margin.top - margin.bottom;
-
-        const g = svg
-            .append("g")
-            .attr("transform", `translate(${margin.left},${margin.top})`);
-
-        // Setting up scales for X and Y axes
-        const x = d3
-            .scaleTime()
-            .domain(d3.extent(data, (d) => d.date))
-            .range([0, width]);
-
-        const y = d3
-            .scaleLinear()
-            .domain([0, d3.max(data, (d) => d.averageOrderAmount)])
-            .range([height, 0]);
-
-        // Adding the X-axis
-        g.append("g")
-            .attr("transform", `translate(0,${height})`)
-            .call(d3.axisBottom(x).tickFormat(d3.timeFormat("%b %d")).tickSize(0))
-            .selectAll("text")
-            .attr("transform", "rotate(-45)")
-            .style("text-anchor", "end");
-
-        // Adding the Y-axis
-        g.append("g").call(d3.axisLeft(y));
-
-        // Adding a line to represent the data
-        const line = d3
-            .line()
-            .x((d) => x(d.date))
-            .y((d) => y(d.averageOrderAmount));
-
-        g.append("path")
-            .datum(data)
-            .attr("fill", "none")
-            .attr("stroke", "steelblue")
-            .attr("stroke-width", 2)
-            .attr("d", line);
-
-        // Adding data points as circles on the line
-        g.selectAll(".dot")
-            .data(data)
-            .enter()
-            .append("circle")
-            .attr("class", "dot")
-            .attr("cx", (d) => x(d.date))
-            .attr("cy", (d) => y(d.averageOrderAmount))
-            .attr("r", 4)
-            .attr("fill", "steelblue")
-            .append("title") // Adding tooltip
-            .text((d) => `Date: ${d3.timeFormat("%b %d, %Y")(d.date)}\nAvg Order Amount: $${d.averageOrderAmount.toFixed(2)}`);
-    }
-
-    // Function to Fetch and Render Product Orders Chart (unchanged)
-    async function fetchAndRenderProductOrdersStats() {
-        const response = await fetch("/api/orders-stats/products-orders-stats");
-        const data = await response.json();
-
-        const svg = d3.select("#product-chart");
-        const margin = { top: 20, right: 30, bottom: 70, left: 60 };
-        const width = +svg.attr("width") - margin.left - margin.right;
-        const height = +svg.attr("height") - margin.top - margin.bottom;
-
-        const g = svg
-            .append("g")
-            .attr("transform", `translate(${margin.left},${margin.top})`);
-
-        const x = d3
-            .scaleBand()
-            .domain(data.map((d) => d.productName))
-            .range([0, width])
-            .padding(0.1);
-
-        const y = d3
-            .scaleLinear()
-            .domain([0, d3.max(data, (d) => d.orderCount)])
-            .range([height, 0]);
-
-        g.append("g")
-            .attr("transform", `translate(0,${height})`)
-            .call(d3.axisBottom(x).tickSize(0))
-            .selectAll("text")
-            .attr("transform", "rotate(-45)")
-            .style("text-anchor", "end");
-
-        g.append("g").call(d3.axisLeft(y));
-
-        g.selectAll(".bar")
-            .data(data)
-            .enter()
-            .append("rect")
-            .attr("class", "bar")
-            .attr("x", (d) => x(d.productName))
-            .attr("y", (d) => y(0))
-            .attr("width", x.bandwidth())
-            .attr("height", 0)
-            .transition()
-            .duration(800)
-            .attr("y", (d) => y(d.orderCount))
-            .attr("height", (d) => height - y(d.orderCount));
-    }
-
-    // Call both functions to render the charts
-    fetchAndRenderStats();
-    fetchAndRenderProductOrdersStats();
-</script>
-
-
-    // Call both functions to render the charts
-    fetchAndRenderStats();
-    fetchAndRenderProductOrdersStats();
-</script>
-
   </body>
 </html>
->
+
           <button class="modal-btn" id="deleteCancel">Cancel</button>
         </div>
       </div>
