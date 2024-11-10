@@ -503,3 +503,8 @@ p,
 #gamesDisplay {
   display: contents;
 }
+#map {
+  position: static; 
+  height: 500px;
+  width: 100%;
+}
