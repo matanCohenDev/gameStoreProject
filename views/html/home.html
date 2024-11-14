@@ -11,6 +11,8 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
     />
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCeFfJhD8CvME3cjeg93X6YwFOJNFtIBLE"></script>
+
     <link rel="stylesheet" href="/css/homeStyle.css" />
   </head>
   <body>
@@ -21,6 +23,8 @@
         <li id="gamesBtn"><a href="#games">Games</a></li>
         <li id="featuresBtn"><a href="#features">Features</a></li>
         <li id="newsBtn"><a href="#news">News</a></li>
+        <li id="branchesBtn"><a href="#branches">Branches</a></li>
+
       </ul>
     </nav>
 
@@ -137,6 +141,23 @@
       </div>
     </section>
 
+
+    
+    <section id="news" class="section">
+      <center><h2>Trending Games in the world</h2></center>
+      <div class="newsgames">
+        <div id="gamesDisplay">Loading games data...</div>
+      </div>
+    </section>
+    
+
+    <section id="branches-section" class="section">
+      <h2>Our Branch Locations</h2>
+      <p>Find our stores on the map below.</p>
+      <div id="map"></div>
+  </section>
+    
+
     <button class="btn contact-btn" onclick="openContactPopup()">
       Contact Us
     </button>
@@ -162,12 +183,6 @@
       </div>
     </div>
 
-    <section id="news" class="section">
-      <center><h2>Trending Games in the world</h2></center>
-      <div class="newsgames">
-        <div id="gamesDisplay">Loading games data...</div>
-      </div>
-    </section>
 
     <footer>
       <p>&copy; 2024 GameStore. All rights reserved.</p>
@@ -177,6 +192,8 @@
         <a href="#"><i class="fab fa-instagram"></i></a>
       </div>
     </footer>
+
+    
 
     <script src="/js/homeJs.js"></script>
   </body>

@@ -144,3 +144,52 @@ function displayGames(games) {
 }
 
 fetchPopularGames();
+
+      // Function to fetch branch data from the server
+      async function fetchBranches() {
+          try {
+              const response = await fetch('/api/branches'); // Assumes the server route is '/api/branches'
+              const branches = await response.json();
+              return branches;
+          } catch (error) {
+              console.error('Error fetching branch data:', error);
+              return [];
+          }
+      }
+  
+      function initMap() {
+          // Default location to center the map initially
+          const defaultCenter = { lat: 40.730610, lng: -73.935242 }; 
+          const map = new google.maps.Map(document.getElementById('map'), {
+              center: defaultCenter,
+              zoom: 10,
+          });
+  
+          // Fetch branch locations and place markers
+          fetchBranches().then(branches => {
+              if (branches.length > 0) {
+                  // Center map based on the first branch location if available
+                  map.setCenter({ lat: branches[0].coordinates.lat, lng: branches[0].coordinates.lng });
+              }
+  
+              branches.forEach(branch => {
+                  const marker = new google.maps.Marker({
+                      position: { lat: branch.coordinates.lat, lng: branch.coordinates.lng },
+                      map: map,
+                      title: branch.name,
+                  });
+  
+                  // InfoWindow for displaying branch details
+                  const infoWindow = new google.maps.InfoWindow({
+                      content: `<h3>${branch.name}</h3><p>${branch.address}</p>`,
+                  });
+                  
+                  marker.addListener('click', () => {
+                      infoWindow.open(map, marker);
+                  });
+              });
+          });
+      }
+  
+      // Initialize map when the page loads
+      window.onload = initMap;
