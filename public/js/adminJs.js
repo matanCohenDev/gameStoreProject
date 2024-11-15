@@ -41,7 +41,7 @@ const deleteCancelBtn = document.getElementById('deleteCancel');
 //chat Actions
 const chatContainer = document.getElementById('chatSection');
 const usersContainer = document.getElementsByClassName('user-list');
-const currentChat = document.getElementsByClassName('current-user');
+const currentChat = document.getElementsByClassName('currentUser');
 const messageContainer = document.querySelector('.messages'); 
 let chatWith = null;
 
