@@ -16,32 +16,6 @@ async function getProducts() {
     }
 }
 
-function displayProducts() {
-    const productList = document.getElementById('productList');
-    productsNames.forEach(productNameText => {
-        let product = document.createElement('div');
-        product.className = 'game-item';
-        productList.appendChild(product);
-
-        let productImage = document.createElement('img');
-        productImage.className = 'game-image';
-        productImage.src = '/pics/' + productNameText + '.webp';
-        productImage.alt = productNameText;
-        product.appendChild(productImage);
-
-        let productName = document.createElement('div');
-        productName.className = 'game-name';
-        productName.innerHTML = '<h2>' + productNameText + '</h2>';
-        product.appendChild(productName);
-
-        let buyNowBtn = document.createElement('a');
-        buyNowBtn.className = 'btn';
-        buyNowBtn.href = '/login';
-        buyNowBtn.innerText = 'Buy Now';
-        product.appendChild(buyNowBtn);
-    });
-}
-
 // Open the Contact Us popup
 function openContactPopup() {
     document.getElementById('contactPopup').style.display = 'flex';
@@ -99,19 +73,6 @@ document.getElementById('sendMessageBtn').addEventListener('click', function(eve
 });
 
 getProducts();
-
-document.addEventListener("DOMContentLoaded", function () {
-    const images = document.querySelectorAll(".carousel-image");
-    const angle = 360 / images.length;
-    const radius = 700; 
-
-    images.forEach((img, index) => {
-        const rotation = angle * index / 0.5;
-        img.style.transform = `rotateY(${rotation}deg) translateZ(${radius}px)`;
-    });
-});
-
-
 
 async function fetchPopularGames() {
     const apiKey = "784fcaf5773e4e3eb57d6a78e9e6191b";
