@@ -28,6 +28,10 @@ let countProductsInCart = 0;
 let pollingInterval;
 let myGames = []; //each user's games
 
+function openShop(){
+  
+}
+
 // Update the cart display
 function updateCartDisplay() {
   cartItems.innerHTML = "";
@@ -753,7 +757,7 @@ function OpenVirtualShop() {
   const virtualProducts = document.querySelector(".virtual-products-shop");
   const landingPage = document.querySelector(".landing-page");
   const myGamesList = document.querySelector(".my-play-games");
-
+  document.body.style.overflowY = "auto"; 
   // Check if elements exist before attempting to modify them
   if (virtualProducts && landingPage) {
     virtualProducts.classList.remove("hidden");
@@ -817,5 +821,6 @@ document.addEventListener("click", (event) => {
 });
 
 document.getElementById("my-games").addEventListener("click", () => {
+  document.body.style.overflowY = "auto"; 
   displayProductsOfUser();
 });

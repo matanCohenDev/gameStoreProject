@@ -310,11 +310,16 @@ tbody tr.selected {
 .unread {
     background-color: var(--text-color);
     color: rgb(1, 1, 1);
-    padding: 10px;
-    border-radius: 50%;
+    width: 25px; 
+    height: 25px; 
+    border-radius: 50%; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center;
     font-size: 14px;
     margin-left: auto;
-}
+  }
+  
 
 .user:hover {
     background-color: var(--primary-color);

@@ -4,247 +4,6 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Admin Page - GameStore</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" href="/css/styleAdmin.css">
-</head>
-<body>
-    <!-- Toolbar -->
-    <div class="toolbar">
-      <h1>Admin Dashboard</h1>
-      <button class="tab-btn" id="homeBtn">
-        <i class="fas fa-home"></i> Home 
-      </button>
-      <button class="tab-btn" id="usersBtn">
-        <i class="fas fa-users"></i> Users
-      </button>
-      <button class="tab-btn" id="productsBtn">
-        <i class="fas fa-gamepad"></i> Products
-      </button>
-      <button class="tab-btn" id="ordersBtn">
-        <i class="fas fa-shopping-cart"></i> Orders
-      </button>
-      <button class="tab-btn" id="messagesBtn">
-        <i class="fas fa-envelope"></i> Messages
-      </button>
-      <button class="tab-btn" id="statsBtn">
-        <i class="fas fa-funnel-dollar"></i>
-        Stats
-      </button>
-      <button class="logout-btn" id="logoutBtn">
-        <i class="fas fa-sign-out-alt"></i> Logout
-      </button>
-    </div>
-
-    <div class="container" id="conatiner">
-        <div class="content">
-
-    <!-- Stats Section -->
-    <div id="statsSection" class="section hidden">
-        <h2 class="stats-title">Order Statistics Overview</h2>
-    <h4 class="stats-subtitle">Track daily profit trends and revenue growth over the last two weeks with detailed visual analytics</h4>
-    
-    <!-- First Chart: Average Order Amount by Date -->
-    <div id="chart-container">
-        <svg id="chart" width="800" height="400"></svg>
-    </div>
-
-    <!-- Second Chart: Number of Orders per Product -->
-    <h3 class="stats-subtitle">Product Popularity Overview</h3>
-    <h4 class="stats-subtitle">Understand which products are in demand based on the number of orders</h4>
-    <div id="product-chart-container">
-        <svg id="product-chart" width="800" height="400"></svg>
-    </div>
-
-    <div class="tooltip" id="tooltip"></div>
-</div>
-
-
-
-            <!-- Users Section -->
-            <div id="usersSection" class="section hidden">
-                <h2>Users</h2>
-            
-                <!-- Single Search Bar and Date Filter -->
-                <div class="search-container">
-                    <input type="text" id="searchInput" placeholder="Search" class="search-field">
-                    <div class="date-filter">
-                        <label for="searchDate">Create at:</label>
-                        <input type="date" id="searchDate" class="search-field">
-                    </div>
-                    <button id="searchBtn" class="control-btn"><i class="fas fa-search"></i> Search</button>
-                </div>
-            
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Username</th>
-                            <th>Email</th>
-                            <th>Role Level</th>
-                            <th>Created At</th>
-                        </tr>
-                    </thead>
-                    <tbody id="usersTableBody">
-                        <!-- User data will be populated here -->
-                    </tbody>
-                </table>
-            </div>
-            
-            <!-- end filter -->
-
-            <!-- Products Section -->
-            <div id="productsSection" class="section hidden">
-                <h2>Products</h2>
-                <div class="product-controls">
-                    <button class="control-btn" id="createProductBtn"><i class="fas fa-plus-circle"></i> Create Product</button>
-                    <button class="control-btn" id="updateProductBtn"><i class="fas fa-edit"></i> Update Product</button>
-                    <button class="control-btn" id="deleteProductBtn"><i class="fas fa-trash-alt"></i> Delete Product</button>
-                </div>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Price</th>
-                            <th>Description</th>
-                            <th>Category</th>
-                            <th>Created At</th>
-                        </tr>
-                    </thead>
-                    <tbody id="productsTableBody">
-                        <!-- Product data will be populated here -->
-                    </tbody>
-                </table>
-            </div>
-
-        <!-- Orders Section -->
-        <div id="ordersSection" class="section hidden">
-          <h2>Orders</h2>
-          <table>
-            <thead>
-              <tr>
-                <th>Username</th>
-                <th>Products Ordered</th>
-                <th>Quantity</th>
-                <th>Created At</th>
-              </tr>
-            </thead>
-            <tbody id="ordersTableBody">
-              <!-- Order data will be populated here -->
-            </tbody>
-          </table>
-        </div>
-        <!-- messages -->
-        <div id="chatSection" class="section hidden">
-          <!-- Added Chat Section -->
-          <h2>Chat Interface</h2>
-          <div class="chat-center">
-            <div class="side-menu">
-              <input
-                type="text"
-                id="searchUsers"
-                class="search"
-                placeholder="Search"
-              />
-              <div class="user-list">
-                <!-- Add dynamically loaded user elements here -->
-              </div>
-            </div>
-            <div class="message-area">
-              <div class="message-header">
-                <div class="current-user"><h3 class="currentUser"></h3></div>
-              </div>
-              <div class="messages">
-                <!-- Messages will be loaded dynamically here -->
-              </div>
-              <div class="message-input">
-                <input
-                  type="text"
-                  class="message"
-                  id="message"
-                  placeholder="Type a message"
-                />
-                <button class="send" id="send">Send</button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Modals -->
-    <!-- Create Product Modal -->
-    <div id="productModal" class="modal hidden">
-      <div class="modal-content">
-        <span class="close-btn" id="closeModal">&times;</span>
-        <h2>Create Product</h2>
-        <form id="productForm">
-          <label for="productName">Name:</label>
-          <input type="text" id="productName" name="name" required />
-
-          <label for="productPrice">Price:</label>
-          <input type="number" id="productPrice" name="price" required />
-
-          <label for="productDescription">Description:</label>
-          <textarea
-            id="productDescription"
-            name="description"
-            required
-          ></textarea>
-
-          <label for="productCategory">Category:</label>
-          <select id="productCategory" name="category" required>
-            <option value="" disabled selected>Select Category</option>
-            <!-- אפשרות לא ניתנת לבחירה -->
-            <option value="Memory">Memory</option>
-            <option value="Board">Board</option>
-            <option value="Cards">Cards</option>
-            <option value="Strategy">Strategy</option>
-          </select>
-
-          <button type="submit" class="modal-btn" id="AddProduct">
-            Submit
-          </button>
-        </form>
-      </div>
-    </div>
-
-    <!-- Update Product Modal -->
-    <div id="updateProductModal" class="modal hidden">
-      <div class="modal-content">
-        <span class="close-btn" id="closeUpdateModal">&times;</span>
-        <h2>Update Product</h2>
-        <form id="updateProductForm">
-          <label for="productNameUpdate">Name:</label>
-          <input
-            type="text"
-            id="productNameUpdate"
-            name="name"
-            required
-            readonly
-          />
-
-          <label for="productPriceUpdate">Price:</label>
-          <input type="number" id="productPriceUpdate" name="price" required />
-
-          <button type="submit" class="modal-btn" id="UpdateProductBtnComplete">
-            Submit
-          </button>
-        </form>
-      </div>
-    </div>
-
-    <!-- Delete Product Modal -->
-    <div id="deleteProductModal" class="modal hidden">
-      <div class="modal-content">
-        <span class="close-btn" id="closeDeleteModal">&times;</span>
-        <h2>Delete Product</h2>
-        <p id="deleteMessage">Are you sure you want to delete this product?</p>
-        <div class="modal-actions">
-          <button class="modal-btn" id="deleteOk">Yes, Delete</button<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Admin Page - GameStore</title>
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
@@ -347,8 +106,6 @@
           </table>
         </div>
 
-       
-
         <!-- Orders Section -->
         <div id="ordersSection" class="section hidden">
           <h2>Orders</h2>
@@ -399,134 +156,100 @@
             </div>
           </div>
         </div>
+
+        <!-- Stats Section -->
+        <div id="statsSection" class="section hidden">
+          <h2 class="stats-title">Order Statistics Overview</h2>
+          <h4 class="stats-subtitle">
+            Track daily profit trends and revenue growth over the last two weeks
+            with detailed visual analytics
+          </h4>
+
+          <div id="chart-container">
+            <svg id="chart" width="800" height="400"></svg>
+          </div>
+
+          <h3 class="stats-subtitle">Product Popularity Overview</h3>
+          <h4 class="stats-subtitle">
+            Understand which products are in demand based on the number of orders
+          </h4>
+          <div id="product-chart-container">
+            <svg id="product-chart" width="800" height="400"></svg>
+          </div>
+        </div>
+
       </div>
     </div>
 
-<<<<<<< HEAD
-=======
-   <script>
-    // Function to Fetch and Render Order Stats as a Line Graph
-    async function fetchAndRenderStats() {
-        const response = await fetch("/api/orders-stats/by-date");
-        const data = await response.json();
-        data.forEach((d) => (d.date = new Date(d.date)));
+    <!-- Modals -->
+    <!-- Create Product Modal -->
+    <div id="productModal" class="modal hidden">
+      <div class="modal-content">
+        <span class="close-btn" id="closeModal">&times;</span>
+        <h2>Create Product</h2>
+        <form id="productForm">
+          <label for="productName">Name:</label>
+          <input type="text" id="productName" name="name" required />
 
-        const svg = d3.select("#chart");
-        const margin = { top: 20, right: 30, bottom: 70, left: 60 };
-        const width = +svg.attr("width") - margin.left - margin.right;
-        const height = +svg.attr("height") - margin.top - margin.bottom;
+          <label for="productPrice">Price:</label>
+          <input type="number" id="productPrice" name="price" required />
 
-        const g = svg
-            .append("g")
-            .attr("transform", `translate(${margin.left},${margin.top})`);
+          <label for="productDescription">Description:</label>
+          <textarea
+            id="productDescription"
+            name="description"
+            required
+          ></textarea>
 
-        // Setting up scales for X and Y axes
-        const x = d3
-            .scaleTime()
-            .domain(d3.extent(data, (d) => d.date))
-            .range([0, width]);
+          <label for="productCategory">Category:</label>
+          <select id="productCategory" name="category" required>
+            <option value="" disabled selected>Select Category</option>
+            <option value="Memory">Memory</option>
+            <option value="Board">Board</option>
+            <option value="Cards">Cards</option>
+            <option value="Strategy">Strategy</option>
+          </select>
 
-        const y = d3
-            .scaleLinear()
-            .domain([0, d3.max(data, (d) => d.averageOrderAmount)])
-            .range([height, 0]);
+          <button type="submit" class="modal-btn" id="AddProduct">
+            Submit
+          </button>
+        </form>
+      </div>
+    </div>
 
-        // Adding the X-axis
-        g.append("g")
-            .attr("transform", `translate(0,${height})`)
-            .call(d3.axisBottom(x).tickFormat(d3.timeFormat("%b %d")).tickSize(0))
-            .selectAll("text")
-            .attr("transform", "rotate(-45)")
-            .style("text-anchor", "end");
+    <!-- Update Product Modal -->
+    <div id="updateProductModal" class="modal hidden">
+      <div class="modal-content">
+        <span class="close-btn" id="closeUpdateModal">&times;</span>
+        <h2>Update Product</h2>
+        <form id="updateProductForm">
+          <label for="productNameUpdate">Name:</label>
+          <input
+            type="text"
+            id="productNameUpdate"
+            name="name"
+            required
+            readonly
+          />
 
-        // Adding the Y-axis
-        g.append("g").call(d3.axisLeft(y));
+          <label for="productPriceUpdate">Price:</label>
+          <input type="number" id="productPriceUpdate" name="price" required />
 
-        // Adding a line to represent the data
-        const line = d3
-            .line()
-            .x((d) => x(d.date))
-            .y((d) => y(d.averageOrderAmount));
+          <button type="submit" class="modal-btn" id="UpdateProductBtnComplete">
+            Submit
+          </button>
+        </form>
+      </div>
+    </div>
 
-        g.append("path")
-            .datum(data)
-            .attr("fill", "none")
-            .attr("stroke", "steelblue")
-            .attr("stroke-width", 2)
-            .attr("d", line);
-
-        // Adding data points as circles on the line
-        g.selectAll(".dot")
-            .data(data)
-            .enter()
-            .append("circle")
-            .attr("class", "dot")
-            .attr("cx", (d) => x(d.date))
-            .attr("cy", (d) => y(d.averageOrderAmount))
-            .attr("r", 4)
-            .attr("fill", "steelblue")
-            .append("title") // Adding tooltip
-            .text((d) => `Date: ${d3.timeFormat("%b %d, %Y")(d.date)}\nAvg Order Amount: $${d.averageOrderAmount.toFixed(2)}`);
-    }
-
-    // Function to Fetch and Render Product Orders Chart (unchanged)
-    async function fetchAndRenderProductOrdersStats() {
-        const response = await fetch("/api/orders-stats/products-orders-stats");
-        const data = await response.json();
-
-        const svg = d3.select("#product-chart");
-        const margin = { top: 20, right: 30, bottom: 70, left: 60 };
-        const width = +svg.attr("width") - margin.left - margin.right;
-        const height = +svg.attr("height") - margin.top - margin.bottom;
-
-        const g = svg
-            .append("g")
-            .attr("transform", `translate(${margin.left},${margin.top})`);
-
-        const x = d3
-            .scaleBand()
-            .domain(data.map((d) => d.productName))
-            .range([0, width])
-            .padding(0.1);
-
-        const y = d3
-            .scaleLinear()
-            .domain([0, d3.max(data, (d) => d.orderCount)])
-            .range([height, 0]);
-
-        g.append("g")
-            .attr("transform", `translate(0,${height})`)
-            .call(d3.axisBottom(x).tickSize(0))
-            .selectAll("text")
-            .attr("transform", "rotate(-45)")
-            .style("text-anchor", "end");
-
-        g.append("g").call(d3.axisLeft(y));
-
-        g.selectAll(".bar")
-            .data(data)
-            .enter()
-            .append("rect")
-            .attr("class", "bar")
-            .attr("x", (d) => x(d.productName))
-            .attr("y", (d) => y(0))
-            .attr("width", x.bandwidth())
-            .attr("height", 0)
-            .transition()
-            .duration(800)
-            .attr("y", (d) => y(d.orderCount))
-            .attr("height", (d) => height - y(d.orderCount));
-    }
-
-    // Call both functions to render the charts
-    fetchAndRenderStats();
-    fetchAndRenderProductOrdersStats();
-</script>
-
->>>>>>> c4f6e39aa6c51377783caba0f86435194ddd1ab6
-  </body>
-</html>
-
+    <!-- Delete Product Modal -->
+    <div id="deleteProductModal" class="modal hidden">
+      <div class="modal-content">
+        <span class="close-btn" id="closeDeleteModal">&times;</span>
+        <h2>Delete Product</h2>
+        <p id="deleteMessage">Are you sure you want to delete this product?</p>
+        <div class="modal-actions">
+          <button class="modal-btn" id="deleteOk">Yes, Delete</button>
           <button class="modal-btn" id="deleteCancel">Cancel</button>
         </div>
       </div>
