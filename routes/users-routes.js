@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { createUser, getUsers, updateUser, deleteUser ,loginUser ,logout,currentUser, addProductsToUser} = require('../controllers/users-controller');
+const { createUser, getUsers, updateUser, deleteUser ,loginUser ,logout,currentUser, addProductsToUser, deleteProductFromUser} = require('../controllers/users-controller');
 
 router.post('/register', createUser);
 
@@ -17,5 +17,7 @@ router.delete('/deleteUser', deleteUser);
 router.post('/logout', logout);
 
 router.post('/addProducts', addProductsToUser);
+
+router.post('/deleteProductFromUser', deleteProductFromUser);
 
 module.exports = router;

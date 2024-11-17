@@ -170,6 +170,28 @@ async function addProductsToUser(req, res) {
     }
 }
 
+//מחיקת מוצר מהמערך מוצרים של כל המשתמשים
+const deleteProductFromUser = async (req, res) => {
+    console.log("deleteProductsToUser try");
+    const { productId } = req.body; // מקבל מזהה משתמש ומערך מוצרים מהבקשה
+
+    try {
+        const result = await User.updateMany(
+            {}, //אין תנאי חיפוש- פועל על כל הטבלה
+            { $pull: { products: { productId: productId } } },
+            { new: true }
+        );
+
+        if (result.modifiedCount > 0) {
+            res.status(200).send({ success: true, message: "Product removed from all users" });
+        } else {
+            res.status(404).send({ success: false, message: "Product not found in any user" });
+        }
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Failed to delete product from user' });
+    }
+}
 
 //exporting the functions
-module.exports = { createUser, getUsers, updateUser, deleteUser, loginUser , logout , currentUser, addProductsToUser};
+module.exports = { createUser, getUsers, updateUser, deleteUser, loginUser , logout , currentUser, addProductsToUser, deleteProductFromUser};

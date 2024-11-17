@@ -149,7 +149,8 @@ function fetchProductSummary() {
                     <td>${categorySummary._id}</td>
                     <td>${categorySummary.count}</td>
                 `;
-                summaryTableBody.appendChild(tr); // מוסיף את השורה לטבלה
+                if(summaryTableBody)
+                    summaryTableBody.appendChild(tr); // מוסיף את השורה לטבלה
             });
         })
         .catch(error => console.error('Error fetching product summary:', error)); // טיפול בשגיאות במקרה של כשל
@@ -354,8 +355,10 @@ deleteCancelBtn.addEventListener('click', () => {
 
 // Confirm Delete Product
 deleteOkBtn.addEventListener('click', async () => {
+    console.log("admin.js");
+    // Delete the product from products table
     try {
-        const response = await fetch('/api/products/deleteProduct', {
+            const response = await fetch('/api/products/deleteProduct', {
             method: 'DELETE',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ id: selectedProduct._id }),
@@ -375,6 +378,35 @@ deleteOkBtn.addEventListener('click', async () => {
         console.error('Error:', error);
         alert('An error occurred. Please try again.');
     }
+
+    //aviv test
+    //delete the product from users table
+    try {
+            console.log("delete the product from users table- try");
+            const response2 = await fetch('/api/users/deleteProductFromUser', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({productId: selectedProduct._id }),
+            });
+
+        console.log("delete the product from users table- after try");
+
+        if (response2.ok) {
+            console.log("response2.ok: " + response2.ok);
+            const data2 = await response2.json();
+            console.log("response2.ok: " + data2);
+            console.log("delete the product from users table success");
+            alert("Product removed successfully from all users!");
+        } else {
+            console.log("response2. not ok: " + response2.ok);
+            const errorMessage = await response2.text(); // קרא את התגובה כטקסט
+            console.error("Failed to remove product:", errorMessage);
+            alert(errorMessage);
+          }
+        } catch (error) {
+          console.error("Error:", error);
+          alert("An error occurred. Please try again later");
+        }
 });
 
 // Logout Functionality
@@ -407,10 +439,6 @@ chatBtn.addEventListener('click', () => {
         chatContainer.classList.add('hidden');
     }
 });
-
-
-
-
 
 async function fetchAllUsers() {
     try {
