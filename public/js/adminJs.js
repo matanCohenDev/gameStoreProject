@@ -41,7 +41,7 @@ const deleteCancelBtn = document.getElementById('deleteCancel');
 //chat Actions
 const chatContainer = document.getElementById('chatSection');
 const usersContainer = document.getElementsByClassName('user-list');
-const currentChat = document.getElementsByClassName('currentUser');
+const currentChat = document.getElementsByClassName('current-user');
 const messageContainer = document.querySelector('.messages'); 
 let chatWith = null;
 
@@ -662,7 +662,7 @@ document.getElementById('searchInput').addEventListener('keyup', filterUsersTabl
 document.getElementById('searchDate').addEventListener('input', function() {
     const dateYear = this.value.substring(0, 4);
     if (this.value.length === 10) { 
-        if(dateYear > 2023)
+        if(dateYear > 2024)
             filterUsersTable();
         else if(dateYear.substring(0, 1) != 0){
             alert('enetr a valid date');
@@ -680,120 +680,82 @@ document.getElementById('delBtn').addEventListener('click', () => {
 }
 
 
-async function fetchAndRenderStats() {
-    const response = await fetch("/api/orders-stats/by-date");
-    const data = await response.json();
-    data.forEach((d) => (d.date = new Date(d.date)));
 
-    const svg = d3.select("#chart");
-    const margin = { top: 20, right: 30, bottom: 70, left: 60 };
+async function fetchAndRenderStats() {
+    const data = await fetchData("/api/orders-stats/by-date");
+    renderLineChart(data, "#chart", "totalProfit", "date", "Total Profit", "green");
+}
+
+async function fetchAndRenderProductOrdersStats() {
+    const data = await fetchData("/api/orders-stats/products-orders-stats");
+    renderBarChart(data, "#product-chart", "productName", "orderCount", "Order Count");
+}
+
+async function fetchData(apiUrl) {
+    const response = await fetch(apiUrl);
+    return await response.json();
+}
+
+function renderLineChart(data, svgSelector, yField, xField, yLabel, lineColor) {
+    const svg = d3.select(svgSelector);
+    const margin = { top: 20, right: 20, bottom: 50, left: 50 };
     const width = +svg.attr("width") - margin.left - margin.right;
     const height = +svg.attr("height") - margin.top - margin.bottom;
 
-    const g = svg
-        .append("g")
-        .attr("transform", `translate(${margin.left},${margin.top})`);
+    const g = svg.append("g").attr("transform", `translate(${margin.left},${margin.top})`);
 
-    // Set up scales for X and Y axes
-    const x = d3
-        .scaleTime()
-        .domain(d3.extent(data, (d) => d.date))
-        .range([0, width]);
+    const x = d3.scaleTime().domain(d3.extent(data, (d) => new Date(d[xField]))).range([0, width]);
+    const y = d3.scaleLinear().domain([0, d3.max(data, (d) => d[yField])]).range([height, 0]);
 
-    const y = d3
-        .scaleLinear()
-        .domain([0, d3.max(data, (d) => d.totalProfit)])
-        .range([height, 0]);
-
-    // Add the X-axis
     g.append("g")
         .attr("transform", `translate(0,${height})`)
-        .call(d3.axisBottom(x).tickFormat(d3.timeFormat("%b %d")).tickSize(0))
+        .call(d3.axisBottom(x).tickFormat(d3.timeFormat("%b %d")))
         .selectAll("text")
         .attr("transform", "rotate(-45)")
         .style("text-anchor", "end");
 
-    // Add the Y-axis
     g.append("g").call(d3.axisLeft(y));
- 
-    // Draw the line for total profit
-    const line = d3
-        .line()
-        .x((d) => x(d.date))
-        .y((d) => y(d.totalProfit));
+
+    const line = d3.line().x((d) => x(new Date(d[xField]))).y((d) => y(d[yField]));
 
     g.append("path")
         .datum(data)
         .attr("fill", "none")
-        .attr("stroke", "green")
+        .attr("stroke", lineColor)
         .attr("stroke-width", 2)
         .attr("d", line);
-
-    // Add data points as circles on the line
-    g.selectAll(".dot")
-        .data(data)
-        .enter()
-        .append("circle")
-        .attr("class", "dot")
-        .attr("cx", (d) => x(d.date))
-        .attr("cy", (d) => y(d.totalProfit))
-        .attr("r", 4)
-        .attr("fill", "green")
-        .append("title")
-        .text((d) => `Date: ${d3.timeFormat("%b %d, %Y")(d.date)}\nTotal Profit: $${d.totalProfit.toFixed(2)}`);
 }
 
-// Function to Fetch and Render Product Orders Stats as a Bar Chart
-async function fetchAndRenderProductOrdersStats() {
-    const response = await fetch("/api/orders-stats/products-orders-stats");
-    const data = await response.json();
-
-    const svg = d3.select("#product-chart");
-    const margin = { top: 20, right: 30, bottom: 70, left: 60 };
+// Function to Render a Bar Chart using D3.js
+function renderBarChart(data, svgSelector, xField, yField, yLabel) {
+    const svg = d3.select(svgSelector);
+    const margin = { top: 20, right: 20, bottom: 50, left: 50 };
     const width = +svg.attr("width") - margin.left - margin.right;
     const height = +svg.attr("height") - margin.top - margin.bottom;
 
-    const g = svg
-        .append("g")
-        .attr("transform", `translate(${margin.left},${margin.top})`);
+    const g = svg.append("g").attr("transform", `translate(${margin.left},${margin.top})`);
 
-    const x = d3
-        .scaleBand()
-        .domain(data.map((d) => d.productName))
-        .range([0, width])
-        .padding(0.1);
-
-    const y = d3
-        .scaleLinear()
-        .domain([0, d3.max(data, (d) => d.orderCount)])
-        .range([height, 0]);
+    const x = d3.scaleBand().domain(data.map((d) => d[xField])).range([0, width]).padding(0.1);
+    const y = d3.scaleLinear().domain([0, d3.max(data, (d) => d[yField])]).range([height, 0]);
 
     g.append("g")
         .attr("transform", `translate(0,${height})`)
-        .call(d3.axisBottom(x).tickSize(0))
+        .call(d3.axisBottom(x))
         .selectAll("text")
         .attr("transform", "rotate(-45)")
         .style("text-anchor", "end");
 
-    g.append("g")
-        .call(d3.axisLeft(y)
-            .ticks(Math.max(...data.map(d => d.orderCount))) // Set ticks based on max orderCount
-            .tickFormat(d3.format("d")) // Format tick labels as integers
-        );
+    g.append("g").call(d3.axisLeft(y));
 
     g.selectAll(".bar")
         .data(data)
         .enter()
         .append("rect")
         .attr("class", "bar")
-        .attr("x", (d) => x(d.productName))
-        .attr("y", (d) => y(0))
+        .attr("x", (d) => x(d[xField]))
+        .attr("y", (d) => y(d[yField]))
         .attr("width", x.bandwidth())
-        .attr("height", 0)
-        .transition()
-        .duration(800)
-        .attr("y", (d) => y(d.orderCount))
-        .attr("height", (d) => height - y(d.orderCount));
+        .attr("height", (d) => height - y(d[yField]));
 }
 
 // Call both functions to render the charts
