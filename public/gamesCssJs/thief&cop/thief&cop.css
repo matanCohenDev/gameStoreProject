@@ -1,3 +1,31 @@
+.home-button {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d); /* אותו Gradient כמו הרקע */
+  color: white; /* צבע טקסט */
+  padding: 10px 20px; /* ריווח פנימי */
+  font-size: 16px; /* גודל טקסט */
+  font-weight: bold; /* טקסט מודגש */
+  text-decoration: none; /* הסרת קו תחתון */
+  border: 2px solid white; /* גבול לבן */
+  border-radius: 10px; /* פינות מעוגלות */
+  box-shadow: 0 5px 15px rgba(255, 255, 255, 0.3); /* צל */
+  cursor: pointer; /* מצביע עכבר */
+  transition: transform 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease; /* אפקט מעבר */
+}
+
+.home-button:hover {
+  background: linear-gradient(135deg, #fdbb2d, #b21f1f, #1a2a6c); /* שינוי סדר הצבעים בריחוף */
+  box-shadow: 0 10px 20px rgba(255, 255, 255, 0.5); /* צל מוגבר */
+  transform: scale(1.1); /* הגדלה קלה */
+}
+
+.home-button:active {
+  background: #b21f1f; /* צבע אדום כהה בלחיצה */
+  transform: scale(0.95); /* הקטנה קלה בלחיצה */
+}
+
 body {
     margin: 0;
     display: flex;

@@ -1,3 +1,25 @@
+.home-button {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background-color: var(--primary-color); /* כתום */
+  color: var(--text-color); /* לבן */
+  padding: 10px 20px; /* ריווח פנימי */
+  font-size: 16px;
+  font-weight: bold;
+  text-decoration: none; /* הסרת קו תחתון */
+  border: none; /* ללא גבול */
+  border-radius: 10px; /* פינות מעוגלות */
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); /* צל לכפתור */
+  cursor: pointer; /* מצביע עכבר */
+  transition: background-color 0.3s ease, transform 0.2s ease; /* אפקט מעבר */
+}
+
+.home-button:hover {
+  background-color: #e03e00; /* צבע כהה יותר בעת ריחוף */
+  transform: scale(1.1); /* הגדלה קלה */
+}
+
 :root {
   --primary-color: #ff4500;
   --secondary-color: #1a1a1a;

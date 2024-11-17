@@ -1,3 +1,48 @@
+.home-button {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    text-decoration: none; /* הסרת קו תחתון */
+}
+button {
+    background-color: #343838;
+    border: 2px solid #00B4CC;
+    color: white;
+    padding: 5px 5px;
+    font-size: 10px;
+    text-align: center;
+    margin: 10px auto;
+    width: 140px;
+    height: 40px;
+    cursor: pointer;
+    transition: all 0.5s;
+}
+
+button span {
+    cursor: pointer;
+    display: inline-block;
+    position: relative;
+    transition: 0.5s;
+}
+
+button span:after {
+    content: '>>';
+    position: absolute;
+    opacity: 0;
+    top: 0;
+    right: -20px;
+    transition: 0.5s;
+}
+
+button:hover span {
+    padding-right: 25px;
+}
+
+button:hover span:after {
+    opacity: 1;
+    right: 0;
+}
+
 html,body{
     margin: 0;
     padding: 0;

@@ -1,3 +1,26 @@
+.home-button {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background-color: white;
+    color: #302b63;
+    text-decoration: none;
+    padding: 10px 20px;
+    font-family: "Montserrat", sans-serif;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+}
+
+.home-button:hover {
+    background-color: #302b63;
+    color: white;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+    transform: scale(1.05);
+}
+
 * {
     margin: 0;
     padding: 0;
