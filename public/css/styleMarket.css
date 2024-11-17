@@ -314,7 +314,9 @@ h1 {
 }
 
 .cart-content {
-  position: relative;
+  margin-top: 10%; /* הסרת המרווח מלמעלה */
+  /*top: 10%;  הצמדה למעלה עם מרווח קטן */
+  transform: translateY(0); /* מניעת התאמה אוטומטית למרכז */  position: relative;
   background-color: rgba(34, 34, 44, 0.95);
   padding: 30px;
   width: 400px;
@@ -323,7 +325,6 @@ h1 {
   color: var(--text-color);
   text-align: center;
   animation: fadeIn 0.5s ease;
-  margin-top: 20%;
   margin-left: 35%;
 }
 
@@ -581,6 +582,7 @@ h1 {
   padding: 30px;
   width: 400px;
   max-width: 90%;
+  max-height: 100%;
   border-radius: 10px;
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
   position: relative;
