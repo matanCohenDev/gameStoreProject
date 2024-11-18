@@ -119,12 +119,12 @@ function getNeighbors(pos) {
 
 function checkGameStatus() {
   if (thiefPosition === carPosition) {
-    alert('ניצחת! הגנב הגיע לרכב!');
+    showPopup('You Win!', 'the thief has reached the car!');
     gameOver = true;
     resetGame();
     return true;
   } else if (thiefPosition === copPosition) {
-    alert('נפסלת! השוטר תפס אותך!');
+    showPopup('You Lose', 'The cop has caught you!');
     gameOver = true;
     resetGame();
     return true;
@@ -144,5 +144,20 @@ document.addEventListener('keydown', (e) => {
     moveThief(e.code);
   }
 });
+
+function showPopup(title, message) {
+  const popup = document.getElementById('game-popup');
+  const popupTitle = document.getElementById('popup-title');
+  const popupMessage = document.getElementById('popup-message');
+
+  popupTitle.textContent = title; // כותרת הפופאפ
+  popupMessage.textContent = message; // תוכן ההודעה
+  popup.style.display = 'flex'; // הצגת הפופאפ
+
+  const closeButton = popup.querySelector('.close-popup');
+  closeButton.addEventListener('click', () => {
+    popup.style.display = 'none'; // הסתרת הפופאפ
+  });
+}
 
 createBoard();

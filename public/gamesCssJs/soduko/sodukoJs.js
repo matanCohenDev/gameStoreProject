@@ -35,7 +35,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     startButton.addEventListener('click', () => {
-        if (['Easy', 'Medium', 'Hard'].includes(selectedOption.textContent)) {
+        if (['Easy', 'Hard'].includes(selectedOption.textContent)) {
             dropDown.style.display = 'none';
             checkButton.style.display = 'block';
             resetButton.style.display = 'block';
@@ -58,15 +58,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 boxSize = 2;
                 timeLeft = 120;
                 theRealTime = 120;
-                break;
-            case 'Medium': 
-                rows = 6;
-                columns = 6;
-                maxNumber = 9;
-                cellSize = '80px';
-                boxSize = 3;
-                timeLeft = 300;
-                theRealTime = 300;
                 break;
             case 'Hard':
                 rows = 9;
@@ -186,9 +177,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 for (let j = 0; j < columns; j++) {
                     if (i % boxSize === 0 && i !== 0) {
                         sodukoGrid.children[i * columns + j].style.borderTop = '0.1px solid red';
-                        if (difficulty === 'Medium') {
-                            sodukoGrid.children[i * columns + j - 6].style.borderBottom = '0.1px solid red';
-                        }
                         if (difficulty === 'Hard') {
                             sodukoGrid.children[i * columns + j - 9].style.borderBottom = '0.1px solid red';
                         }
@@ -206,18 +194,8 @@ document.addEventListener('DOMContentLoaded', function() {
             const secondBox = [2,3,6,7];
             const thirdBox = [8,9,12,13];
             const fourthBox = [10,11,14,15];
-            putTheNumbersInBoardEasyAndMedium(firstBox, secondBox, thirdBox, fourthBox);
-            putTheNumbersInBoardEasyAndMedium(firstBox, secondBox, thirdBox, fourthBox);
-
-        }
-        if(difficulty === 'Medium') {
-            const firstBox = [0,1,2,6,7,8,12,13,14];
-            const secondBox = [3,4,5,9,10,11,15,16,17];
-            const thirdBox = [18,19,20,24,25,26,30,31,32];
-            const fourthBox = [21,22,23,27,28,29,33,34,35];
-            putTheNumbersInBoardEasyAndMedium(firstBox, secondBox, thirdBox, fourthBox);
-            putTheNumbersInBoardEasyAndMedium(firstBox, secondBox, thirdBox, fourthBox);
-            putTheNumbersInBoardEasyAndMedium(firstBox, secondBox, thirdBox, fourthBox);
+            putTheNumbersInBoardEasy(firstBox, secondBox, thirdBox, fourthBox);
+            putTheNumbersInBoardEasy(firstBox, secondBox, thirdBox, fourthBox);
 
         }
         if(difficulty === 'Hard') {
@@ -275,9 +253,6 @@ document.addEventListener('DOMContentLoaded', function() {
                         case 'Easy':
                             countScore -= 5;
                             break;
-                        case 'Medium':
-                            countScore -= 3;
-                            break;
                         case 'Hard':
                             countScore -= 1;
                             break;
@@ -314,7 +289,7 @@ document.addEventListener('DOMContentLoaded', function() {
         return arr[randomIndex];
     }
 
-    function putTheNumbersInBoardEasyAndMedium(firstBox, secondBox, thirdBox, fourthBox) {
+    function putTheNumbersInBoardEasy(firstBox, secondBox, thirdBox, fourthBox) {
         let num1 = getRandomElement(firstBox);
         let num2 = getRandomElement(secondBox);
         let num3 = getRandomElement(thirdBox);
