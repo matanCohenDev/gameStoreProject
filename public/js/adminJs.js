@@ -696,67 +696,93 @@ async function fetchData(apiUrl) {
     return await response.json();
 }
 
+// Function to Render a Line Chart using D3.js
 function renderLineChart(data, svgSelector, yField, xField, yLabel, lineColor) {
+    // Select the SVG element and set up margin, width, and height
     const svg = d3.select(svgSelector);
     const margin = { top: 20, right: 20, bottom: 50, left: 50 };
     const width = +svg.attr("width") - margin.left - margin.right;
     const height = +svg.attr("height") - margin.top - margin.bottom;
 
+    // Create a group (g) element with proper margins for the chart area
     const g = svg.append("g").attr("transform", `translate(${margin.left},${margin.top})`);
 
-    const x = d3.scaleTime().domain(d3.extent(data, (d) => new Date(d[xField]))).range([0, width]);
-    const y = d3.scaleLinear().domain([0, d3.max(data, (d) => d[yField])]).range([height, 0]);
+    // Create scales for the x-axis (time) and y-axis (linear scale)
+    const x = d3.scaleTime()
+        .domain(d3.extent(data, (d) => new Date(d[xField])))
+        .range([0, width]);
+    const y = d3.scaleLinear()
+        .domain([0, d3.max(data, (d) => d[yField])])
+        .range([height, 0]);
 
+    // Add the x-axis with tick formatting for dates
     g.append("g")
         .attr("transform", `translate(0,${height})`)
         .call(d3.axisBottom(x).tickFormat(d3.timeFormat("%b %d")))
         .selectAll("text")
-        .attr("transform", "rotate(-45)")
+        .attr("transform", "rotate(-45)") // Rotate labels for better readability
         .style("text-anchor", "end");
 
+    // Add the y-axis
     g.append("g").call(d3.axisLeft(y));
 
-    const line = d3.line().x((d) => x(new Date(d[xField]))).y((d) => y(d[yField]));
+    // Define the line generator function for the line chart
+    const line = d3.line()
+        .x((d) => x(new Date(d[xField])))
+        .y((d) => y(d[yField]));
 
+    // Append the line path to the chart
     g.append("path")
         .datum(data)
-        .attr("fill", "none")
-        .attr("stroke", lineColor)
-        .attr("stroke-width", 2)
-        .attr("d", line);
+        .attr("fill", "none") // No fill for the line
+        .attr("stroke", lineColor) // Line color based on input
+        .attr("stroke-width", 2) // Set line thickness
+        .attr("d", line); // Generate the line path
 }
 
 // Function to Render a Bar Chart using D3.js
 function renderBarChart(data, svgSelector, xField, yField, yLabel) {
+    // Select the SVG element and set up margin, width, and height
     const svg = d3.select(svgSelector);
     const margin = { top: 20, right: 20, bottom: 50, left: 50 };
     const width = +svg.attr("width") - margin.left - margin.right;
     const height = +svg.attr("height") - margin.top - margin.bottom;
 
+    // Create a group (g) element with proper margins for the chart area
     const g = svg.append("g").attr("transform", `translate(${margin.left},${margin.top})`);
 
-    const x = d3.scaleBand().domain(data.map((d) => d[xField])).range([0, width]).padding(0.1);
-    const y = d3.scaleLinear().domain([0, d3.max(data, (d) => d[yField])]).range([height, 0]);
+    // Create scales for the x-axis (categorical) and y-axis (linear scale)
+    const x = d3.scaleBand()
+        .domain(data.map((d) => d[xField])) // Use xField values for categories
+        .range([0, width])
+        .padding(0.1); // Add padding between bars
+    const y = d3.scaleLinear()
+        .domain([0, d3.max(data, (d) => d[yField])])
+        .range([height, 0]);
 
+    // Add the x-axis with labels
     g.append("g")
         .attr("transform", `translate(0,${height})`)
         .call(d3.axisBottom(x))
         .selectAll("text")
-        .attr("transform", "rotate(-45)")
+        .attr("transform", "rotate(-45)") // Rotate labels for better readability
         .style("text-anchor", "end");
 
+    // Add the y-axis
     g.append("g").call(d3.axisLeft(y));
 
+    // Create and append rectangles for each bar
     g.selectAll(".bar")
         .data(data)
         .enter()
         .append("rect")
         .attr("class", "bar")
-        .attr("x", (d) => x(d[xField]))
-        .attr("y", (d) => y(d[yField]))
-        .attr("width", x.bandwidth())
-        .attr("height", (d) => height - y(d[yField]));
+        .attr("x", (d) => x(d[xField])) // Set the x position based on the category
+        .attr("y", (d) => y(d[yField])) // Set the y position based on the value
+        .attr("width", x.bandwidth()) // Set the width of the bar
+        .attr("height", (d) => height - y(d[yField])); // Calculate height from value
 }
+
 
 // Call both functions to render the charts
 fetchAndRenderStats();

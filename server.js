@@ -19,6 +19,9 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json());
 app.use('/api', branchRoutes);
 
+require('dotenv').config();
+
+
 // DB Config
 mongoose.connect('mongodb+srv://gameStore:gameStore123456@gamestore.tshx1.mongodb.net/', {
 })
