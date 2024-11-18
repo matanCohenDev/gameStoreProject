@@ -743,6 +743,7 @@ async function fetchData(apiUrl) {
   return await response.json();
 }
 
+// Function to Render a Line Chart using D3.js
 function renderLineChart(data, svgSelector, yField, xField, yLabel, lineColor) {
   const svg = d3.select(svgSelector);
   const margin = { top: 20, right: 20, bottom: 50, left: 50 };
