@@ -1217,3 +1217,11 @@ h1 {
   opacity: 0.5;
   cursor: not-allowed;
 }
+
+.product-video {
+  position: absolute; /* הסרטון יוצמד לאותו המיקום כמו התמונה */
+  z-index: 1;
+  border-radius: 8px; /* מתאים לצורה של התמונות */
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5); /* צל לסרטון */
+  object-fit: cover; /* מבטיח שהתמונה תכסה את כל המרחב */
+}

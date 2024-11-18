@@ -154,6 +154,9 @@ function displayProducts() {
       product.appendChild(owned);
     }
   }
+
+  // הוספת אפקט hover
+  addVideoHoverEffect();
 }
 
 // Fetch products
@@ -824,3 +827,44 @@ document.getElementById("my-games").addEventListener("click", () => {
   document.body.style.overflowY = "auto"; 
   displayProductsOfUser();
 });
+
+//כאשר עומדים על התמונה בעמוד המוצרים, יופיע וידאו מבוא למשחק
+function addVideoHoverEffect() {
+  const productCards = document.querySelectorAll('.product-card');
+
+  productCards.forEach((card) => {
+    const productName = card.querySelector('h2').textContent; // שם המוצר (לשימוש בשם הווידאו)
+    const productImage = card.querySelector('.product-image'); // התמונה המקורית
+
+    // הוספת מאזינים לאירועים
+    card.addEventListener('mouseenter', () => {
+      const video = document.createElement('video');
+      video.src = `/videos/${productName}.mp4`; // מחפש את הסרטון בתיקייה
+      video.autoplay = true;
+      video.muted = true; // מושתק כברירת מחדל
+      video.loop = true; // לולאה אינסופית
+      video.classList.add('product-video');
+
+      // התאמת הסרטון לגודל ומיקום התמונה
+      video.style.width = productImage.offsetWidth + 'px'; // גודל זהה לרוחב התמונה
+      video.style.height = productImage.offsetHeight + 'px'; // גובה זהה לגובה התמונה
+      video.style.borderRadius = getComputedStyle(productImage).borderRadius; // ירושה של הפינות המעוגלות
+      video.style.boxShadow = getComputedStyle(productImage).boxShadow; // ירושה של הצל
+      video.style.position = 'absolute'; // הצמדה למיקום התמונה
+      video.style.top = productImage.offsetTop + 'px';
+      video.style.left = productImage.offsetLeft + 'px';
+
+      productImage.style.visibility = 'hidden'; // הסתרת התמונה אך שמירה על המיקום
+      card.style.position = 'relative'; // הכרטיס צריך להיות יחסית למיקום
+      card.appendChild(video); // הוספת הסרטון
+    });
+
+    card.addEventListener('mouseleave', () => {
+      const video = card.querySelector('video');
+      if (video) {
+        video.remove(); // מסיר את הווידאו
+      }
+      productImage.style.visibility = 'visible'; // הצגת התמונה מחדש
+    });
+  });
+}
