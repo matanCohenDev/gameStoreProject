@@ -43,7 +43,7 @@ const deleteCancelBtn = document.getElementById("deleteCancel");
 //chat Actions
 const chatContainer = document.getElementById("chatSection");
 const usersContainer = document.getElementsByClassName("user-list");
-const currentChat = document.getElementsByClassName("current-user");
+const currentChat = document.getElementsByClassName("currentUser");
 const messageContainer = document.querySelector(".messages");
 let chatWith = null;
 
@@ -505,7 +505,6 @@ async function fetchAllUsers() {
           const cleanUsername = userDiv.textContent.replace(/\d+/g, "");
           userDiv.textContent = cleanUsername;
           chatWith = userDiv;
-          chatWith.classList.add("currentUser");
           currentChat[0].textContent = "Chat with " + cleanUsername;
           changeInDbToReadWhenClicker(cleanUsername);
           fetchMessages(cleanUsername);
@@ -585,6 +584,7 @@ function filterUsers() {
     }
   }
 }
+
 document.getElementById("searchUsers").addEventListener("keyup", filterUsers);
 
 async function countUnreadMessages(username) {
@@ -742,6 +742,12 @@ async function fetchData(apiUrl) {
   const response = await fetch(apiUrl);
   return await response.json();
 }
+
+document.getElementById("deleteBtn").addEventListener("click", () => {
+  document.getElementById("searchInput").value = "";
+  document.getElementById("searchDate").value = "";
+  filterUsersTable();
+});
 
 // Function to Render a Line Chart using D3.js
 function renderLineChart(data, svgSelector, yField, xField, yLabel, lineColor) {

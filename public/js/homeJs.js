@@ -139,15 +139,6 @@ fetchPopularGames();
                       map: map,
                       title: branch.name,
                   });
-  
-                  // InfoWindow for displaying branch details
-                  const infoWindow = new google.maps.InfoWindow({
-                      content: `<h3>${branch.name}</h3><p>${branch.address}</p>`,
-                  });
-                  
-                  marker.addListener('click', () => {
-                      infoWindow.open(map, marker);
-                  });
               });
           });
       }
