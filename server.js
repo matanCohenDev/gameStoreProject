@@ -79,7 +79,7 @@ app.use('/user' , (req, res) => {
 
 
 app.use('/login', (req, res) => {
-    if(sion.user && req.session.user.username === 'admin'){
+    if(req.session.user && req.session.user.username === 'admin'){
         res.sendFile(path.join(__dirname, 'views' , 'html', 'admin.html'));
     }
     else if(req.session.user){
