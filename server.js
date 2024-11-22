@@ -59,18 +59,27 @@ app.use('/game/:gameName', (req, res) => {
     }
 });
 
-  
 app.use('/admin', (req, res) => {
-    res.sendFile(path.join(__dirname, 'views' , 'html', 'admin.html'));
+    if(req.session.user && req.session.user.username === 'admin'){
+        res.sendFile(path.join(__dirname, 'views' , 'html', 'admin.html'));
+    }
+    else{
+        res.sendFile(path.join(__dirname, 'views' , 'html', 'home.html'));
+    }
 });
 
 app.use('/user' , (req, res) => {
-    res.sendFile(path.join(__dirname, 'views' , 'html', 'market.html'));
+    if(req.session.user){
+        res.sendFile(path.join(__dirname, 'views' , 'html', 'market.html'));
+    }
+    else{
+        res.sendFile(path.join(__dirname, 'views' , 'html', 'home.html'));
+    }
 });
 
 
 app.use('/login', (req, res) => {
-    if(req.session.user && req.session.user.username === 'admin'){
+    if(sion.user && req.session.user.username === 'admin'){
         res.sendFile(path.join(__dirname, 'views' , 'html', 'admin.html'));
     }
     else if(req.session.user){
